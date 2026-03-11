@@ -1,0 +1,303 @@
+/**
+ * dialogue-wordmark / wordmark.css
+ * Scoped to .wm-panel and [data-wordmark] elements.
+ * Body/html resets are intentionally omitted — add them in your own stylesheet.
+ */
+
+/* ── Wordmark ── */
+[data-wordmark] {
+  display: inline-block;
+  white-space: nowrap;
+  user-select: text;
+  line-height: 1;
+  outline: none;
+  caret-color: rgba(255,255,255,0.6);
+  min-width: 1em;
+}
+
+[data-wordmark] span {
+  display: inline-block;
+  text-align: center;
+  overflow: visible;
+}
+
+/* ── Glow canvas overlay ── */
+.wm-glow-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+/* ── Spark overlay ── */
+.wm-sparks {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.wm-sparks .spark {
+  position: absolute;
+  pointer-events: none;
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+/* ══════════════════════════════════════════
+   CONTROL PANEL  (only injected when panel:true)
+══════════════════════════════════════════ */
+
+.wm-panel {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 16px 24px;
+  font-family: 'Space Grotesk', sans-serif;
+  z-index: 9999;
+}
+
+.wm-divider {
+  width: 1px;
+  align-self: stretch;
+  background: rgba(255,255,255,0.08);
+  flex-shrink: 0;
+}
+
+/* Presets */
+.wm-sliders-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wm-preset-tabs {
+  display: flex;
+  gap: 6px;
+}
+
+.wm-sliders-row {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+}
+
+.wm-preset-btn {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 7px;
+  color: rgba(255,255,255,0.45);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.wm-preset-btn:hover {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.85);
+  border-color: rgba(255,255,255,0.2);
+}
+
+.wm-preset-btn.active {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  border-color: rgba(255,255,255,0.35);
+}
+
+/* Vertical sliders */
+.wm-ctrl {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.wm-ctrl label {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
+  white-space: nowrap;
+}
+
+.wm-ctrl .wm-val {
+  font-size: 11px;
+  color: rgba(255,255,255,0.85);
+  min-width: 36px;
+  text-align: center;
+}
+
+.wm-slider-wrap {
+  position: relative;
+  width: 20px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wm-tick {
+  position: absolute;
+  right: -1px;
+  width: 5px;
+  height: 1px;
+  background: rgba(255,255,255,0.22);
+  pointer-events: none;
+}
+.wm-tick[data-p="25"] { top: 25%; }
+.wm-tick[data-p="50"] { top: 50%; }
+.wm-tick[data-p="75"] { top: 75%; }
+
+.wm-panel input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  writing-mode: vertical-lr;
+  direction: rtl;
+  width: 4px;
+  height: 72px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+.wm-panel input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.7);
+  cursor: pointer;
+}
+.wm-panel input[type=range]::-moz-range-thumb {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.7);
+  border: none;
+  cursor: pointer;
+}
+.wm-panel input[type=range]:hover::-webkit-slider-thumb { background: #fff; }
+
+/* Color column */
+.wm-color-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+}
+
+.wm-color-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wm-color-row label {
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
+  width: 38px;
+  flex-shrink: 0;
+}
+
+.wm-swatch-wrap {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.wm-swatch-wrap input[type=color] {
+  position: absolute;
+  inset: -4px;
+  width: calc(100% + 8px);
+  height: calc(100% + 8px);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.wm-swatch-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.wm-blend-sel {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 5px;
+  color: rgba(255,255,255,0.5);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  padding: 3px 4px;
+  outline: none;
+  cursor: pointer;
+  width: 72px;
+}
+
+.wm-hex-val {
+  font-size: 10px;
+  color: rgba(255,255,255,0.65);
+  font-variant-numeric: tabular-nums;
+  min-width: 28px;
+  text-align: right;
+}
+
+.wm-panel input[type=range].wm-h-slider {
+  writing-mode: horizontal-tb;
+  direction: ltr;
+  width: 72px;
+  height: 4px;
+}
+
+.wm-toggle-wrap {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-left: 2px;
+}
+.wm-toggle-wrap input { display: none; }
+.wm-toggle-box {
+  width: 26px; height: 14px;
+  border-radius: 7px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  position: relative;
+  transition: background 0.2s;
+}
+.wm-toggle-box::after {
+  content: '';
+  position: absolute;
+  left: 2px; top: 2px;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  transition: transform 0.2s, background 0.2s;
+}
+.wm-toggle-wrap input:checked + .wm-toggle-box {
+  background: rgba(160,80,255,0.5);
+  border-color: rgba(160,80,255,0.6);
+}
+.wm-toggle-wrap input:checked + .wm-toggle-box::after {
+  transform: translateX(12px);
+  background: #fff;
+}

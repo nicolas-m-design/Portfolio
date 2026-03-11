@@ -20,6 +20,14 @@ const nextConfig = {
       }
     ]
   },
+  async rewrites() {
+    return [
+      {
+        source: '/experiments/animated-wordmark',
+        destination: '/experiments/animated-wordmark/index.html',
+      },
+    ]
+  },
   async headers() {
     return [
       {
@@ -28,6 +36,12 @@ const nextConfig = {
           { key: 'X-Frame-Options', value: 'DENY' },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' }
+        ]
+      },
+      {
+        source: '/experiments/animated-wordmark/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'no-store' }
         ]
       }
     ]
