@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 
 // Generate 3D mesh - moved outside component to avoid recreation
 const generateIsometricMesh = (amplitude: number, frequency: number, time: number) => {
-  const gridSize = 25;
+  const gridSize = 18;
   const points = [];
 
   for (let i = 0; i < gridSize; i++) {
@@ -96,7 +96,7 @@ export default function WaveMesh() {
             key={i}
             d={pathData}
             fill="none"
-            stroke="#3b82f6"
+            stroke="#8F4CF2"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
