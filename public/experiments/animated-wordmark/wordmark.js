@@ -91,8 +91,13 @@
       peakPeakColor:   [235, 180, 255],
       valleyColor:     [30, 10, 80],
       sparkColor:      '#c8b4ff',
+      sparkBlendMode:  'screen',
       starsEnabled:    true,
-      glowIntensity:   1.0,
+      glowIntensity:   0.30,
+      motion:          'wave',   // 'wave' | 'sparkling'
+      sparkRate:       1.2,      // Hz — base flicker rate (sparkling mode)
+      sparkSharpness:  2.5,      // power curve — higher = more contrast dark/bright
+      invertWeight:    false,    // true = heavy at rest, thins as color brightens
     }, preset, options.config || {});
 
     /* text from data-attr or option */
@@ -116,6 +121,7 @@
     /* ── Overlays ── */
     const sparksEl = document.createElement('div');
     sparksEl.className = 'wm-sparks';
+    sparksEl.style.mixBlendMode = CONFIG.sparkBlendMode;
     document.body.appendChild(sparksEl);
 
     const glowCanvas = document.createElement('canvas');
@@ -145,6 +151,8 @@
 
     /* ── Spans ── */
     let spans = [];
+    let sparkPhases    = []; // per-letter random phases for sparkling motion
+    let smoothedWeights = []; // per-letter weight with asymmetric rise/fall smoothing
 
     function relayout() {
       const emPx  = probe('M', CONFIG.baseWeight).height;
@@ -170,6 +178,11 @@
         el.appendChild(span);
         spans.push(span);
       });
+      // Randomise per-letter phases for sparkling mode
+      sparkPhases    = spans.map(() => Math.random() * Math.PI * 2);
+      // Initialise smoothed weights to resting value
+      const restW    = CONFIG.invertWeight ? CONFIG.peakWeight : CONFIG.baseWeight;
+      smoothedWeights = spans.map(() => restW);
       relayout();
     }
 
@@ -200,7 +213,7 @@
     const particles = [];
     let spawnAccum = 0;
 
-    function spawnSpark(x, y) {
+    function spawnSpark(x, y, allDirections) {
       const svgEl = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svgEl.setAttribute('width', '48');
       svgEl.setAttribute('height', '48');
@@ -221,9 +234,13 @@
       svgEl.appendChild(path);
       sparksEl.appendChild(svgEl);
 
-      const angle = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 0.7;
+      const angle = allDirections
+        ? Math.random() * Math.PI * 2
+        : -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 0.7;
       const speed = SPARKS_CONFIG.speed * (0.5 + Math.random() * 0.5);
-      const size  = SPARKS_CONFIG.sizeMin + Math.random() * (SPARKS_CONFIG.sizeMax - SPARKS_CONFIG.sizeMin);
+      const sMin  = CONFIG.sparkSizeMin != null ? CONFIG.sparkSizeMin : SPARKS_CONFIG.sizeMin;
+      const sMax  = CONFIG.sparkSizeMax != null ? CONFIG.sparkSizeMax : SPARKS_CONFIG.sizeMax;
+      const size  = sMin + Math.random() * (sMax - sMin);
       particles.push({
         el: svgEl, x, y,
         vx: Math.cos(angle) * speed,
@@ -236,12 +253,17 @@
       });
     }
 
-    function updateSparks(now, dt, cx, cy, envelope) {
+    function updateSparks(now, dt, cx, cy, halfW, halfH, envelope, allDirections) {
       if (envelope > 0.05) {
         spawnAccum += SPARKS_CONFIG.spawnRate * dt * envelope;
-        while (spawnAccum >= 1 && particles.length < SPARKS_CONFIG.maxParticles) {
+        const maxP = CONFIG.sparkMaxParticles != null ? CONFIG.sparkMaxParticles : SPARKS_CONFIG.maxParticles;
+        while (spawnAccum >= 1 && particles.length < maxP) {
           spawnAccum -= 1;
-          spawnSpark(cx + (Math.random() - 0.5) * 30, cy + (Math.random() - 0.5) * 20);
+          spawnSpark(
+            cx + (Math.random() - 0.5) * 2 * halfW,
+            cy + (Math.random() - 0.5) * 2 * halfH,
+            allDirections
+          );
         }
         if (spawnAccum >= 1) spawnAccum = 0;
       }
@@ -271,6 +293,91 @@
         const n = spans.length;
         if (n === 0) { requestAnimationFrame(tick); return; }
 
+        /* ── Sparkling motion ── */
+        if (CONFIG.motion === 'sparkling') {
+          const tSec = (now - t0) / 1000;
+          let maxIntensity = 0, brightX = 0, brightY = 0;
+
+          // Per-letter intensity: two overlapping sines with independent phase offsets
+          const intensities = spans.map((_, i) => {
+            const ph  = sparkPhases[i] || 0;
+            const raw = Math.sin(tSec * CONFIG.sparkRate * Math.PI * 2 + ph) * 0.65
+                      + Math.sin(tSec * CONFIG.sparkRate * 0.47 * Math.PI * 2 + ph * 1.6) * 0.35;
+            return Math.pow(Math.max(0, raw * 0.5 + 0.5), CONFIG.sparkSharpness);
+          });
+
+          for (let i = 0; i < n; i++) {
+            const intensity = intensities[i];
+            const w        = CONFIG.invertWeight
+              ? CONFIG.peakWeight - (CONFIG.peakWeight - CONFIG.baseWeight) * intensity
+              : CONFIG.baseWeight + (CONFIG.peakWeight - CONFIG.baseWeight) * intensity;
+            const valleyT  = Math.max(0, 1 - intensity * 3);
+            const baseRgb  = lerpColor(CONFIG.valleyColor, CONFIG.baseColor, 1 - valleyT);
+            const midRgb   = lerpColor(baseRgb, CONFIG.peakColor, intensity);
+            const rgb      = lerpColor(midRgb, CONFIG.peakPeakColor, Math.pow(intensity, 1.5));
+
+            const sw    = smoothedWeights[i];
+            const alpha = 1 - Math.exp(-dt / (w > sw ? 80 : 160)); // rise 2× faster than fall
+            smoothedWeights[i] = sw + (w - sw) * alpha;
+            spans[i].style.fontVariationSettings = `'wght' ${smoothedWeights[i].toFixed(1)}`;
+            spans[i].style.color = `rgb(${rgb.join(',')})`;
+            spans[i].style.textShadow = '';
+
+            if (intensity > maxIntensity) {
+              maxIntensity = intensity;
+              const r = spans[i].getBoundingClientRect();
+              brightX = r.left + r.width * 0.5;
+              brightY = r.top  + r.height * 0.4;
+            }
+          }
+
+          // Glow canvas — per-letter radial glow proportional to intensity
+          if (glowCanvas.width !== window.innerWidth || glowCanvas.height !== window.innerHeight) {
+            glowCanvas.width = window.innerWidth; glowCanvas.height = window.innerHeight;
+          }
+          const gCtx = glowCanvas.getContext('2d');
+          gCtx.clearRect(0, 0, glowCanvas.width, glowCanvas.height);
+
+          for (let i = 0; i < n; i++) {
+            const iv = intensities[i];
+            if (iv < 0.04) continue;
+            const rect = spans[i].getBoundingClientRect();
+            const cx   = rect.left + rect.width * 0.5;
+            const cy   = rect.top  + rect.height * 0.5;
+            const gc   = lerpColor(CONFIG.peakColor, CONFIG.peakPeakColor, iv);
+            const gcs  = `${gc[0]},${gc[1]},${gc[2]}`;
+
+            const r1 = rect.height * (0.3 + iv * 0.5);
+            const g1 = gCtx.createRadialGradient(cx, cy, 0, cx, cy, r1);
+            g1.addColorStop(0, `rgba(${gcs},${(iv * 0.28 * CONFIG.glowIntensity).toFixed(3)})`);
+            g1.addColorStop(1, `rgba(${gcs},0)`);
+            gCtx.fillStyle = g1;
+            gCtx.fillRect(cx - r1, cy - r1, r1 * 2, r1 * 2);
+
+            const r2 = rect.height * (0.9 + iv * 1.4);
+            const g2 = gCtx.createRadialGradient(cx, cy, 0, cx, cy, r2);
+            g2.addColorStop(0, `rgba(${gcs},${(iv * 0.1 * CONFIG.glowIntensity).toFixed(3)})`);
+            g2.addColorStop(1, `rgba(${gcs},0)`);
+            gCtx.fillStyle = g2;
+            gCtx.fillRect(cx - r2, cy - r2, r2 * 2, r2 * 2);
+          }
+
+          if (CONFIG.starsEnabled) {
+            // Pick a spawn letter weighted by intensity so sparks spread across all bright letters
+            const totalIv = intensities.reduce((s, v) => s + v, 0);
+            if (totalIv > 0.01) {
+              let pick = Math.random() * totalIv, spawnIdx = n - 1;
+              for (let i = 0; i < n; i++) { pick -= intensities[i]; if (pick <= 0) { spawnIdx = i; break; } }
+              const sr = spans[spawnIdx].getBoundingClientRect();
+              // Spawn across full letter area, all directions
+              updateSparks(now, dt, sr.left + sr.width * 0.5, sr.top + sr.height * 0.5, sr.width * 0.5, sr.height * 0.5, maxIntensity, true);
+            }
+          }
+          requestAnimationFrame(tick);
+          return;
+        }
+        /* ── End sparkling ── */
+
         const falloff = FALLOFFS[CONFIG.easing] || FALLOFFS.gaussian;
         const t      = ((now - t0) % CONFIG.loopDuration) / CONFIG.loopDuration;
         const cr     = CONFIG.colorRadius;
@@ -283,25 +390,32 @@
 
         const centerIdx  = Math.round(Math.max(0, Math.min(n - 1, pos)));
         const centerSpan = spans[centerIdx];
-        let sparkX = 0, sparkY = 0;
+        let sparkX = 0, sparkY = 0, sparkHalfW = 15, sparkHalfH = 10;
         if (centerSpan) {
           const rect = centerSpan.getBoundingClientRect();
-          sparkX = rect.left + rect.width * 0.5;
-          sparkY = rect.top  + rect.height * 0.4;
+          sparkX     = rect.left + rect.width  * 0.5;
+          sparkY     = rect.top  + rect.height * 0.5;
+          sparkHalfW = rect.width  * 0.5;
+          sparkHalfH = rect.height * 0.5;
         }
 
         for (let i = 0; i < n; i++) {
           const dist      = Math.abs(i - pos);
           const weightInf = dist / CONFIG.waveRadius  <= 1 ? falloff(dist / CONFIG.waveRadius)  : 0;
           const colorInf  = dist / CONFIG.colorRadius <= 1 ? falloff(dist / CONFIG.colorRadius) : 0;
-          const w = CONFIG.baseWeight + (CONFIG.peakWeight - CONFIG.baseWeight) * weightInf;
+          const w = CONFIG.invertWeight
+            ? CONFIG.peakWeight - (CONFIG.peakWeight - CONFIG.baseWeight) * weightInf
+            : CONFIG.baseWeight + (CONFIG.peakWeight - CONFIG.baseWeight) * weightInf;
 
           const valleyT = Math.max(0, 1 - colorInf * 3);
           const baseRgb = lerpColor(CONFIG.valleyColor, CONFIG.baseColor, 1 - valleyT);
           const midRgb  = lerpColor(baseRgb, CONFIG.peakColor, colorInf * globalFade);
           const rgb     = lerpColor(midRgb, CONFIG.peakPeakColor, weightInf * globalFade);
 
-          spans[i].style.fontVariationSettings = `'wght' ${w.toFixed(1)}`;
+          const sw_w    = smoothedWeights[i];
+          const alpha_w = 1 - Math.exp(-dt / (w > sw_w ? 80 : 160)); // rise 2× faster than fall
+          smoothedWeights[i] = sw_w + (w - sw_w) * alpha_w;
+          spans[i].style.fontVariationSettings = `'wght' ${smoothedWeights[i].toFixed(1)}`;
           spans[i].style.color = `rgb(${rgb.join(',')})`;
           spans[i].style.textShadow = '';
         }
@@ -340,7 +454,7 @@
           ctx.fillRect(cx2 - r2, cy2 - r2, r2 * 2, r2 * 2);
         }
 
-        if (CONFIG.starsEnabled) updateSparks(now, dt, sparkX, sparkY, globalFade);
+        if (CONFIG.starsEnabled) updateSparks(now, dt, sparkX, sparkY, sparkHalfW, sparkHalfH, globalFade, false);
         requestAnimationFrame(tick);
       }
       requestAnimationFrame(tick);
@@ -423,6 +537,17 @@
         <span class="wm-hex-val" id="wm-v-glow-int">${CONFIG.glowIntensity.toFixed(2)}</span>
       </div>`;
 
+    /* Motion select row */
+    const motionRow = document.createElement('div');
+    motionRow.className = 'wm-color-row';
+    motionRow.innerHTML = `
+      <label>Motion</label>
+      <select id="wm-sel-motion" class="wm-blend-sel" style="flex:1;">
+        <option value="wave"${CONFIG.motion==='wave'?' selected':''}>Wave</option>
+        <option value="sparkling"${CONFIG.motion==='sparkling'?' selected':''}>Sparkling</option>
+      </select>`;
+    colorCol.appendChild(motionRow);
+
     const BLEND_MODES = ['normal','multiply','screen','overlay','darken','lighten',
       'color-dodge','color-burn','hard-light','soft-light','difference','exclusion',
       'hue','saturation','color','luminosity'];
@@ -458,7 +583,7 @@
         <input type="color" id="wm-c-spark" value="${sparkHex}">
       </div>
       <select class="wm-blend-sel" id="wm-blend-spark">
-        ${BLEND_MODES.map(m => `<option value="${m}"${m==='screen'?' selected':''}>${m}</option>`).join('')}
+        ${BLEND_MODES.map(m => `<option value="${m}"${m===CONFIG.sparkBlendMode?' selected':''}>${m}</option>`).join('')}
       </select>
       <label class="wm-toggle-wrap">
         <input type="checkbox" id="wm-toggle-stars" ${CONFIG.starsEnabled ? 'checked' : ''}>
@@ -547,6 +672,11 @@
       });
     });
 
+    /* Motion select */
+    document.getElementById('wm-sel-motion').addEventListener('change', e => {
+      CONFIG.motion = e.target.value;
+    });
+
     /* Blend selects — center drives letters */
     document.getElementById('wm-blend-peakpeak').addEventListener('change', e => {
       spans.forEach(s => s.style.mixBlendMode = e.target.value);
@@ -595,6 +725,10 @@
           document.getElementById(`wm-bg-${id}`).style.background = hex;
         });
         cSpark.value = CONFIG.sparkColor; bgSpark.style.background = CONFIG.sparkColor;
+        const blendSel = document.getElementById('wm-blend-spark');
+        blendSel.value = CONFIG.sparkBlendMode || 'screen';
+        sparksEl.style.mixBlendMode = blendSel.value;
+        document.getElementById('wm-sel-motion').value = CONFIG.motion || 'wave';
         document.getElementById('wm-toggle-stars').checked = CONFIG.starsEnabled;
         if (!CONFIG.starsEnabled) { particles.forEach(pt => pt.el.remove()); particles.length = 0; }
         relayout();

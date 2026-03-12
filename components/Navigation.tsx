@@ -3,13 +3,15 @@
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { AboutMe } from '@/types'
+import ExperimentsNavLink from './ExperimentsNavLink'
+import NavWordmark from './NavWordmark'
 
 interface NavigationProps {
   aboutMe?: AboutMe | null
 }
 
 export default function Navigation({ aboutMe }: NavigationProps) {
-  const router = useRouter()
+  const router   = useRouter()
   const pathname = usePathname()
 
   const handleNavigation = (sectionId: string) => {
@@ -35,20 +37,14 @@ export default function Navigation({ aboutMe }: NavigationProps) {
     <header className="fixed top-6 left-0 right-0 z-50" role="banner">
       <nav role="navigation" aria-label="Main navigation">
         <div className="px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto rounded-full py-3 bg-black/90 backdrop-blur-lg border border-gray-800/50">
+          <div className="max-w-7xl mx-auto rounded-full py-3.5 bg-black/90 backdrop-blur-lg border border-gray-800/50">
             <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8">
-              <Link
-                href="/"
-                className="font-medium text-base text-white hover:text-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-black rounded-md"
-                aria-label="Navigate to home page"
-              >
-                Nicolas Ménard
-              </Link>
+              <NavWordmark />
 
-              <div className="flex items-center gap-1 font-medium text-sm" role="menubar" aria-label="Main menu">
+              <div className="flex items-center gap-1 font-medium text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }} role="menubar" aria-label="Main menu">
                 <button
                   onClick={() => handleNavigation('work')}
-                  className="hidden md:block text-gray-300 hover:text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-full px-4 py-2"
+                  className="nav-item hidden md:block text-gray-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded-full px-3 py-3"
                   role="menuitem"
                   aria-label="Navigate to Projects section"
                 >
@@ -56,7 +52,7 @@ export default function Navigation({ aboutMe }: NavigationProps) {
                 </button>
                 <button
                   onClick={() => handleNavigation('experience')}
-                  className="hidden md:block text-gray-300 hover:text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-full px-4 py-2"
+                  className="nav-item hidden md:block text-gray-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded-full px-3 py-3"
                   role="menuitem"
                   aria-label="Navigate to Experience section"
                 >
@@ -64,26 +60,19 @@ export default function Navigation({ aboutMe }: NavigationProps) {
                 </button>
                 <button
                   onClick={() => handleNavigation('contact')}
-                  className="hidden md:block text-gray-300 hover:text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-full px-4 py-2"
+                  className="nav-item hidden md:block text-gray-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded-full px-3 py-3"
                   role="menuitem"
                   aria-label="Navigate to About me section"
                 >
                   About me
                 </button>
-                <Link
-                  href="/experiments"
-                  className="hidden md:block text-gray-300 hover:text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-full px-4 py-2"
-                  role="menuitem"
-                  aria-label="Navigate to Experiments page"
-                >
-                  Experiments
-                </Link>
+                <ExperimentsNavLink />
                 {aboutMe?.metadata?.resume_cv?.url && (
                   <a
                     href={aboutMe.metadata.resume_cv.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-full px-4 py-2"
+                    className="nav-item text-gray-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded-full px-3 py-3"
                     role="menuitem"
                     aria-label="Open Resume in new tab"
                   >

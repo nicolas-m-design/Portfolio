@@ -26,7 +26,7 @@ export default function ExperienceCard({ experience, isLast }: ExperienceCardPro
     <article className="relative" role="article">
       {/* Content */}
       <div 
-        className="card pl-4 md:pl-6 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:outline-none transition-all duration-300" 
+        className="card pl-4 md:pl-6 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus:outline-none transition-all duration-300" 
         tabIndex={0}
       >
         <div className="flex items-start justify-between mb-4">

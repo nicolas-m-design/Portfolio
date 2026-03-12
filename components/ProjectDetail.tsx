@@ -120,7 +120,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                     {metadata?.project_overview_image && (
                       <button
                         onClick={() => openLightbox([metadata.project_overview_image, metadata?.project_overview_image_2].filter((img): img is string => Boolean(img)), 0)}
-                        className="w-full group focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg mb-4"
+                        className="w-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-lg mb-4"
                         aria-label={`View overview image for ${metadata?.project_name || project.title} in lightbox`}
                       >
                         <div className="w-full overflow-hidden" style={{ maxHeight: '538px', borderRadius: '0.5rem' }}>
@@ -139,7 +139,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                     {metadata?.project_overview_image_2 && (
                       <button
                         onClick={() => openLightbox([metadata.project_overview_image, metadata?.project_overview_image_2].filter((img): img is string => Boolean(img)), metadata?.project_overview_image ? 1 : 0)}
-                        className="w-full group focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg"
+                        className="w-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-lg"
                         aria-label={`View overview image 2 for ${metadata?.project_name || project.title} in lightbox`}
                       >
                         <div className="w-full overflow-hidden" style={{ maxHeight: '538px', borderRadius: '0.5rem' }}>
@@ -177,7 +177,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                     {metadata?.challenge_and_research_image && (
                       <button
                         onClick={() => openLightbox([metadata.challenge_and_research_image, metadata?.challenge_and_research_image_2, metadata?.challenge_and_research_image_3].filter((img): img is string => Boolean(img)), 0)}
-                        className="w-full group focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg mb-4"
+                        className="w-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-lg mb-4"
                         aria-label={`View challenge & research image for ${metadata?.project_name || project.title} in lightbox`}
                       >
                         <div className="w-full overflow-hidden" style={{ maxHeight: '538px', borderRadius: '0.5rem' }}>
@@ -196,7 +196,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                     {metadata?.challenge_and_research_image_2 && (
                       <button
                         onClick={() => { const imgs = [metadata.challenge_and_research_image, metadata?.challenge_and_research_image_2, metadata?.challenge_and_research_image_3].filter((img): img is string => Boolean(img)); openLightbox(imgs, imgs.indexOf(metadata.challenge_and_research_image_2!)) }}
-                        className="w-full group focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg mb-4"
+                        className="w-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-lg mb-4"
                         aria-label={`View challenge & research image 2 for ${metadata?.project_name || project.title} in lightbox`}
                       >
                         <div className="w-full overflow-hidden" style={{ maxHeight: '538px', borderRadius: '0.5rem' }}>
@@ -215,7 +215,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                     {metadata?.challenge_and_research_image_3 && (
                       <button
                         onClick={() => { const imgs = [metadata.challenge_and_research_image, metadata?.challenge_and_research_image_2, metadata?.challenge_and_research_image_3].filter((img): img is string => Boolean(img)); openLightbox(imgs, imgs.indexOf(metadata.challenge_and_research_image_3!)) }}
-                        className="w-full group focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg"
+                        className="w-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-lg"
                         aria-label={`View challenge & research image 3 for ${metadata?.project_name || project.title} in lightbox`}
                       >
                         <div className="w-full overflow-hidden" style={{ maxHeight: '538px', borderRadius: '0.5rem' }}>
@@ -253,7 +253,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                     {metadata?.design_process_image && (
                       <button
                         onClick={() => openLightbox([metadata.design_process_image, metadata?.design_process_image_2, metadata?.design_process_image_3].filter((img): img is string => Boolean(img)), 0)}
-                        className="w-full group focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg mb-4"
+                        className="w-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-lg mb-4"
                         aria-label={`View design process image for ${metadata?.project_name || project.title} in lightbox`}
                       >
                         <div className="w-full overflow-hidden" style={{ maxHeight: '538px', borderRadius: '0.5rem' }}>
@@ -272,7 +272,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                     {metadata?.design_process_image_2 && (
                       <button
                         onClick={() => { const imgs = [metadata.design_process_image, metadata?.design_process_image_2, metadata?.design_process_image_3].filter((img): img is string => Boolean(img)); openLightbox(imgs, imgs.indexOf(metadata.design_process_image_2!)) }}
-                        className="w-full group focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg mb-4"
+                        className="w-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-lg mb-4"
                         aria-label={`View design process image 2 for ${metadata?.project_name || project.title} in lightbox`}
                       >
                         <div className="w-full overflow-hidden" style={{ maxHeight: '538px', borderRadius: '0.5rem' }}>
@@ -291,7 +291,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                     {metadata?.design_process_image_3 && (
                       <button
                         onClick={() => { const imgs = [metadata.design_process_image, metadata?.design_process_image_2, metadata?.design_process_image_3].filter((img): img is string => Boolean(img)); openLightbox(imgs, imgs.indexOf(metadata.design_process_image_3!)) }}
-                        className="w-full group focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg"
+                        className="w-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-lg"
                         aria-label={`View design process image 3 for ${metadata?.project_name || project.title} in lightbox`}
                       >
                         <div className="w-full overflow-hidden" style={{ maxHeight: '538px', borderRadius: '0.5rem' }}>
@@ -329,7 +329,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                     {metadata?.solution_image && (
                       <button
                         onClick={() => openLightbox([metadata.solution_image, metadata?.solution_image_2, metadata?.solution_image_3].filter((img): img is string => Boolean(img)), 0)}
-                        className="w-full group focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg mb-4 overflow-hidden"
+                        className="w-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-lg mb-4 overflow-hidden"
                         style={{ maxHeight: '538px' }}
                         aria-label={`View solution image for ${metadata?.project_name || project.title} in lightbox`}
                       >
@@ -346,7 +346,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                     {metadata?.solution_image_2 && (
                       <button
                         onClick={() => { const imgs = [metadata.solution_image, metadata?.solution_image_2, metadata?.solution_image_3].filter((img): img is string => Boolean(img)); openLightbox(imgs, imgs.indexOf(metadata.solution_image_2!)) }}
-                        className="w-full group focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg mb-4 overflow-hidden"
+                        className="w-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-lg mb-4 overflow-hidden"
                         style={{ maxHeight: '538px' }}
                         aria-label={`View solution image 2 for ${metadata?.project_name || project.title} in lightbox`}
                       >
@@ -363,7 +363,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                     {metadata?.solution_image_3 && (
                       <button
                         onClick={() => { const imgs = [metadata.solution_image, metadata?.solution_image_2, metadata?.solution_image_3].filter((img): img is string => Boolean(img)); openLightbox(imgs, imgs.indexOf(metadata.solution_image_3!)) }}
-                        className="w-full group focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg overflow-hidden"
+                        className="w-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-lg overflow-hidden"
                         style={{ maxHeight: '538px' }}
                         aria-label={`View solution image 3 for ${metadata?.project_name || project.title} in lightbox`}
                       >
@@ -399,7 +399,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                     {metadata?.implementation_and_results_image && (
                       <button
                         onClick={() => openLightbox([metadata.implementation_and_results_image, metadata?.implementation_and_results_image_2].filter((img): img is string => Boolean(img)), 0)}
-                        className="w-full group focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg mb-4 overflow-hidden"
+                        className="w-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-lg mb-4 overflow-hidden"
                         style={{ maxHeight: '538px' }}
                         aria-label={`View implementation & results image for ${metadata?.project_name || project.title} in lightbox`}
                       >
@@ -416,7 +416,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                     {metadata?.implementation_and_results_image_2 && (
                       <button
                         onClick={() => openLightbox([metadata.implementation_and_results_image, metadata?.implementation_and_results_image_2].filter((img): img is string => Boolean(img)), metadata?.implementation_and_results_image ? 1 : 0)}
-                        className="w-full group focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg overflow-hidden"
+                        className="w-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-lg overflow-hidden"
                         style={{ maxHeight: '538px' }}
                         aria-label={`View implementation & results image 2 for ${metadata?.project_name || project.title} in lightbox`}
                       >
@@ -452,7 +452,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                     {metadata?.reflection_image && (
                       <button
                         onClick={() => openLightbox([metadata.reflection_image, metadata?.reflection_image_2].filter((img): img is string => Boolean(img)), 0)}
-                        className="w-full group focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg mb-4 overflow-hidden"
+                        className="w-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-lg mb-4 overflow-hidden"
                         style={{ maxHeight: '538px' }}
                         aria-label={`View reflection image for ${metadata?.project_name || project.title} in lightbox`}
                       >
@@ -469,7 +469,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                     {metadata?.reflection_image_2 && (
                       <button
                         onClick={() => openLightbox([metadata.reflection_image, metadata?.reflection_image_2].filter((img): img is string => Boolean(img)), metadata?.reflection_image ? 1 : 0)}
-                        className="w-full group focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg overflow-hidden"
+                        className="w-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-lg overflow-hidden"
                         style={{ maxHeight: '538px' }}
                         aria-label={`View reflection image 2 for ${metadata?.project_name || project.title} in lightbox`}
                       >
@@ -513,7 +513,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                   <div style={{ marginTop: '2em', marginBottom: '3em' }}>
                     <button
                       onClick={() => openLightbox([metadata.solution_image].filter((img): img is string => Boolean(img)), 0)}
-                      className="w-full group focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg overflow-hidden"
+                      className="w-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-lg overflow-hidden"
                       style={{ maxHeight: '538px' }}
                       aria-label={`View solution image for ${metadata?.project_name || project.title} in lightbox`}
                     >
@@ -739,7 +739,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                           // Render image with lightbox
                           <button
                             onClick={() => openLightbox(allImages.filter(url => !url.toLowerCase().match(/\.(mp4|webm|ogg|mov)(\?.*)?$/)), allImages.filter(url => !url.toLowerCase().match(/\.(mp4|webm|ogg|mov)(\?.*)?$/)).indexOf(imageUrl))}
-                            className="w-full group focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg overflow-hidden"
+                            className="w-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-lg overflow-hidden"
                             style={{ maxHeight: '538px' }}
                             aria-label={`View ${metadata?.project_name || project.title} screenshot ${index + 1} in lightbox`}
                           >
@@ -764,7 +764,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                       <div key={index} role="listitem">
                         <button
                           onClick={() => openLightbox(cloudinaryImages, index)}
-                          className="w-full group focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg overflow-hidden"
+                          className="w-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-lg overflow-hidden"
                           style={{ maxHeight: '538px' }}
                           aria-label={`View ${metadata?.project_name || project.title} screenshot ${index + 1} in lightbox`}
                         >
@@ -788,7 +788,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                       <div key={index} role="listitem">
                         <button
                           onClick={() => openLightbox(originalImages, index)}
-                          className="w-full group focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg overflow-hidden"
+                          className="w-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-lg overflow-hidden"
                           style={{ maxHeight: '538px' }}
                           aria-label={`View ${metadata?.project_name || project.title} screenshot ${index + 1} in lightbox`}
                         >

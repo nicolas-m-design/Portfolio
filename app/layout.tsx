@@ -42,6 +42,11 @@ export default function RootLayout({
         <link rel="preload" href="/pp-neue-montreal/ppneuemontreal-book.otf" as="font" type="font/otf" crossOrigin="anonymous" />
         <link rel="preload" href="/pp-neue-montreal/ppneuemontreal-medium.otf" as="font" type="font/otf" crossOrigin="anonymous" />
 
+        {/* Space Grotesk variable font — used for animated nav wordmark */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
+
         {/* Favicons */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

@@ -107,6 +107,16 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  /* Nav links — smooth weight + stroke transition via variable font axis */
+  .nav-item {
+    font-variation-settings: 'wght' 500;
+    transition: font-variation-settings 180ms ease, color 180ms ease, box-shadow 180ms ease;
+  }
+  .nav-item:hover {
+    font-variation-settings: 'wght' 700;
+    box-shadow: 0 0 0 1.5px rgb(209 213 219 / 0.5);
+  }
   
   /* High contrast mode support */
   @media (prefers-contrast: high) {

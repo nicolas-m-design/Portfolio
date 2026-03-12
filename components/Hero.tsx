@@ -27,7 +27,7 @@ export default function Hero({ aboutMe }: HeroProps) {
 
           {/* Text content - below on mobile, left on desktop */}
           <div className="flex-1 md:order-1 md:max-w-xl lg:max-w-2xl px-4 md:px-0 text-center md:text-left">
-            <h1 className="text-xl md:text-2xl lg:text-3xl text-gray-600 mb-6 font-semibold leading-relaxed">
+            <h1 className="text-xl md:text-2xl lg:text-3xl text-gray-600 mb-6 font-extrabold leading-relaxed" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
               Engineering mindset,<br className="md:hidden" /> user-focused heart
             </h1>
             <p className="text-lg text-gray-500 leading-6">
@@ -46,7 +46,7 @@ export default function Hero({ aboutMe }: HeroProps) {
               workSection.scrollIntoView({ behavior: 'smooth' })
             }
           }}
-          className="flex flex-col items-center hover:text-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-md p-2"
+          className="flex flex-col items-center hover:text-gray-900 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-md p-2"
           style={{ color: 'rgb(107 114 128 / var(--tw-text-opacity, 1))' }}
           aria-label="Scroll to work section"
         >

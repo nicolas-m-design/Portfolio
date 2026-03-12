@@ -24,7 +24,7 @@ export default function ExperimentCard({ experiment }: ExperimentCardProps) {
   return (
     <Link
       href={`/experiments/${slug}`}
-      className="block group focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-gray-50 rounded-2xl transition-all duration-200"
+      className="block group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-50 rounded-2xl transition-all duration-200"
       aria-label={`View experiment: ${title}`}
       tabIndex={0}
     >
