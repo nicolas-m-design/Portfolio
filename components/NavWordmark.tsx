@@ -125,7 +125,7 @@ export default function NavWordmark() {
       <span
         ref={containerRef}
         aria-hidden="true"
-        style={{ display: 'inline-block', fontSize: '0.875rem', fontWeight: 500, lineHeight: 1 }}
+        style={{ display: 'inline-block', fontSize: '1rem', fontWeight: 500, lineHeight: 1, letterSpacing: '-0.02em' }}
       />
       <span className="sr-only">{TEXT}</span>
     </Link>
