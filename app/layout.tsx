@@ -9,12 +9,12 @@ export const viewport = 'width=device-width, initial-scale=1'
 
 export const metadata: Metadata = {
   title: 'Nicolas Ménard - Design Engineer',
-  description: 'Design Engineer with 10+ years of experience building user-centered products.',
+  description: 'Design Engineer with 10 years of experience in UI Design and user research.',
   keywords: 'Design Engineer, Design Systems, User Experience, Portfolio, UI Design, User Research',
   authors: [{ name: 'Nicolas Ménard' }],
   openGraph: {
     title: 'Nicolas Ménard - Design Engineer',
-    description: 'Design Engineer with 10+ years of experience building user-centered products. Results-driven and engineering-oriented, with experience conducting user research and leading small design teams.',
+    description: 'Design Engineer with 10 years of experience in UI Design and user research.',
     type: 'website',
     images: [
       {
