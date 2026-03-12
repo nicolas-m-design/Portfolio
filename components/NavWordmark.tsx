@@ -40,7 +40,7 @@ export default function NavWordmark() {
     // Build one inline-block span per character
     container.innerHTML = ''
     spansRef.current = []
-    ;[...TEXT].forEach(char => {
+    ;Array.from(TEXT).forEach(char => {
       const span = document.createElement('span')
       span.textContent = char === ' ' ? '\u00a0' : char
       span.style.display              = 'inline-block'
