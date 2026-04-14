@@ -26,6 +26,10 @@ const nextConfig = {
         source: '/experiments/animated-wordmark',
         destination: '/experiments/animated-wordmark/index.html',
       },
+      {
+        source: '/experiments/token-brand-system',
+        destination: '/experiments/token-brand-system/index.html',
+      },
     ]
   },
   async headers() {
@@ -40,6 +44,12 @@ const nextConfig = {
       },
       {
         source: '/experiments/animated-wordmark/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'no-store' }
+        ]
+      },
+      {
+        source: '/experiments/token-brand-system/:path*',
         headers: [
           { key: 'Cache-Control', value: 'no-store' }
         ]
