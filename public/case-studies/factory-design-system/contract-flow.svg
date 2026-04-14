@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 860" role="img" aria-label="Factory Design System architecture showing DESIGN.md governing Figma and MCP, AI agents, tokens and UI, and verification">
+  <defs>
+    <filter id="elevation-sm" x="-20%" y="-20%" width="160%" height="180%">
+      <feDropShadow dx="4" dy="4" stdDeviation="0" flood-color="#1A1A18" flood-opacity="0.16"/>
+    </filter>
+    <style>
+      .bg { fill: #FAF9F8; }
+      .surface { fill: #FAF9F8; }
+      .surface-neutral { fill: #FFFFFF; }
+      .ink { fill: #1A1A18; }
+      .muted { fill: #6B6760; }
+      .orange { fill: #E8520A; }
+      .flow-arrow { fill: #1A1A18; }
+      .stage-box { fill: #FFFFFF; stroke: #D8D4CD; stroke-width: 1; filter: url(#elevation-sm); }
+      .eyebrow { font: 700 16px ui-monospace, "Geist Mono", monospace; letter-spacing: 3px; }
+      .hero { font: 700 40px ui-monospace, "Geist Mono", monospace; letter-spacing: -1px; }
+      .title { font: 700 24px ui-monospace, "Geist Mono", monospace; }
+      .body { font: 500 18px ui-monospace, "Geist Mono", monospace; }
+      .stage-copy { font: 500 15px ui-monospace, "Geist Mono", monospace; }
+      .accent-line { animation: accentPulse 7s ease-in-out infinite; }
+      @keyframes accentPulse {
+        0%, 100% { opacity: 0.82; }
+        50% { opacity: 1; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .accent-line { animation: none; }
+      }
+    </style>
+  </defs>
+
+  <rect width="1600" height="860" class="bg"/>
+
+  <!-- Header -->
+  <text x="104" y="178" class="hero ink">DESIGN.md defines the system before Figma or code do</text>
+  <text x="104" y="238" class="body muted">Tokens, components, docs, accessibility, and identity all flow from one machine-readable brief.</text>
+
+  <!-- Process labels -->
+  <text x="430" y="344" text-anchor="middle" class="eyebrow ink">INSPECT</text>
+  <text x="790" y="344" text-anchor="middle" class="eyebrow ink">GENERATE</text>
+  <text x="1150" y="344" text-anchor="middle" class="eyebrow ink">VERIFY</text>
+
+  <!-- Stage containers -->
+  <rect x="104" y="372" width="296" height="236" class="stage-box"/>
+  <rect x="464" y="372" width="296" height="236" class="stage-box"/>
+  <rect x="824" y="372" width="296" height="236" class="stage-box"/>
+  <rect x="1184" y="372" width="296" height="236" class="stage-box"/>
+
+  <!-- Flow arrows -->
+  <g transform="translate(412 478) scale(2)">
+    <path d="M16.172 10.9999L10.808 5.63592L12.222 4.22192L20 11.9999L12.222 19.7779L10.808 18.3639L16.172 12.9999H4V10.9999H16.172Z" class="flow-arrow"/>
+  </g>
+  <g transform="translate(772 478) scale(2)">
+    <path d="M16.172 10.9999L10.808 5.63592L12.222 4.22192L20 11.9999L12.222 19.7779L10.808 18.3639L16.172 12.9999H4V10.9999H16.172Z" class="flow-arrow"/>
+  </g>
+  <g transform="translate(1132 478) scale(2)">
+    <path d="M16.172 10.9999L10.808 5.63592L12.222 4.22192L20 11.9999L12.222 19.7779L10.808 18.3639L16.172 12.9999H4V10.9999H16.172Z" class="flow-arrow"/>
+  </g>
+
+  <!-- Stage 1 -->
+  <text x="136" y="414" class="eyebrow orange">01 / SOURCE</text>
+  <rect x="136" y="428" width="104" height="4" class="orange accent-line" style="animation-delay: -1.8s"/>
+  <text x="136" y="488" class="title ink">Figma + MCP</text>
+  <text x="136" y="526" class="stage-copy muted">Queryable variables,</text>
+  <text x="136" y="552" class="stage-copy muted">components, and variants.</text>
+
+  <!-- Stage 2 -->
+  <text x="496" y="414" class="eyebrow orange">02 / EXECUTE</text>
+  <rect x="496" y="428" width="118" height="4" class="orange accent-line" style="animation-delay: -3.6s"/>
+  <text x="496" y="488" class="title ink">AI Agents</text>
+  <text x="496" y="526" class="stage-copy muted">Inspect, patch,</text>
+  <text x="496" y="552" class="stage-copy muted">and run checks.</text>
+
+  <!-- Stage 3 -->
+  <text x="856" y="414" class="eyebrow orange">03 / OUTPUT</text>
+  <rect x="856" y="428" width="110" height="4" class="orange accent-line" style="animation-delay: -5.4s"/>
+  <text x="856" y="488" class="title ink">Tokens + UI</text>
+  <text x="856" y="526" class="stage-copy muted">primitives.json</text>
+  <text x="856" y="552" class="stage-copy muted">semantic.json</text>
+  <text x="856" y="578" class="stage-copy muted">React components</text>
+
+  <!-- Stage 4 -->
+  <text x="1216" y="414" class="eyebrow orange">04 / VERIFY</text>
+  <rect x="1216" y="428" width="104" height="4" class="orange accent-line" style="animation-delay: -7.2s"/>
+  <text x="1216" y="488" class="title ink">Spec App + Tests</text>
+  <text x="1216" y="526" class="stage-copy muted">Catch drift before shipping.</text>
+  <text x="1216" y="552" class="stage-copy muted">Enforced, not narrated.</text>
+
+  <!-- Footer -->
+  <text x="104" y="718" class="eyebrow orange">SOURCE OF TRUTH</text>
+  <text x="360" y="718" class="body muted">DESIGN.md → One token chain. One place to catch drift.</text>
+</svg>

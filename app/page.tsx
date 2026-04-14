@@ -1,4 +1,5 @@
 import { getAboutMe, getWorkExperience, getProjects } from '@/lib/cosmic'
+import { manualProjects } from '@/lib/manual-projects'
 import HomePage from '@/components/HomePage'
 import Navigation from '@/components/Navigation'
 
@@ -11,6 +12,10 @@ export default async function Page() {
       getProjects().catch(() => [])
     ])
 
+    // Prepend hand-authored projects that bypass the CMS. Their slugs must
+    // resolve to a static route under `app/work/<slug>/page.tsx`.
+    const mergedProjects = [...manualProjects, ...projects]
+
     return (
       <div className="min-h-screen">
         <a href="#main-content" className="skip-link">
@@ -21,7 +26,7 @@ export default async function Page() {
           <HomePage
             aboutMe={aboutMe}
             workExperience={workExperience}
-            projects={projects}
+            projects={mergedProjects}
           />
         </main>
       </div>
