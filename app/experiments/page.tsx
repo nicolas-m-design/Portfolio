@@ -11,6 +11,13 @@ export const metadata: Metadata = {
 
 const experiments: Experiment[] = [
   {
+    slug: 'token-brand-system',
+    title: 'Factory Design System',
+    description: 'A token-driven spec app where JSON primitives and semantic aliases are the single source of truth — every foundation and component is derived from them.',
+    thumbnail: '/experiments/token-brand-system.svg',
+    tags: ['Design Tokens', 'React', 'Design System'],
+  },
+  {
     slug: 'animated-wordmark',
     title: 'Animated Wordmark',
     description: 'Variable font wordmark with a traveling weight wave, neon glow, and physics-based spark particles',
