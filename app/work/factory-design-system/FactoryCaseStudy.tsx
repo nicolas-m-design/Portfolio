@@ -40,6 +40,7 @@ const META = {
 const LINKS = {
   github: 'https://github.com/nicolas-m-design/factory-design-system',
   figma: 'https://www.figma.com/design/8MJzvdHYtuUoVg0cwVm3mW/Factory-Design-System',
+  liveDemo: '/experiments/token-brand-system',
   stitch: 'https://stitch.withgoogle.com/docs/design-md/overview',
   jocelyn: 'https://www.jocelyn-lin.com/dls-2026-case-study.html',
 }
@@ -49,7 +50,7 @@ const LINKS = {
 const OVERVIEW = `
 Most design systems die at the Figma → code handoff. The file drifts, the tokens fork, the components get rebuilt twice, and within six months nobody can answer a simple question: *where is the truth?*
 
-Factory is an experiment in making that handoff automatic. It is a token-driven spec app built around one canonical visual language – Geist Mono, orange and ink, square edges – where every primitive, semantic alias, and component contract lives in machine-readable files that both humans and AI agents can execute against.
+Factory is an experiment in making that handoff automatic. It is a token-driven [spec app](${LINKS.liveDemo}) built around one canonical visual language – Geist Mono, orange and ink, square edges – where every primitive, semantic alias, and component contract lives in machine-readable files that both humans and AI agents can execute against.
 
 ### What's in it
 
@@ -380,6 +381,14 @@ export default function FactoryCaseStudy() {
                 className="text-primary-600 hover:text-primary-700 text-sm font-medium underline underline-offset-2"
               >
                 Figma
+              </a>
+              <a
+                href={LINKS.liveDemo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary-600 hover:text-primary-700 text-sm font-medium underline underline-offset-2"
+              >
+                Live Demo
               </a>
             </span>
           </div>
