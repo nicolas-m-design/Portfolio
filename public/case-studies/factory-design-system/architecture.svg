@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 920" role="img" aria-label="Three-layer token pipeline: primitives, semantics, and components">
+  <defs>
+    <filter id="elevation-sm" x="-20%" y="-20%" width="160%" height="180%">
+      <feDropShadow dx="4" dy="4" stdDeviation="0" flood-color="#1A1A18" flood-opacity="0.16"/>
+    </filter>
+    <style>
+      .bg { fill: #FAF9F8; }
+      .ink { fill: #1A1A18; }
+      .muted { fill: #6B6760; }
+      .orange { fill: #E8520A; }
+      .soft-line { fill: none; stroke: #D8D4CD; stroke-width: 1; }
+      .stage-box { fill: #FFFFFF; stroke: #D8D4CD; stroke-width: 1; filter: url(#elevation-sm); }
+      .rule-box { fill: #FAF9F8; stroke: #D8D4CD; stroke-width: 1; }
+      .eyebrow { font: 700 15px ui-monospace, "Geist Mono", monospace; letter-spacing: 3px; }
+      .hero { font: 700 44px ui-monospace, "Geist Mono", monospace; letter-spacing: -1px; }
+      .intro { font: 500 19px ui-monospace, "Geist Mono", monospace; }
+      .title { font: 700 29px ui-monospace, "Geist Mono", monospace; }
+      .body { font: 500 15px ui-monospace, "Geist Mono", monospace; }
+      .body-sm { font: 500 13px ui-monospace, "Geist Mono", monospace; }
+      .detail { font: 700 14px ui-monospace, "Geist Mono", monospace; }
+      .accent-line { animation: accentPulse 7s ease-in-out infinite; }
+      @keyframes accentPulse {
+        0%, 100% { opacity: 0.82; }
+        50% { opacity: 1; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .accent-line { animation: none; }
+      }
+    </style>
+  </defs>
+
+  <rect width="1600" height="920" class="bg"/>
+
+  <!-- Header -->
+  <text x="104" y="162" class="hero ink">Three token layers prevent drift</text>
+  <text x="104" y="214" class="intro muted">Primitives hold values, semantics hold intent, and components are only allowed to read the semantic layer.</text>
+
+  <!-- Stage 1 -->
+  <rect x="104" y="286" width="420" height="500" class="stage-box"/>
+  <text x="136" y="332" class="eyebrow orange">01 / PRIMITIVES</text>
+  <rect x="136" y="346" width="132" height="4" class="orange accent-line" style="animation-delay: -1.6s"/>
+  <text x="136" y="408" class="title ink">Raw values only</text>
+  <text x="136" y="442" class="body muted">Concrete, reusable values.</text>
+  <text x="136" y="468" class="body muted">No product meaning yet.</text>
+  <line x1="136" y1="504" x2="492" y2="504" class="soft-line"/>
+  <text x="136" y="548" class="detail ink">primitive-color-orange-9</text>
+  <text x="136" y="574" class="body muted">#E8520A</text>
+  <text x="136" y="620" class="detail ink">primitive-space-4</text>
+  <text x="136" y="646" class="body muted">16px</text>
+  <text x="136" y="692" class="detail ink">primitive-radius-none</text>
+  <text x="136" y="718" class="body muted">0px</text>
+
+  <!-- Stage 2 -->
+  <rect x="554" y="286" width="420" height="500" class="stage-box"/>
+  <text x="586" y="332" class="eyebrow orange">02 / SEMANTICS</text>
+  <rect x="586" y="346" width="132" height="4" class="orange accent-line" style="animation-delay: -3.2s"/>
+  <text x="586" y="408" class="title ink">Intent over value</text>
+  <text x="586" y="442" class="body muted">Roles map raw tokens into intent.</text>
+  <text x="586" y="468" class="body muted">Components consume this layer.</text>
+  <line x1="586" y1="504" x2="942" y2="504" class="soft-line"/>
+  <text x="586" y="548" class="detail ink">color-action-primary</text>
+  <text x="586" y="574" class="body muted">→ primitive-color-orange-9</text>
+  <text x="586" y="620" class="detail ink">layout-section-gap</text>
+  <text x="586" y="646" class="body muted">→ primitive-space-8</text>
+  <text x="586" y="692" class="detail ink">radius-control</text>
+  <text x="586" y="718" class="body muted">→ primitive-radius-none</text>
+
+  <!-- Stage 3 -->
+  <rect x="1004" y="286" width="420" height="500" class="stage-box"/>
+  <text x="1036" y="332" class="eyebrow orange">03 / COMPONENTS</text>
+  <rect x="1036" y="346" width="138" height="4" class="orange accent-line" style="animation-delay: -4.8s"/>
+  <text x="1036" y="408" class="title ink">Semantic-only UI</text>
+  <text x="1036" y="442" class="body muted">Components consume semantic tokens only.</text>
+  <text x="1036" y="468" class="body muted">Primitives never enter UI code directly.</text>
+
+  <g transform="translate(1036 504) scale(2)">
+    <rect x="0.5" y="0.5" width="120" height="48" fill="#E8520A"/>
+    <rect x="0.5" y="0.5" width="120" height="48" fill="none" stroke="#E8520A" stroke-miterlimit="10" stroke-linejoin="bevel"/>
+    <path d="M18.2979 30V18.64H21.8179C22.6072 18.64 23.2952 18.784 23.8819 19.072C24.4792 19.36 24.9379 19.7707 25.2579 20.304C25.5885 20.8267 25.7539 21.4507 25.7539 22.176C25.7539 22.9013 25.5885 23.5307 25.2579 24.064C24.9379 24.5867 24.4792 24.992 23.8819 25.28C23.2952 25.5573 22.6072 25.696 21.8179 25.696H19.9779V30H18.2979ZM19.9779 24.112H21.6419C22.4525 24.112 23.0499 23.9467 23.4339 23.616C23.8179 23.2853 24.0099 22.8053 24.0099 22.176C24.0099 21.536 23.8179 21.0507 23.4339 20.72C23.0499 20.3893 22.4525 20.224 21.6419 20.224H19.9779V24.112ZM30.0196 30V21.488H31.2996L31.4436 23.664L31.2996 23.648C31.4063 22.912 31.6356 22.368 31.9876 22.016C32.3396 21.664 32.825 21.488 33.4436 21.488H35.2516V22.896H33.5076C33.1023 22.896 32.761 22.976 32.4836 23.136C32.2063 23.2853 31.993 23.5147 31.8436 23.824C31.705 24.1227 31.6356 24.496 31.6356 24.944V30H30.0196ZM27.8596 30V28.64H34.2916V30H27.8596ZM27.8596 22.848V21.488H30.9316V22.848H27.8596ZM40.6534 30V21.488H42.2854V30H40.6534ZM37.3254 30V28.64H45.1334V30H37.3254ZM37.4854 22.848V21.488H42.1414V22.848H37.4854ZM40.5574 20.256V18.576H42.2214V20.256H40.5574ZM46.2791 30V21.488H47.6871L47.7511 23.408L47.5751 23.36C47.6818 22.7093 47.8898 22.2027 48.1991 21.84C48.5191 21.4773 48.9191 21.296 49.3991 21.296C49.9111 21.296 50.2951 21.4773 50.5511 21.84C50.8178 22.2027 50.9831 22.7413 51.0471 23.456H50.8711C50.9671 22.7733 51.1858 22.2453 51.5271 21.872C51.8685 21.488 52.2951 21.296 52.8071 21.296C53.4791 21.296 53.9645 21.5307 54.2631 22C54.5725 22.4587 54.7271 23.2107 54.7271 24.256V30H53.1591V24.528C53.1591 23.8453 53.0845 23.3707 52.9351 23.104C52.7965 22.8373 52.5778 22.704 52.2791 22.704C52.0871 22.704 51.9111 22.768 51.7511 22.896C51.6018 23.024 51.4845 23.2267 51.3991 23.504C51.3138 23.7707 51.2711 24.1227 51.2711 24.56V30H49.7351V24.528C49.7351 23.8667 49.6658 23.3973 49.5271 23.12C49.3991 22.8427 49.1805 22.704 48.8711 22.704C48.6685 22.704 48.4925 22.768 48.3431 22.896C48.1938 23.024 48.0711 23.2267 47.9751 23.504C47.8898 23.7707 47.8471 24.1227 47.8471 24.56V30H46.2791ZM58.9449 30.192C58.4115 30.192 57.9315 30.096 57.5049 29.904C57.0782 29.712 56.7369 29.44 56.4809 29.088C56.2355 28.736 56.1129 28.3253 56.1129 27.856C56.1129 27.1307 56.3315 26.5653 56.7689 26.16C57.2169 25.7547 57.8889 25.4667 58.7849 25.296L61.5369 24.72C61.5369 24.0587 61.3929 23.5627 61.1049 23.232C60.8169 22.9013 60.3849 22.736 59.8089 22.736C59.2755 22.736 58.8595 22.8587 58.5609 23.104C58.2622 23.3493 58.0595 23.6907 57.9529 24.128L56.2569 24.016C56.4169 23.2053 56.8062 22.5493 57.4249 22.048C58.0435 21.5467 58.8382 21.296 59.8089 21.296C60.8969 21.296 61.7235 21.6053 62.2889 22.224C62.8649 22.8427 63.1529 23.696 63.1529 24.784V28.144C63.1529 28.336 63.1955 28.4747 63.2809 28.56C63.3662 28.6347 63.4889 28.672 63.6489 28.672H64.1289V30C64.0649 30.0107 63.9582 30.0213 63.8089 30.032C63.6702 30.0427 63.5315 30.048 63.3929 30.048C63.0089 30.048 62.6835 29.984 62.4169 29.856C62.1502 29.728 61.9475 29.5307 61.8089 29.264C61.6809 28.9867 61.6062 28.64 61.5849 28.224H61.8409C61.7769 28.5973 61.6115 28.9333 61.3449 29.232C61.0782 29.5307 60.7369 29.7653 60.3209 29.936C59.9049 30.1067 59.4462 30.192 58.9449 30.192ZM59.1849 28.864C59.6969 28.864 60.1289 28.7733 60.4809 28.592C60.8329 28.4107 61.0942 28.1547 61.2649 27.824C61.4462 27.4933 61.5369 27.104 61.5369 26.656V26L59.1689 26.48C58.6569 26.576 58.2995 26.7253 58.0969 26.928C57.8942 27.1307 57.7929 27.3973 57.7929 27.728C57.7929 28.08 57.9155 28.3573 58.1609 28.56C58.4062 28.7627 58.7475 28.864 59.1849 28.864ZM68.3946 30V21.488H69.6746L69.8186 23.664L69.6746 23.648C69.7813 22.912 70.0106 22.368 70.3626 22.016C70.7146 21.664 71.2 21.488 71.8186 21.488H73.6266V22.896H71.8826C71.4773 22.896 71.136 22.976 70.8586 23.136C70.5813 23.2853 70.368 23.5147 70.2186 23.824C70.08 24.1227 70.0106 24.496 70.0106 24.944V30H68.3946ZM66.2346 30V28.64H72.6666V30H66.2346ZM66.2346 22.848V21.488H69.3066V22.848H66.2346ZM76.5644 32.4V31.04H77.6044C77.903 31.04 78.1217 30.992 78.2604 30.896C78.4097 30.8107 78.5217 30.6667 78.5964 30.464L78.8844 29.712H78.3404L75.2364 21.488H76.9804L79.3964 28.192L81.6524 21.488H83.3804L79.9884 30.96C79.8177 31.472 79.551 31.84 79.1884 32.064C78.8364 32.288 78.3617 32.4 77.7644 32.4H76.5644Z" fill="white"/>
+    <path d="M99.2814 23.8333L95.7054 20.2573L96.648 19.3147L101.833 24.5L96.648 29.6853L95.7054 28.7427L99.2814 25.1667H91.1667V23.8333H99.2814Z" fill="white"/>
+  </g>
+
+  <text x="1036" y="652" class="body-sm muted">background: var(--color-action-primary)</text>
+  <text x="1036" y="676" class="body-sm muted">padding: var(--space-control-md)</text>
+  <text x="1036" y="700" class="body-sm muted">border-radius: var(--radius-control)</text>
+
+  <rect x="1036" y="730" width="312" height="34" rx="2" class="rule-box"/>
+  <text x="1052" y="752" class="body-sm orange">RULE: no var(--primitive-*) here</text>
+</svg>
