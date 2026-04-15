@@ -11,6 +11,7 @@ import ContractFlowDiagram from '@/components/project-detail/ContractFlowDiagram
 import TokenPipelineDiagram from '@/components/project-detail/TokenPipelineDiagram'
 import ContractTriangleDiagram from '@/components/project-detail/ContractTriangleDiagram'
 import AgentTraceCard from '@/components/project-detail/AgentTraceCard'
+import SpecPageTemplateGrid from '@/components/project-detail/SpecPageTemplateGrid'
 
 // ---------- Article metadata ----------
 
@@ -330,6 +331,10 @@ export default function FactoryCaseStudy() {
                     <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
                       {SOLUTION_SPEC_PAGES}
                     </ReactMarkdown>
+                  </div>
+
+                  <div className="mt-10">
+                    <SpecPageTemplateGrid />
                   </div>
 
                   <div className="mt-10">
