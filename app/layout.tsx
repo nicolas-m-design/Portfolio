@@ -45,7 +45,8 @@ export default function RootLayout({
         {/* Space Grotesk variable font — used for animated nav wordmark */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
+        {/* DM Sans — display face for project detail hero titles and pull-quotes */}
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet" />
 
         {/* Favicons */}
         <link rel="icon" href="/favicon.ico" sizes="any" />

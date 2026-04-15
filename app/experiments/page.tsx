@@ -16,6 +16,7 @@ const experiments: Experiment[] = [
     description: 'A token-driven spec app where JSON primitives and semantic aliases are the single source of truth — every foundation and component is derived from them.',
     thumbnail: '/experiments/token-brand-system.svg',
     tags: ['Design Tokens', 'React', 'Design System'],
+    newTab: true,
   },
   {
     slug: 'animated-wordmark',

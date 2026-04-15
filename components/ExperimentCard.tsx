@@ -6,6 +6,7 @@ export interface Experiment {
   description: string
   thumbnail?: string
   tags: string[]
+  newTab?: boolean
 }
 
 interface ExperimentCardProps {
@@ -13,7 +14,7 @@ interface ExperimentCardProps {
 }
 
 export default function ExperimentCard({ experiment }: ExperimentCardProps) {
-  const { slug, title, description, thumbnail, tags } = experiment
+  const { slug, title, description, thumbnail, tags, newTab } = experiment
 
   const isVideo = thumbnail && thumbnail.toLowerCase().match(/\.(mp4|webm|ogg|mov)(\?.*)?$/)
 
@@ -21,13 +22,27 @@ export default function ExperimentCard({ experiment }: ExperimentCardProps) {
     ? thumbnail
     : `https://images.unsplash.com/photo-1558655146-d09347e92766?w=800&h=600&fit=crop&auto=format,compress&q=80`
 
+  const href = `/experiments/${slug}`
+  const commonProps = {
+    className:
+      'block group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-50 rounded-2xl transition-all duration-200',
+    'aria-label': `View experiment: ${title}`,
+    tabIndex: 0,
+  }
+
+  const Wrapper = ({ children }: { children: React.ReactNode }) =>
+    newTab ? (
+      <a href={href} target="_blank" rel="noopener noreferrer" {...commonProps}>
+        {children}
+      </a>
+    ) : (
+      <Link href={href} {...commonProps}>
+        {children}
+      </Link>
+    )
+
   return (
-    <Link
-      href={`/experiments/${slug}`}
-      className="block group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-50 rounded-2xl transition-all duration-200"
-      aria-label={`View experiment: ${title}`}
-      tabIndex={0}
-    >
+    <Wrapper>
       <article className="relative h-[320px] rounded-2xl overflow-hidden shadow-lg group-hover:shadow-2xl transition-all duration-500 transform group-hover:-translate-y-2" role="article">
         {/* Video background or image fallback */}
         {isVideo ? (
@@ -90,6 +105,6 @@ export default function ExperimentCard({ experiment }: ExperimentCardProps) {
           </div>
         </div>
       </article>
-    </Link>
+    </Wrapper>
   )
 }

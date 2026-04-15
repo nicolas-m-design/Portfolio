@@ -1,29 +1,16 @@
 'use client'
 
-import Image from 'next/image'
-import Link from 'next/link'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
-import { useState } from 'react'
-import Lightbox from '@/components/Lightbox'
-
-const PROSE_CLASS =
-  'prose max-w-none text-gray-700 ' +
-  '[&_h2]:font-semibold [&_h2]:text-black [&_h2]:mt-12 [&_h2]:mb-9 ' +
-  '[&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-black [&_h3]:mt-8 [&_h3]:mb-6 ' +
-  '[&_h4]:mb-5 [&_h5]:mt-4 [&_h5]:mb-4 [&_h6]:mt-4 [&_h6]:mb-3.5 ' +
-  '[&_ul]:list-disc [&_ul]:ml-5 [&_ul]:mb-6 [&_li]:mb-2 ' +
-  '[&_ol]:list-decimal [&_ol]:ml-5 [&_ol]:mb-6 ' +
-  '[&_p]:text-base [&_p]:leading-relaxed [&_p+p]:mt-6 ' +
-  '[&_strong]:font-medium ' +
-  '[&_blockquote]:bg-gray-100 [&_blockquote]:p-6 [&_blockquote]:rounded-lg [&_blockquote]:text-lg [&_blockquote]:text-gray-700 [&_blockquote]:border-l-4 [&_blockquote]:border-gray-300 [&_blockquote]:my-8 [&_blockquote]:not-italic [&_blockquote_p]:text-lg ' +
-  '[&_table]:w-full [&_table]:my-8 [&_table]:bg-gray-50 [&_table]:rounded-lg [&_table]:overflow-hidden [&_table]:border [&_table]:border-gray-200 ' +
-  '[&_thead]:bg-gray-100 [&_th]:p-4 [&_th]:text-left [&_th]:font-semibold [&_th]:text-gray-900 ' +
-  '[&_td]:p-4 [&_td]:border-t [&_td]:border-gray-200 [&_tr]:hover:bg-gray-100 ' +
-  '[&_img]:rounded-lg [&_img]:max-h-[538px] [&_img]:object-cover ' +
-  '[&_a]:text-primary-600 [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-primary-700 ' +
-  '[&_code]:bg-gray-100 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm [&_code]:font-mono'
+import ArticleMeta from '@/components/project-detail/ArticleMeta'
+import ArticleFooterNav from '@/components/project-detail/ArticleFooterNav'
+import EmbeddedDemo from '@/components/project-detail/EmbeddedDemo'
+import CursorDesignMdFrame from '@/components/CursorDesignMdFrame'
+import ContractFlowDiagram from '@/components/project-detail/ContractFlowDiagram'
+import TokenPipelineDiagram from '@/components/project-detail/TokenPipelineDiagram'
+import ContractTriangleDiagram from '@/components/project-detail/ContractTriangleDiagram'
+import AgentTraceCard from '@/components/project-detail/AgentTraceCard'
 
 // ---------- Article metadata ----------
 
@@ -100,9 +87,9 @@ AI agents reason better against opinionated rules than polite suggestions. So I 
 - Blue is reserved for informational semantics only.
 - Radius: one value. No exceptions.
 
-> One value. No exceptions. If you wanted soft corners, you are in the wrong system.
+> Infrastructure with guardrails, not documentation. Docs describe; infrastructure enforces. If a rule can't fail a build, it isn't a rule.
 
-That last rule is pinned on the Radius foundation page as an easter egg. It's also a real rule – there is exactly one radius token in the system (\`0px\`), and any component that introduces a second fails the test suite.
+Radius is the proof. There is exactly one radius token in the system (\`0px\`), pinned on the Radius foundation page as an easter egg, and any component that introduces a second fails the test suite.
 
 Constraint isn't austerity. It's compression. With these rules in place, the agent's decision space collapses from *"which of 47 spacing values?"* to *"which of 9, and why not one of the other 8?"*
 
@@ -119,7 +106,7 @@ A build script (\`generate-tokens.mjs\`) validates every reference, flattens the
 The layers are the spine. Everything else bolts onto them.
 `
 
-const SOLUTION = `
+const SOLUTION_INTRO = `
 ## The solution: design ↔ code parity with AI agents
 
 This is the section that earns the framing. Three execution moves.
@@ -135,13 +122,17 @@ Claude Code has a Figma MCP tool that exposes \`get_design_context\`, \`get_meta
 **Concrete example.** Midway through the build I updated the Button's Loading state in Figma to use a Remix \`loader-4-line\` icon instead of a CSS border spinner. I told Claude Code to reconcile it. The agent pulled the variant metadata (\`183:182: Size=Large, Variant=Primary, State=Loading\`), saw that the Figma version referenced a \`remix-icons/line/system/loader-4-line\` icon I didn't have in my curated subset, read the SVG from my \`node_modules/remixicon\` folder, added the path data to the \`Icon.tsx\` curated dictionary, and swapped the Button's spinner div for the new \`<Icon>\` component. Type-check passed, build passed, tests passed. The turnaround was seven minutes.
 
 The important thing isn't the speed. It's that **the agent never invented anything** – every move was bound to an explicit rule from \`DESIGN.md\` or the token files. When it ran out of information, it stopped and asked.
+`
 
+const SOLUTION_SPEC_PAGES = `
 ### 2. Every spec page tells the same story
 
 Foundations and components in the docs site are composed from six layout primitives: \`SpecPageLayout\`, \`StateMatrix\`, \`TokenMappingTable\`, \`UsageGuidance\`, \`AccessibilityNotes\`, and \`DoDontExamples\`. Every page uses the same sections in the same order.
 
 This repetition is pedagogy. A reader who spends thirty seconds on the Button page knows how to read every other page in the system. More importantly, the agent knows it too: adding a new component is a fill-in-the-blanks job against a known template, not a bespoke design pass. The structure of the docs is itself a machine-readable contract.
+`
 
+const SOLUTION_TRIANGLE = `
 ### 3. The Figma side has its own contract
 
 \`docs/figma-edit-checklist.md\` is the inverse of \`DESIGN.md\`. When the Figma file needs to change – a new variant, a new state, a token tweak – the checklist forces the editor to declare:
@@ -210,258 +201,201 @@ Two things I'm taking from this.
 Factory is a three-week experiment. The next version is a three-month one, where the markdown contract governs not just tokens and components but product motion, copy, and metrics.
 `
 
-// ---------- Section image manifest ----------
-
-const PLACEHOLDER = '/case-studies/factory-design-system/placeholder.svg'
-const OVERVIEW_IMAGE = '/case-studies/factory-design-system/contract-flow.svg'
-const CHALLENGE_IMAGE = '/case-studies/factory-design-system/challenge-designmd.svg'
-const PROCESS_IMAGE = '/case-studies/factory-design-system/architecture.svg'
-const SOLUTION_IMAGES = [
-  {
-    src: '/case-studies/factory-design-system/contract-flow.svg',
-    alt: 'Diagram showing DESIGN.md governing Figma, AI agents, token files, React components, and the spec app',
-  },
-  {
-    src: PLACEHOLDER,
-    alt: 'Factory Design System solution image 2',
-  },
-  {
-    src: PLACEHOLDER,
-    alt: 'Factory Design System solution image 3',
-  },
-]
-const IMPLEMENTATION_IMAGE = PLACEHOLDER
+// When no next manual project exists, link to the EF global navigation case study.
+const NEXT_PROJECT_FALLBACK = {
+  slug: 'redesigning-ef-global-navigation',
+  title: 'Redesigning EF Global Navigation',
+}
 
 // ---------- Component ----------
 
 export default function FactoryCaseStudy() {
-  const [lightboxOpen, setLightboxOpen] = useState(false)
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  const [galleryImages, setGalleryImages] = useState<string[]>([])
-
-  const openLightbox = (images: string[], index: number) => {
-    setGalleryImages(images)
-    setCurrentImageIndex(index)
-    setLightboxOpen(true)
+  // Sections with content. Flags:
+  //  - `cursorFrame: true` renders the static Cursor/DESIGN.md frame above the prose.
+  //  - `embed: true` renders a live iframe of the deployed Factory spec app.
+  type SimpleSection = {
+    kind: 'simple'
+    key: string
+    cursorFrame?: boolean
+    diagram?: 'contract-flow' | 'token-pipeline'
+    content: string
   }
 
-  const closeLightbox = () => setLightboxOpen(false)
-  const nextImage = () =>
-    setCurrentImageIndex((prev) => (prev + 1) % galleryImages.length)
-  const previousImage = () =>
-    setCurrentImageIndex(
-      (prev) => (prev - 1 + galleryImages.length) % galleryImages.length
-    )
+  // The solution section interleaves visuals between its three subsections.
+  type SolutionSection = { kind: 'solution'; key: 'solution' }
 
-  const renderImage = (
-    src: string,
-    alt: string,
-    group: string[],
-    index: number
-  ) => (
-    <button
-      onClick={() => openLightbox(group, index)}
-      className="w-full group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-lg mb-4 block"
-      aria-label={`${alt} (opens in lightbox)`}
+  const contentSections: Array<SimpleSection | SolutionSection> = [
+    { kind: 'simple', key: 'overview', diagram: 'contract-flow', content: OVERVIEW },
+    { kind: 'simple', key: 'challenge', cursorFrame: true, content: CHALLENGE },
+    { kind: 'simple', key: 'process', diagram: 'token-pipeline', content: PROCESS },
+    { kind: 'solution', key: 'solution' },
+    { kind: 'simple', key: 'implementation', content: IMPLEMENTATION },
+    { kind: 'simple', key: 'reflection', content: REFLECTION },
+  ]
+
+  const externalLink = (href: string, label: string) => (
+    <a
+      key={label}
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-primary-600 hover:text-primary-700 underline underline-offset-2"
     >
-      <div
-        className="w-full overflow-hidden"
-        style={{ maxHeight: '538px', borderRadius: '0.5rem' }}
-      >
-        <Image
-          src={src}
-          alt={alt}
-          width={1600}
-          height={800}
-          className="w-full object-cover cursor-pointer"
-          style={{ borderRadius: '0.5rem' }}
-          unoptimized
-        />
-      </div>
-    </button>
+      {label}
+    </a>
   )
-
-  // Quick facts
-  const quickFacts = [
-    { label: 'Role', values: [META.role] },
-    { label: 'Stack', values: META.stack },
-    { label: 'Published', values: [META.date] },
-  ]
-
-  // Sections with content
-  const contentSections = [
-    { key: 'overview', image: OVERVIEW_IMAGE, imageAlt: 'Factory Design System overview page', content: OVERVIEW },
-    { key: 'challenge', image: CHALLENGE_IMAGE, imageAlt: 'Snapshot of DESIGN.md embedded in a Cursor-like editor UI', content: CHALLENGE },
-    { key: 'process', image: PROCESS_IMAGE, imageAlt: 'Primitives → semantics → components token pipeline diagram', content: PROCESS },
-    {
-      key: 'solution',
-      images: SOLUTION_IMAGES,
-      content: SOLUTION,
-    },
-    { key: 'implementation', image: IMPLEMENTATION_IMAGE, imageAlt: 'Buttons spec page showing state matrix and token mapping', content: IMPLEMENTATION },
-    { key: 'reflection', content: REFLECTION },
-  ]
 
   return (
     <article className="pt-36 pb-16">
-      <style jsx>{`
-        .prose h2 {
-          font-size: clamp(23px, 3vw, 32px);
-        }
-        .prose h4 {
-          margin-top: 2.2rem !important;
-        }
-      `}</style>
-
-      {/* Hero section */}
-      <div className="container" style={{ maxWidth: '900px', marginLeft: 'auto', marginRight: 'auto' }}>
-        <div className="mb-8" data-aos="fade-up" data-aos-delay="50">
-          {/* Eyebrow */}
+      {/* Hero text */}
+      <div className="container article-column">
+        <div>
           <p
-            className="text-gray-500 font-medium tracking-widest uppercase mb-4"
-            style={{ fontSize: '12px', letterSpacing: '0.1em' }}
+            className="text-gray-500 font-medium tracking-widest uppercase mb-6"
+            style={{ fontSize: '12px', letterSpacing: '0.12em' }}
           >
             Design System
           </p>
 
-          {/* Title */}
           <h1
-            className="font-bold text-gray-900"
+            className="text-gray-900 mb-8"
             style={{
-              fontSize: 'clamp(30px, 4.5vw, 48px)',
-              lineHeight: 1.1,
-              letterSpacing: '-0.025em',
+              fontFamily: "'DM Sans', ui-sans-serif, system-ui, sans-serif",
+              fontSize: 'clamp(40px, 6vw, 56px)',
+              lineHeight: 1.07,
+              letterSpacing: '-0.02em',
+              fontWeight: 500,
               marginTop: 0,
-              marginBottom: '1.25rem',
             }}
           >
             {PROJECT_NAME}
           </h1>
 
-          {/* Tagline */}
           <p
-            className="text-gray-600 text-lg"
-            style={{ lineHeight: 1.6, maxWidth: '760px' }}
+            className="text-gray-700 mb-12"
+            style={{
+              fontFamily: "'PP Neue Montreal', ui-sans-serif, system-ui, sans-serif",
+              fontSize: 'clamp(18px, 1.6vw, 20px)',
+              lineHeight: 1.5,
+            }}
           >
             {TAGLINE}
           </p>
         </div>
 
-        {/* Quick facts row */}
-        <div className="flex flex-wrap gap-x-8 gap-y-4 mb-12" data-aos="fade-up" data-aos-delay="100">
-          {quickFacts.map((fact) => (
-            <div key={fact.label} className="flex items-baseline gap-2">
-              <span className="text-gray-500 text-sm font-medium">{fact.label}</span>
-              <span className="flex flex-wrap gap-1.5">
-                {fact.values.map((v) => (
-                  <span key={v} className="inline-block px-2.5 py-0.5 bg-gray-100 text-gray-700 text-sm rounded">
-                    {v}
+        {/* Typographic metadata colophon */}
+        <div>
+          <ArticleMeta
+            rows={[
+              { label: 'Role', values: [META.role] },
+              { label: 'Stack', values: META.stack },
+              { label: 'Published', values: [META.date] },
+              {
+                label: 'Links',
+                content: (
+                  <span className="flex flex-wrap gap-x-4 gap-y-1">
+                    {externalLink(LINKS.github, 'GitHub')}
+                    {externalLink(LINKS.figma, 'Figma')}
+                    {externalLink(LINKS.liveDemo, 'Live Demo')}
                   </span>
-                ))}
-              </span>
-            </div>
-          ))}
-
-          {/* Links */}
-          <div className="flex items-baseline gap-2">
-            <span className="text-gray-500 text-sm font-medium">Links</span>
-            <span className="flex flex-wrap gap-3">
-              <a
-                href={LINKS.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary-600 hover:text-primary-700 text-sm font-medium underline underline-offset-2"
-              >
-                GitHub
-              </a>
-              <a
-                href={LINKS.figma}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary-600 hover:text-primary-700 text-sm font-medium underline underline-offset-2"
-              >
-                Figma
-              </a>
-              <a
-                href={LINKS.liveDemo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary-600 hover:text-primary-700 text-sm font-medium underline underline-offset-2"
-              >
-                Live Demo
-              </a>
-            </span>
-          </div>
+                ),
+              },
+            ]}
+          />
         </div>
       </div>
 
-      {/* Content sections with dividers */}
-      <div className="container" style={{ maxWidth: '900px', marginLeft: 'auto', marginRight: 'auto' }}>
-        <div className="divide-y divide-gray-200">
-          {contentSections.map((section) => (
-            <section key={section.key} className="py-16 md:py-18">
-              {/* Single image */}
-              {'image' in section && section.image && (
-                <div className="mb-10">
-                  {renderImage(
-                    section.image,
-                    section.imageAlt || '',
-                    [section.image],
-                    0
-                  )}
-                </div>
-              )}
+      {/* Content sections: 96px vertical gaps, no divider rules */}
+      <div className="container article-column" style={{ marginTop: '96px' }}>
+        <div className="space-y-24">
+          {contentSections.map((section) => {
+            // Custom composition for the solution section: visuals are
+            // interleaved between subsections instead of appearing at the top.
+            if (section.kind === 'solution') {
+              return (
+                <section key={section.key}>
+                  {/* §1 Figma ↔ code parity */}
+                  <div className="article-prose">
+                    <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+                      {SOLUTION_INTRO}
+                    </ReactMarkdown>
+                  </div>
 
-              {/* Multiple images */}
-              {'images' in section && section.images && (
-                <div className="mb-10">
-                  {section.images.map((image, i) => (
-                    <div key={i}>
-                      {renderImage(
-                        image.src,
-                        image.alt,
-                        section.images!.map(({ src }) => src),
-                        i
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
+                  <div className="mt-10">
+                    <AgentTraceCard />
+                  </div>
 
-              <div className={PROSE_CLASS} style={{ lineHeight: 1.8, maxWidth: '760px', marginLeft: 'auto', marginRight: 'auto' }}>
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  rehypePlugins={[rehypeRaw]}
-                >
-                  {section.content}
-                </ReactMarkdown>
-              </div>
-            </section>
-          ))}
+                  {/* §2 Every spec page tells the same story */}
+                  <div className="article-prose mt-10">
+                    <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+                      {SOLUTION_SPEC_PAGES}
+                    </ReactMarkdown>
+                  </div>
+
+                  <div className="mt-10">
+                    <EmbeddedDemo
+                      src="/experiments/token-brand-system"
+                      displayUrl="nicolasmenard.design/experiments/factory"
+                      title="Factory Design System — live spec app"
+                      tabs={[
+                        { label: 'Overview', path: '/overview' },
+                        { label: 'Colors', path: '/foundations/colors' },
+                        { label: 'Buttons', path: '/components/buttons' },
+                        { label: 'Forms', path: '/components/forms' },
+                      ]}
+                      caption="Live embed of the Factory spec app. Open full page for the complete navigation."
+                    />
+                  </div>
+
+                  {/* §3 Contract triangle */}
+                  <div className="article-prose mt-10">
+                    <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+                      {SOLUTION_TRIANGLE}
+                    </ReactMarkdown>
+                  </div>
+
+                  <div className="mt-10">
+                    <ContractTriangleDiagram />
+                  </div>
+                </section>
+              )
+            }
+
+            return (
+              <section key={section.key}>
+                {section.cursorFrame && (
+                  <div className="mb-10">
+                    <CursorDesignMdFrame />
+                  </div>
+                )}
+
+                {section.diagram === 'contract-flow' && (
+                  <div className="mb-10">
+                    <ContractFlowDiagram />
+                  </div>
+                )}
+
+                {section.diagram === 'token-pipeline' && (
+                  <div className="mb-10">
+                    <TokenPipelineDiagram />
+                  </div>
+                )}
+
+                <div className="article-prose">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+                    {section.content}
+                  </ReactMarkdown>
+                </div>
+              </section>
+            )
+          })}
         </div>
 
-        {/* Article footer navigation */}
-        <nav className="flex items-center justify-between pt-12 mt-4 border-t border-gray-200">
-          <Link
-            href="/#work"
-            className="text-gray-600 hover:text-gray-900 font-medium transition-colors"
-          >
-            ← Back to all work
-          </Link>
-          {/* Next project can be added here when more manual projects exist */}
-        </nav>
+        <div style={{ marginTop: '96px' }}>
+          <ArticleFooterNav next={NEXT_PROJECT_FALLBACK} />
+        </div>
       </div>
 
-      {/* Lightbox */}
-      <Lightbox
-        images={galleryImages}
-        currentIndex={currentImageIndex}
-        isOpen={lightboxOpen}
-        onClose={closeLightbox}
-        onNext={nextImage}
-        onPrevious={previousImage}
-        projectTitle={PROJECT_NAME}
-      />
     </article>
   )
 }

@@ -51,7 +51,16 @@ const nextConfig = {
       {
         source: '/experiments/token-brand-system/:path*',
         headers: [
-          { key: 'Cache-Control', value: 'no-store' }
+          { key: 'Cache-Control', value: 'no-store' },
+          // Override the site-wide X-Frame-Options: DENY so the Factory spec app
+          // can be embedded inside case-study <EmbeddedDemo> iframes on this origin.
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' }
+        ]
+      },
+      {
+        source: '/experiments/token-brand-system',
+        headers: [
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' }
         ]
       }
     ]
