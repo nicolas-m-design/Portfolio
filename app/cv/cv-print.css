@@ -1,0 +1,259 @@
+/* app/cv/cv-print.css
+ *
+ * ATS-safe print stylesheet for /cv. Imported by CurriculumVitae.tsx.
+ * Applies ONLY inside @media print — on-screen styling lives in Tailwind utilities.
+ *
+ * Parseability rules:
+ *   1. Single column, real text selectable top-to-bottom.
+ *   2. Common system sans for body so PDF parsers don't choke on custom fonts.
+ *   3. Links print their URL inline (attr(href)) for LLM flattening.
+ *   4. No SVG text, no background-image content, no absolute-positioned text.
+ *   5. Role entries never break across pages.
+ */
+
+@media print {
+
+  /* ── Page setup ── */
+  @page {
+    size: A4;
+    margin: 14mm 16mm;
+  }
+
+  /* ── Hide site chrome + interactive controls ── */
+  header[role='banner'],
+  nav,
+  .cv-no-print {
+    display: none !important;
+  }
+
+  /* ── Reset colors + backgrounds ── */
+  html,
+  body,
+  .cv-page,
+  .cv-article {
+    background: #fff !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* ── Body typography ── */
+  body {
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+      'Helvetica Neue', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.4;
+    letter-spacing: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── Page wrapper + article ── */
+  .cv-page {
+    min-height: auto !important;
+  }
+
+  .cv-article {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* ── Name ── */
+  .cv-name {
+    font-family: 'PP Neue Montreal', ui-sans-serif, system-ui, sans-serif;
+    font-size: 28pt !important;
+    line-height: 1.0 !important;
+    letter-spacing: -0.02em !important;
+    margin: 0 0 3mm 0 !important;
+    font-weight: 700 !important;
+    color: #000 !important;
+  }
+
+  /* ── Section title ── */
+  .cv-section-title {
+    font-size: 7.5pt !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.15em !important;
+    color: #444 !important;
+    border-bottom: 0.4pt solid #ccc !important;
+    padding-bottom: 1mm !important;
+    margin: 5mm 0 2.5mm 0 !important;
+    text-transform: uppercase !important;
+    break-after: avoid-page !important;
+  }
+
+  /* ── Role entries ── */
+  .cv-role {
+    border-left: none !important;
+    padding-left: 0 !important;
+    margin: 0 0 4mm 0 !important;
+    break-inside: avoid !important;
+  }
+
+  .cv-role-heading {
+    font-size: 10pt !important;
+    font-weight: 600 !important;
+    color: #000 !important;
+    margin: 0 !important;
+    line-height: 1.3 !important;
+  }
+
+  .cv-role-meta {
+    font-size: 9pt !important;
+    color: #555 !important;
+    margin: 0.5mm 0 0 0 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .cv-role-context {
+    font-size: 8.5pt !important;
+    color: #666 !important;
+    font-style: italic !important;
+    margin: 0.5mm 0 0 0 !important;
+    max-width: none !important;
+  }
+
+  /* ── Bullets ── */
+  .cv-bullets {
+    margin: 1mm 0 0 3mm !important;
+    padding: 0 !important;
+    list-style: none !important;
+  }
+
+  .cv-bullets li {
+    display: flex;
+    gap: 2mm;
+    margin: 0 0 0.8mm 0 !important;
+    font-size: 9.5pt !important;
+    break-inside: avoid !important;
+    line-height: 1.4 !important;
+  }
+
+  /* Bullet marker (the ▸ span) — keep as text character, no color */
+  .cv-bullets li span[aria-hidden] {
+    color: #999 !important;
+    font-size: 7pt !important;
+    margin-top: 0.5mm !important;
+  }
+
+  /* ── Skill pills → flat inline text ── */
+  .cv-skills-groups {
+    display: block !important;
+  }
+
+  .cv-skills-group {
+    display: block !important;
+    margin: 0 0 1.5mm 0 !important;
+    break-inside: avoid !important;
+  }
+
+  .cv-skills-group-label {
+    font-weight: 700 !important;
+    font-size: 8pt !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    color: #000 !important;
+    display: inline !important;
+    width: auto !important;
+  }
+
+  .cv-skills-group-label::after {
+    content: ': ';
+  }
+
+  .cv-skills-group-items {
+    display: inline !important;
+  }
+
+  .cv-skills-group-items li {
+    display: inline !important;
+    padding: 0 !important;
+    list-style: none !important;
+  }
+
+  /* Pill → bare text */
+  .cv-pill {
+    border: none !important;
+    background: none !important;
+    padding: 0 !important;
+    display: inline !important;
+    font-size: 9.5pt !important;
+    color: #000 !important;
+    border-radius: 0 !important;
+  }
+
+  /* Dot separator between pills */
+  .cv-skills-group-items li:not(:last-child) .cv-pill::after {
+    content: ' · ';
+    color: #888;
+  }
+
+  /* ── Contact row ── */
+  .cv-contact-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 1.5mm !important;
+    font-size: 9pt !important;
+    color: #333 !important;
+    margin: 1.5mm 0 3mm 0 !important;
+  }
+
+  .cv-contact-row a,
+  .cv-contact-row span {
+    color: #000 !important;
+    font-size: 9pt !important;
+  }
+
+  /* ── Headline + Summary ── */
+  .cv-headline {
+    font-size: 10.5pt !important;
+    color: #000 !important;
+    font-weight: 500 !important;
+    margin: 0 0 2mm 0 !important;
+  }
+
+  .cv-summary {
+    font-size: 9.5pt !important;
+    line-height: 1.5 !important;
+    color: #111 !important;
+    max-width: none !important;
+    margin: 0 0 4mm 0 !important;
+  }
+
+  /* ── Links: print URL after anchor text ── */
+  .cv-article a[href^='http']::after,
+  .cv-article a[href^='https']::after {
+    content: ' (' attr(href) ')';
+    font-size: 7.5pt;
+    color: #555;
+  }
+
+  /* Suppress URL expansion for decorative/nav anchors */
+  .cv-article a[href^='?']::after,
+  .cv-article a[href^='/']::after {
+    content: '';
+  }
+
+  .cv-article a {
+    color: #000 !important;
+    text-decoration: underline !important;
+  }
+
+  /* ── Horizontal rule under name ── */
+  hr,
+  .h-px {
+    border-color: #ccc !important;
+    margin: 2mm 0 !important;
+  }
+
+  /* ── Animation classes — disable on print ── */
+  .animate-fade-in,
+  .animate-slide-up {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+}
