@@ -51,14 +51,6 @@ export default function Navigation({ aboutMe }: NavigationProps) {
                   Projects
                 </button>
                 <button
-                  onClick={() => handleNavigation('experience')}
-                  className="nav-item hidden md:block text-gray-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded-full px-3 py-3"
-                  role="menuitem"
-                  aria-label="Navigate to Experience section"
-                >
-                  Experience
-                </button>
-                <button
                   onClick={() => handleNavigation('contact')}
                   className="nav-item hidden md:block text-gray-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded-full px-3 py-3"
                   role="menuitem"
@@ -67,18 +59,14 @@ export default function Navigation({ aboutMe }: NavigationProps) {
                   About me
                 </button>
                 <ExperimentsNavLink />
-                {aboutMe?.metadata?.resume_cv?.url && (
-                  <a
-                    href={aboutMe.metadata.resume_cv.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="nav-item text-gray-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded-full px-3 py-3"
-                    role="menuitem"
-                    aria-label="Open Resume in new tab"
-                  >
-                    Resume
-                  </a>
-                )}
+                <Link
+                  href="/cv"
+                  className="nav-item text-gray-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded-full px-3 py-3"
+                  role="menuitem"
+                  aria-label="View CV"
+                >
+                  Resume
+                </Link>
               </div>
             </div>
           </div>

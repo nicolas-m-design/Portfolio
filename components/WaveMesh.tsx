@@ -96,7 +96,7 @@ export default function WaveMesh() {
             key={i}
             d={pathData}
             fill="none"
-            stroke="#8F4CF2"
+            stroke="#000000"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
