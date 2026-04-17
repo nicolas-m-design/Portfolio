@@ -14,8 +14,8 @@ export const cv: CV = {
   name: 'Nicolas Ménard',
 
   headline: {
-    de: 'Design Engineer · Product Designer · 10+ yrs shipping React/TS UI',
-    ux: 'Senior Product Designer · 10+ yrs · Design systems, research, and code',
+    de: 'Design Engineer · Product Designer',
+    ux: 'Senior Product Designer · Design systems, research & code',
   },
 
   summary: {
@@ -38,9 +38,9 @@ export const cv: CV = {
     location: 'Zurich, Switzerland',
     legalStatus: 'Swiss B Permit',
     links: [
-      { label: 'nicolasmenard.design', href: 'https://nicolasmenard.design' },
-      { label: 'github.com/nicolas-m-design', href: 'https://github.com/nicolas-m-design' },
-      { label: 'linkedin.com/in/nicolas-menard-design', href: 'https://ch.linkedin.com/in/nicolas-menard-design' },
+      { label: 'Portfolio', href: 'https://nicolasmenard.design' },
+      { label: 'GitHub', href: 'https://github.com/nicolas-m-design' },
+      { label: 'LinkedIn', href: 'https://ch.linkedin.com/in/nicolas-menard-design' },
     ],
   },
 

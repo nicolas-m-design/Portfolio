@@ -1,10 +1,343 @@
 'use client'
 
 import React from 'react'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+
+// Full content of /DESIGN.md from the token-brand-system repo
+const DESIGN_MD = `# Factory Design System
+
+## Summary
+
+Factory Design System is a token-driven spec app built around one canonical visual language:
+
+- Typeface: Geist Mono
+- Brand palette: orange + ink
+- Semantic blue: informational-only
+
+The repo is intentionally structured so the token inputs are the single source of truth and the spec site is the visible expression of those tokens.
+
+## Collaboration Source Of Truth
+
+- The repo is canonical for accepted design-system changes.
+- Figma may diverge only in \`WIP\` exploration areas.
+- Published Figma variables and components must match \`main\`.
+- Canonical Figma changes require a matching repo PR.
+
+## Source of Truth
+
+Only these files define token values and aliases:
+
+- \`src/tokens/primitives.json\`
+- \`src/tokens/semantic.json\`
+
+All generated CSS variables and token docs derive from those files.
+
+## Artifact Governance
+
+The repo has more than one canonical layer. Each artifact has a different job:
+
+- Token values and alias relationships:
+  - \`src/tokens/primitives.json\`
+  - \`src/tokens/semantic.json\`
+- Global design language, layout policy, accessibility policy, and route contract:
+  - \`DESIGN.md\`
+- Normalized component behavior contracts:
+  - \`docs/component-specs.md\`
+- Figma execution checklist for system edits:
+  - \`docs/figma-edit-checklist.md\`
+- Icon subset, growth rules, and semantic usage:
+  - \`docs/icon-guidelines.md\`
+- Rendered specimens, examples, and route copy:
+  - \`src/docs/routes.tsx\`
+- Runtime implementation details:
+  - \`src/components/**\`
+- Consistency enforcement:
+  - \`src/test/**\`
+
+Do not treat the routed spec pages as the only source of truth for behavior. They are the rendered expression of the authored contracts above.
+
+## Token Pipeline
+
+\`primitives.json\` and \`semantic.json\` are processed by \`scripts/generate-tokens.mjs\`.
+
+That script is responsible for:
+
+- validating token references
+- generating \`src/generated/primitives.css\`
+- generating \`src/generated/semantic.css\`
+- generating \`src/generated/token-docs.ts\`
+
+The build and test scripts always run token generation first.
+
+## Token Taxonomy
+
+### Primitives
+
+Raw values only. No meaning beyond the value itself.
+
+- \`color\`
+  - \`orange\`, \`ink\`, \`sand\`, \`red\`, \`green\`, \`blue\`
+- \`space\`
+- \`radius\`
+- \`borderWidth\`
+- \`elevation\`
+- \`iconSize\`
+- \`fontFamily\`
+- \`fontSize\`
+- \`lineHeight\`
+- \`fontWeight\`
+- \`opacity\`
+
+Generated CSS format:
+
+- \`--primitive-color-orange-9\`
+- \`--primitive-space-4\`
+- \`--primitive-border-width-strong\`
+
+### Semantics
+
+Meaningful aliases that components consume.
+
+- \`color.action\`
+- \`color.surface\`
+- \`color.text\`
+- \`color.border\`
+- \`color.feedback\`
+- \`focus\`
+- \`layout\`
+- \`radius\`
+- \`borderWidth\`
+- \`elevation\`
+- \`iconSize\`
+- \`opacity\`
+- \`typography\`
+
+Generated CSS format:
+
+- \`--color-action-primary\`
+- \`--color-feedback-info-surface\`
+- \`--focus-outline-color\`
+- \`--layout-page-inset\`
+- \`--typography-heading-size\`
+
+## Route Structure
+
+The app uses \`HashRouter\` and mirrors the design-system information architecture.
+
+### Overview
+
+- \`#/overview\`
+
+### Foundations
+
+- \`#/foundations/colors\`
+- \`#/foundations/typography\`
+- \`#/foundations/layout\`
+- \`#/foundations/icons\`
+
+### Components
+
+- \`#/components/buttons\`
+- \`#/components/forms\`
+- \`#/components/links\`
+- \`#/components/tabs\`
+- \`#/components/badges\`
+- \`#/components/alerts\`
+- \`#/components/cards\`
+
+### Route Contract
+
+The \`Overview\` route is intentionally different from the rest of the system. It is the narrative entry point and must include:
+
+- system model
+- reference implementation
+- accessibility notes
+
+Every foundation and component route must include:
+
+- state coverage
+- usage guidance
+- token mapping
+- accessibility notes
+
+Optional sections such as best practices, curated galleries, or interactive demos may be added when they clarify the contract.
+
+## Component Contracts
+
+### Button
+
+- Variants: \`primary | secondary\`
+- Sizes: \`sm | md | lg\`
+- Props:
+  - \`leadingIcon?\`
+  - \`trailingIcon?\`
+  - \`loading?\`
+
+Required documentation states:
+
+- default
+- hover
+- focus
+- pressed
+- disabled
+- loading
+
+### Forms
+
+Shared field contract across \`InputField\`, \`Select\`, and \`Textarea\`:
+
+- \`label\`
+- \`helperText\`
+- \`error\`
+- \`disabled\`
+- \`readOnly\`
+- \`required\`
+
+Required documentation coverage:
+
+- default
+- hover
+- focus
+- error
+- disabled
+- read-only
+- helper/error text
+- select/date guidance
+
+Date input remains spec-only in this phase.
+
+### Link
+
+- Appearances: \`default | inverse\`
+- States:
+  - default
+  - hover
+  - focus
+  - visited
+  - disabled
+
+### Tabs
+
+- Props:
+  - \`value\`
+  - \`onValueChange\`
+  - \`items: { value, label, icon?, count?, disabled?, content? }[]\`
+
+Behavior requirements:
+
+- explicit tab and tabpanel ids
+- arrow key navigation
+- Home/End navigation
+- icon and count variants
+- overflow/mobile guidance
+
+### Badge
+
+- Tones:
+  - \`brand\`
+  - \`info\`
+- \`max\` controls overflow formatting
+
+Badge semantics rule:
+
+- \`brand\` is the filled \`New\` state
+- \`info\` is the outlined \`Informational\` state and must not use action tokens as its fill
+
+### Alert
+
+- Tones:
+  - \`neutral\`
+  - \`info\`
+  - \`success\`
+  - \`attention\`
+  - \`error\`
+- Props:
+  - \`action?\`
+  - \`dismissible?\`
+  - \`showIcon?\`
+
+Accessibility rule:
+
+- use \`role="status"\` for non-disruptive tones
+- use \`role="alert"\` for disruptive attention/error tones
+
+Semantic rule:
+
+- the former white "info" treatment is now \`neutral\`
+- blue info is a true informational tone
+
+### Card
+
+Documented behaviors:
+
+- static vs clickable
+- hover/focus lift
+- square vs landscape media ratios
+- CTA hierarchy
+
+## Visual Rules
+
+- Orange is the only brand accent.
+- Ink surfaces and text anchor the system.
+- Blue is reserved for informational semantics.
+- Do not reintroduce a second documentation font.
+- Do not use primitive color tokens directly in component CSS.
+
+## Accessibility Rules
+
+- Focus must remain clearly visible on all interactive elements.
+- Touch targets must stay at or above 44px.
+- Labels must remain visible for form fields.
+- Tabs must preserve correct ARIA wiring and keyboard interaction.
+- Alerts must use appropriate live-region semantics.
+- Links must remain identifiable before hover.
+
+## Page Annotation Rules
+
+Any page, screen, or flow documented through this system should annotate page-level structure as well as component-level behavior.
+
+- Heading hierarchy:
+  - one page-level heading
+  - section headings must descend in order
+- Landmarks:
+  - annotate primary regions such as header, navigation, main, complementary, and footer when they exist
+- Semantic order:
+  - document reading order and source order when the visual layout could imply a different sequence
+- Focus order:
+  - note where focus enters, how it moves through composite widgets, and where it lands after dismiss or navigation actions
+- Status and live messaging:
+  - identify when passive status uses \`status\` semantics and when disruptive messaging uses \`alert\`
+
+Page annotation rules are part of the authored system contract even when the routed spec page is primarily visual.
+
+## Testing Rules
+
+The repo must keep these checks passing:
+
+- \`npm run build\`
+- \`npm run test\`
+
+The automated suite covers:
+
+- token reference validation and generated-file drift
+- component behavior for buttons, alerts, badges, tabs, and fields
+- docs-route acceptance coverage
+- accessibility smoke tests with \`jest-axe\`
+
+## Implementation Guardrails
+
+- Update token JSON first, then regenerate outputs.
+- Keep generated files deterministic and committed.
+- Prefer semantic tokens in components.
+- Use the routed docs app as the primary artifact, not a single long gallery page.
+- When a new component or state is added, update both the runtime component and its route-level spec coverage.
+`
 
 /**
  * Static replica of the Cursor IDE window displaying DESIGN.md.
- * Pure presentational — no interactivity.
+ * Editor pane renders the full DESIGN.md content via ReactMarkdown.
+ * Explorer sidebar hidden on mobile (md:flex).
  */
 export default function CursorDesignMdFrame() {
   return (
@@ -109,8 +442,8 @@ export default function CursorDesignMdFrame() {
           </div>
         </div>
 
-        {/* Sidebar */}
-        <div className="flex w-[240px] flex-col border-r border-black/40 bg-[#252526]">
+        {/* Sidebar — hidden on mobile, visible md+ */}
+        <div className="hidden md:flex w-[240px] flex-col border-r border-black/40 bg-[#252526]">
           <div className="px-4 pt-3 pb-1 text-[11px] font-semibold uppercase tracking-wide text-[#cccccc]">
             Explorer
           </div>
@@ -139,7 +472,6 @@ export default function CursorDesignMdFrame() {
             <TreeRow depth={1} kind="file" name="App.tsx" badge="M" />
             <TreeRow depth={1} kind="file" name="main.ts" />
             <TreeRow depth={1} kind="file" name="site-env.d.ts" />
-            <TreeRow depth={1} kind="file" name=".gitignore" />
             <TreeRow depth={1} kind="file" name="AGENTS.md" badge="U" />
             <TreeRow depth={1} kind="file" name="CONTRIBUTING.md" />
             <TreeRow depth={1} kind="file" name="DESIGN.md" selected />
@@ -154,7 +486,7 @@ export default function CursorDesignMdFrame() {
           <SectionHeader label="LOCAL HISTORY" />
         </div>
 
-        {/* Editor column */}
+        {/* Editor column — full DESIGN.md via ReactMarkdown */}
         <div className="flex min-w-0 flex-1 flex-col bg-[#1e1e1e]">
           {/* Tab strip */}
           <div className="flex h-[35px] items-stretch bg-[#2d2d2d] text-[12px]">
@@ -170,59 +502,43 @@ export default function CursorDesignMdFrame() {
             </div>
           </div>
 
-          {/* Markdown preview */}
-          <div className="flex-1 overflow-auto px-10 py-6 font-sans text-[13.5px] leading-[1.65] text-[#d4d4d4]">
-            <h1 className="mb-5 text-[28px] font-semibold text-white">Factory Design System</h1>
-
-            <h2 className="mt-6 mb-3 text-[20px] font-semibold text-white">Summary</h2>
-            <p className="mb-2 text-[#d4d4d4]">
-              Factory Design System is a token-driven spec app built around one canonical visual language:
-            </p>
-            <ul className="mb-3 list-disc space-y-1 pl-6 marker:text-[#858585]">
-              <li>
-                <span className="font-semibold text-white">Typeface:</span> Geist Mono
-              </li>
-              <li>
-                <span className="font-semibold text-white">Brand palette:</span> orange + ink
-              </li>
-              <li>
-                <span className="font-semibold text-white">Semantic blue:</span> informational-only
-              </li>
-            </ul>
-            <p>
-              The repo is intentionally structured so the token inputs are the single source of truth and the spec site is the visible expression of
-              those tokens.
-            </p>
-
-            <h2 className="mt-7 mb-3 text-[20px] font-semibold text-white">Collaboration Source Of Truth</h2>
-            <ul className="mb-3 list-disc space-y-1 pl-6 marker:text-[#858585]">
-              <li>The repo is canonical for accepted design-system changes.</li>
-              <li>
-                Figma may diverge only in <InlineCode>WIP</InlineCode> exploration areas.
-              </li>
-              <li>
-                Published Figma variables and components must match <InlineCode>main</InlineCode>.
-              </li>
-              <li>Canonical Figma changes require a matching repo PR.</li>
-            </ul>
-
-            <h2 className="mt-7 mb-3 text-[20px] font-semibold text-white">Source of Truth</h2>
-            <p className="mb-2">Only these files define token values and aliases:</p>
-            <ul className="mb-3 list-disc space-y-1 pl-6 marker:text-[#858585]">
-              <li>
-                <InlineCode>src/tokens/primitives.json</InlineCode>
-              </li>
-              <li>
-                <InlineCode>src/tokens/semantic.json</InlineCode>
-              </li>
-            </ul>
-            <p>All generated CSS variables and token docs derive from those files.</p>
-
-            <h2 className="mt-7 mb-3 text-[20px] font-semibold text-white">Artifact Governance</h2>
-            <p className="mb-2">The repo has more than one canonical layer. Each artifact has a different job:</p>
-            <ul className="list-disc space-y-1 pl-6 marker:text-[#858585]">
-              <li>Token values and alias relationships.</li>
-            </ul>
+          {/* Markdown preview — full DESIGN.md content, scrollable */}
+          <div className="flex-1 overflow-auto px-8 py-6 font-sans text-[13px] leading-[1.65] text-[#d4d4d4]">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                h1: ({ children }) => (
+                  <h1 className="mb-5 mt-0 text-[26px] font-semibold text-white leading-tight">{children}</h1>
+                ),
+                h2: ({ children }) => (
+                  <h2 className="mt-8 mb-3 text-[17px] font-semibold text-white">{children}</h2>
+                ),
+                h3: ({ children }) => (
+                  <h3 className="mt-5 mb-2 text-[13px] font-semibold text-[#cccccc] uppercase tracking-wide">{children}</h3>
+                ),
+                p: ({ children }) => (
+                  <p className="mb-3 text-[#d4d4d4] leading-[1.65]">{children}</p>
+                ),
+                ul: ({ children }) => (
+                  <ul className="mb-3 list-disc pl-5 space-y-0.5 marker:text-[#555]">{children}</ul>
+                ),
+                li: ({ children }) => (
+                  <li className="text-[#d4d4d4] leading-[1.55]">{children}</li>
+                ),
+                code: ({ children }) => (
+                  <code className="rounded-[3px] bg-[#2d2d2d] px-[5px] py-[1px] font-mono text-[11.5px] text-[#e2c08d]">
+                    {children}
+                  </code>
+                ),
+                pre: ({ children }) => (
+                  <pre className="mb-3 overflow-x-auto rounded bg-[#2a2a2a] px-4 py-3 text-[12px] font-mono text-[#d4d4d4]">
+                    {children}
+                  </pre>
+                ),
+              }}
+            >
+              {DESIGN_MD}
+            </ReactMarkdown>
           </div>
         </div>
       </div>
@@ -321,13 +637,5 @@ function TreeRow({ depth, kind, name, expanded = false, selected = false, badge 
       <span className={`truncate ${nameColor}`}>{name}</span>
       {badge && <span className={`ml-auto text-[11px] font-semibold ${badgeColor}`}>{badge}</span>}
     </div>
-  )
-}
-
-function InlineCode({ children }: { children: React.ReactNode }) {
-  return (
-    <code className="rounded-[3px] bg-[#2d2d2d] px-[6px] py-[1px] font-mono text-[12.5px] text-[#e2c08d]">
-      {children}
-    </code>
   )
 }

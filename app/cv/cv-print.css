@@ -30,7 +30,9 @@
   html,
   body,
   .cv-page,
-  .cv-article {
+  .cv-article,
+  .cv-sidebar,
+  .cv-main-content {
     background: #fff !important;
     color: #000 !important;
     box-shadow: none !important;
@@ -60,14 +62,14 @@
     padding: 0 !important;
   }
 
-  /* ── Name ── */
+  /* ── Name — DM Sans weight 500, matching case-study h1 display face ── */
   .cv-name {
-    font-family: 'PP Neue Montreal', ui-sans-serif, system-ui, sans-serif;
+    font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
     font-size: 28pt !important;
     line-height: 1.0 !important;
     letter-spacing: -0.02em !important;
     margin: 0 0 3mm 0 !important;
-    font-weight: 700 !important;
+    font-weight: 500 !important;
     color: #000 !important;
   }
 
@@ -193,6 +195,7 @@
   /* ── Contact row ── */
   .cv-contact-row {
     display: flex !important;
+    flex-direction: row !important;
     flex-wrap: wrap !important;
     gap: 1.5mm !important;
     font-size: 9pt !important;
@@ -223,11 +226,15 @@
   }
 
   /* ── Links: print URL after anchor text ── */
+  /* Only expand links whose label differs from the raw URL (e.g. "Portfolio",
+     "Case study: …"). Contact links now use short labels so the URL expansion
+     is meaningful rather than redundant. */
   .cv-article a[href^='http']::after,
   .cv-article a[href^='https']::after {
     content: ' (' attr(href) ')';
-    font-size: 7.5pt;
-    color: #555;
+    font-size: 7pt;
+    color: #777;
+    font-weight: 400;
   }
 
   /* Suppress URL expansion for decorative/nav anchors */
@@ -254,6 +261,36 @@
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  /* ── Two-column layout → single column on print ── */
+  .cv-layout {
+    display: block !important;
+  }
+
+  .cv-sidebar {
+    position: static !important;
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    border-right: none !important;
+    padding: 0 !important;
+  }
+
+  .cv-main-content {
+    padding: 0 !important;
+  }
+
+  /* Contact separator spans: hidden on screen via Tailwind `hidden`,
+     restored to inline on print so items read: location · permit · email · … */
+  .cv-sep {
+    display: inline !important;
+    color: #aaa !important;
+  }
+
+  /* Skills section title inside sidebar: tighten top margin on print */
+  .cv-sidebar .cv-section-title {
+    margin-top: 4mm !important;
   }
 
 }
