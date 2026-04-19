@@ -15,7 +15,8 @@ const ratelimit = new Ratelimit({
 })
 
 function countryFlag(code: string): string {
-  return [...code.toUpperCase()]
+  const upper = code.toUpperCase()
+  return Array.from(upper)
     .map(c => String.fromCodePoint(0x1F1E6 + c.charCodeAt(0) - 65))
     .join('')
 }
