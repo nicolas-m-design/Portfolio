@@ -12,8 +12,10 @@ export default function VisitorTracker() {
     // Fire-and-forget: don't await, don't block
     fetch('/api/visit', {
       method: 'POST',
-      keepalive: true, // Ensures request completes even if user navigates away
+      keepalive: true,
       cache: 'no-store',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ page: window.location.pathname }),
     }).catch(() => {
       // Silently ignore errors - tracking should never affect UX
     })
