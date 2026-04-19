@@ -21,12 +21,25 @@ function countryFlag(code: string): string {
     .join('')
 }
 
-async function sendTelegramNotification(country: string | null, city: string | null, page: string | null) {
+function parseDevice(ua: string | null): string {
+  if (!ua) return '🖥️ Unknown'
+  if (/iPhone/i.test(ua)) return '📱 iPhone'
+  if (/iPad/i.test(ua)) return '📱 iPad'
+  if (/Android.*Mobile/i.test(ua)) return '📱 Android'
+  if (/Android/i.test(ua)) return '📱 Android Tablet'
+  if (/Macintosh/i.test(ua)) return '🖥️ Mac'
+  if (/Windows/i.test(ua)) return '🖥️ Windows'
+  if (/Linux/i.test(ua)) return '🖥️ Linux'
+  return '🖥️ Unknown'
+}
+
+async function sendTelegramNotification(country: string | null, city: string | null, page: string | null, ua: string | null) {
   const flag = country ? countryFlag(country) : '🌐'
   const location = [city, country].filter(Boolean).join(', ') || 'Unknown'
   const path = page || '/'
+  const device = parseDevice(ua)
 
-  const text = `${flag} <b>Portfolio visit</b>\n📍 ${location}\n📄 ${path}`
+  const text = `${flag} <b>Portfolio visit</b>\n📍 ${location}\n📄 ${path}\n${device}`
 
   try {
     const response = await fetch(
@@ -80,10 +93,11 @@ export async function POST(request: NextRequest) {
       page = body?.page ?? null
     } catch { /* body optional */ }
 
+    const ua = request.headers.get('user-agent')
     const { success: withinLimit } = await ratelimit.limit('global')
 
     if (withinLimit) {
-      await sendTelegramNotification(country, city, page)
+      await sendTelegramNotification(country, city, page, ua)
     }
 
     await redis.set(visitorKey, '1', { ex: 2592000 })
