@@ -1,18 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { Redis } from '@upstash/redis'
-import { Ratelimit } from '@upstash/ratelimit'
-
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-})
-
-const ratelimit = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(5, '1 m'),
-  analytics: true,
-  prefix: 'ratelimit:visitor-alerts',
-})
 
 function countryFlag(code: string): string {
   const upper = code.toUpperCase()
@@ -75,13 +61,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: true, reason: 'skipped' })
     }
 
-    const visitorKey = `visitor:${ip}`
-    const seen = await redis.get(visitorKey)
-
-    if (seen) {
-      return NextResponse.json({ success: true, reason: 'returning' })
-    }
-
     const country = request.headers.get('x-vercel-ip-country')
     const city = request.headers.get('x-vercel-ip-city')
       ? decodeURIComponent(request.headers.get('x-vercel-ip-city')!)
@@ -94,13 +73,7 @@ export async function POST(request: NextRequest) {
     } catch { /* body optional */ }
 
     const ua = request.headers.get('user-agent')
-    const { success: withinLimit } = await ratelimit.limit('global')
-
-    if (withinLimit) {
-      await sendTelegramNotification(country, city, page, ua)
-    }
-
-    await redis.set(visitorKey, '1', { ex: 2592000 })
+    await sendTelegramNotification(country, city, page, ua)
 
     return NextResponse.json({ success: true, reason: 'new' })
   } catch (error) {
