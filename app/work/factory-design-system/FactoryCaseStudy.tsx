@@ -342,6 +342,7 @@ export default function FactoryCaseStudy() {
                       src="/experiments/token-brand-system"
                       displayUrl="nicolasmenard.design/experiments/factory"
                       title="Factory Design System — live spec app"
+                      internalWidth={800}
                       tabs={[
                         { label: 'Overview', path: '/overview' },
                         { label: 'Colors', path: '/foundations/colors' },

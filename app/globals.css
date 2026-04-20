@@ -221,7 +221,19 @@
     font-variation-settings: 'wght' 700;
     box-shadow: 0 0 0 1.5px rgb(209 213 219 / 0.5);
   }
-  
+
+  /* Light-bg nav links (no-container nav) */
+  .nav-item-light {
+    color: #787774;
+    position: relative;
+    z-index: 1;
+    transition: color 180ms ease, background-color 180ms ease;
+  }
+  .nav-item-light:hover {
+    color: #2F3437;
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
   /* High contrast mode support */
   @media (prefers-contrast: high) {
     .btn-primary {
@@ -246,4 +258,91 @@
   .skip-link {
     @apply sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary-600 focus:text-white focus:rounded-md focus:shadow-lg;
   }
+}
+
+/* Apple-style continuous corners (squircle) via CSS `corner-shape`.
+ * Shipped in Chrome 139+ (Aug 2025), Safari TP. Browsers without support
+ * fall back to existing `border-radius` — zero JS, SSR-safe.
+ *
+ * iOS standard: `superellipse(4)` ≈ Figma smoothing 0.6 ≈ the "Apple squircle".
+ * The CSS `squircle` keyword is defined as this exact value.
+ *
+ * Applied automatically to all card-sized rounded containers (xl/2xl/3xl
+ * and common custom radii). Small radii (<8px) excluded — squircle math
+ * looks visually identical at tiny sizes and can cause subpixel drift
+ * on UI chrome like code blocks and kbd tags.
+ *
+ * To opt-in manually elsewhere: add `squircle` class. */
+@supports (corner-shape: squircle) {
+  /* Manual opt-in */
+  .squircle,
+  .squircle-auto,
+
+  /* Named component classes */
+  .card,
+  .cv-pill,
+
+  /* Tailwind card-sized radii — covers all rounded-lg and up */
+  [class*='rounded-lg'],
+  [class*='rounded-xl'],
+  [class*='rounded-2xl'],
+  [class*='rounded-3xl'],
+
+  /* Common custom radii used across the site (≥ 12px) */
+  [class*='rounded-[1rem]'],
+  [class*='rounded-[1.25rem]'],
+  [class*='rounded-[1.5rem]'],
+  [class*='rounded-[2rem]'],
+  [class*='rounded-[2.5rem]'],
+  [class*='rounded-[12px]'],
+  [class*='rounded-[14px]'],
+  [class*='rounded-[16px]'],
+  [class*='rounded-[20px]'],
+  [class*='rounded-[24px]'],
+  [class*='rounded-[32px]'] {
+    corner-shape: superellipse(4);
+  }
+
+  /* Full-pill shapes (rounded-full) — skip squircle; pills should stay circular */
+}
+
+/* Drop-shadow wrapper for clip-path squircle cards. `box-shadow` is clipped
+ * by `clip-path`, so shadows must come from an ancestor via `filter:
+ * drop-shadow()`, which follows the clipped outline. Hover deepens it. */
+.squircle-shadow {
+  filter: drop-shadow(0 12px 24px rgb(0 0 0 / 0.14)) drop-shadow(0 4px 8px rgb(0 0 0 / 0.08));
+  transition: filter 400ms ease;
+}
+.squircle-shadow:hover,
+.group:hover > .squircle-shadow,
+.squircle-shadow.group:hover {
+  filter: drop-shadow(0 30px 40px rgb(0 0 0 / 0.22)) drop-shadow(0 12px 16px rgb(0 0 0 / 0.12));
+}
+
+/* Scroll-reveal — initial state + revealed state toggle via data attribute.
+ * Used by CV page role entries and can be reused elsewhere. Respects
+ * prefers-reduced-motion via the global rule in @layer utilities above. */
+.reveal {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal[data-revealed='true'] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Nav focus ring — outside Tailwind layers for max specificity.
+ * Targets both <button> and <a> variants. Uses box-shadow (not outline)
+ * so the ring is painted inside the element's stacking context and
+ * can't be clipped by sibling canvases or parent overflow. */
+a.nav-item-light:focus-visible,
+button.nav-item-light:focus-visible,
+.nav-item-light:focus-visible {
+  outline: none !important;
+  box-shadow:
+    0 0 0 2px #ffffff,
+    0 0 0 4px #2563eb !important;
+  border-radius: 6px;
 }

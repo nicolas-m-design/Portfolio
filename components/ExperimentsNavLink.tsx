@@ -62,7 +62,7 @@ export default function ExperimentsNavLink() {
         x, y,
         initVx: Math.cos(angle) * speed,
         initVy: Math.sin(angle) * speed,
-        size: 5 + Math.random() * 4,
+        size: 3 + Math.random() * 2.5,
         angle: Math.random() * Math.PI * 2,
         spin: (Math.random() - 0.5) * 12,  // ±6 rad/s
         life: 600 + Math.random() * 400,
@@ -70,8 +70,8 @@ export default function ExperimentsNavLink() {
       })
     }
 
-    const RATE = 0.008 // sparks per ms ≈ 8/s
-    const MAX  = 10
+    const RATE = 0.003 // sparks per ms ≈ 3/s
+    const MAX  = 4
 
     const tick = (ts: number) => {
       const dt = Math.min(ts - lastTs.current, 50)
@@ -103,6 +103,7 @@ export default function ExperimentsNavLink() {
         ctx.translate(p.x, p.y)
         ctx.rotate(p.angle)
         ctx.scale(scale, scale)
+        ctx.globalAlpha = 1
         ctx.fillStyle   = '#8F4CF2'
         ctx.fill(starPath)
         ctx.restore()
@@ -120,7 +121,7 @@ export default function ExperimentsNavLink() {
   }, [])
 
   return (
-    <span ref={wrapRef} className="relative hidden md:inline-block">
+    <span ref={wrapRef} className="relative hidden md:inline-block overflow-visible">
       <canvas
         ref={canvasRef}
         className="absolute pointer-events-none"
@@ -129,8 +130,7 @@ export default function ExperimentsNavLink() {
       <Link
         ref={linkRef}
         href="/experiments"
-        className="nav-item relative text-gray-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded-full px-3 py-3 block"
-        role="menuitem"
+        className="nav-item-light relative rounded-md px-3 py-2 block"
         aria-label="Navigate to Experiments page"
       >
         Experiments

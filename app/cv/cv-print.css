@@ -257,10 +257,64 @@
 
   /* ── Animation classes — disable on print ── */
   .animate-fade-in,
-  .animate-slide-up {
+  .animate-slide-up,
+  .reveal {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+    transition: none !important;
+  }
+
+  /* ── Role grid: flatten dates-in-gutter on print.
+         Dates inline with heading, separated by " — " via CSS. ── */
+  .cv-role-grid {
+    display: block !important;
+  }
+
+  .cv-role-grid .cv-role-meta {
+    display: inline !important;
+    font-family: inherit !important;
+    font-size: 9pt !important;
+    color: #555 !important;
+    margin: 0 1mm 0 0 !important;
+  }
+
+  .cv-role-grid .cv-role-meta::after {
+    content: ' — ';
+    color: #888;
+  }
+
+  /* Other grid → inline dt/dd list on print */
+  .cv-other-grid {
+    display: block !important;
+  }
+
+  .cv-other-grid dt {
+    display: inline !important;
+    font-family: inherit !important;
+    font-size: 9pt !important;
+    font-weight: 700 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    color: #000 !important;
+    padding: 0 !important;
+  }
+
+  .cv-other-grid dt::after {
+    content: ': ';
+    font-weight: 400;
+  }
+
+  .cv-other-grid dd {
+    display: inline !important;
+    font-size: 9pt !important;
+    color: #333 !important;
+    margin: 0 !important;
+  }
+
+  .cv-other-grid dd::after {
+    content: '\A';
+    white-space: pre;
   }
 
   /* ── Two-column layout → single column on print ── */

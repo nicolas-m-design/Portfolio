@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { AboutMe } from '@/types'
 import ExperimentsNavLink from './ExperimentsNavLink'
 import NavWordmark from './NavWordmark'
@@ -11,64 +12,71 @@ interface NavigationProps {
 }
 
 export default function Navigation({ aboutMe }: NavigationProps) {
-  const router   = useRouter()
+  const router = useRouter()
   const pathname = usePathname()
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 16)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const handleNavigation = (sectionId: string) => {
-    // Check if we're on the homepage
     if (pathname === '/') {
-      // We're on homepage, scroll to section
       const element = document.getElementById(sectionId)
       if (element) {
-        const headerHeight = 80 // Account for fixed header height
+        const headerHeight = 64
         const elementPosition = element.offsetTop - headerHeight
-        window.scrollTo({
-          top: elementPosition,
-          behavior: 'smooth'
-        })
+        window.scrollTo({ top: elementPosition, behavior: 'smooth' })
       }
     } else {
-      // We're on another page (like ProjectDetail), redirect to homepage with anchor
       router.push(`/#${sectionId}`)
     }
   }
 
   return (
-    <header className="fixed top-6 left-0 right-0 z-50" role="banner">
+    <header
+      className={[
+        'fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color] duration-300',
+        scrolled
+          ? 'backdrop-blur-lg border-b border-gray-300'
+          : 'border-b border-transparent',
+      ].join(' ')}
+      role="banner"
+    >
       <nav role="navigation" aria-label="Main navigation">
-        <div className="px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto rounded-full py-3.5 bg-black/90 backdrop-blur-lg border border-gray-800/50">
-            <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8">
-              <NavWordmark />
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 py-4">
+          <NavWordmark />
 
-              <div className="flex items-center gap-1 font-medium text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }} role="menubar" aria-label="Main menu">
-                <button
-                  onClick={() => handleNavigation('work')}
-                  className="nav-item hidden md:block text-gray-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded-full px-3 py-3"
-                  role="menuitem"
-                  aria-label="Navigate to Projects section"
-                >
-                  Projects
-                </button>
-                <button
-                  onClick={() => handleNavigation('contact')}
-                  className="nav-item hidden md:block text-gray-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded-full px-3 py-3"
-                  role="menuitem"
-                  aria-label="Navigate to About me section"
-                >
-                  About me
-                </button>
-                <ExperimentsNavLink />
-                <Link
-                  href="/cv"
-                  className="nav-item text-gray-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded-full px-3 py-3"
-                  role="menuitem"
-                  aria-label="View CV"
-                >
-                  Resume
-                </Link>
-              </div>
-            </div>
+          <div
+            className="flex items-center gap-1 text-sm font-medium"
+            style={{ fontFamily: "'PP Neue Montreal', ui-sans-serif, system-ui, sans-serif" }}
+            aria-label="Main menu"
+          >
+            <button
+              onClick={() => handleNavigation('work')}
+              className="nav-item-light hidden md:block rounded-md px-3 py-2"
+              aria-label="Navigate to Projects section"
+            >
+              Projects
+            </button>
+            <button
+              onClick={() => handleNavigation('contact')}
+              className="nav-item-light hidden md:block rounded-md px-3 py-2"
+              aria-label="Navigate to About me section"
+            >
+              About me
+            </button>
+            <ExperimentsNavLink />
+            <Link
+              href="/cv"
+              className="nav-item-light rounded-md px-3 py-2"
+              aria-label="View CV"
+            >
+              Resume
+            </Link>
           </div>
         </div>
       </nav>

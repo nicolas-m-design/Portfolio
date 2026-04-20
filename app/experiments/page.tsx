@@ -22,7 +22,7 @@ const experiments: Experiment[] = [
     slug: 'animated-wordmark',
     title: 'Animated Wordmark',
     description: 'Variable font wordmark with a traveling weight wave, neon glow, and physics-based spark particles',
-    thumbnail: '/experiments/animated-wordmark.png',
+    bgColor: '#000',
     tags: ['Variable Fonts', 'Canvas', 'CSS'],
   },
   {

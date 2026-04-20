@@ -11,7 +11,7 @@ export default function Contact({ aboutMe }: ContactProps) {
   // If no aboutMe data, show a fallback
   if (!aboutMe || !metadata) {
     return (
-      <section id="contact" className="section bg-white">
+      <section id="contact" className="section" style={{ backgroundColor: '#f9fafb' }}>
         <div className="container">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-2xl md:text-3xl font-normal text-gray-900 mb-4">
@@ -28,7 +28,7 @@ export default function Contact({ aboutMe }: ContactProps) {
   }
 
   return (
-    <section id="contact" className="section bg-white">
+    <section id="contact" className="section" style={{ backgroundColor: '#f9fafb' }}>
       <div className="container">
         <div className="mb-16 flex flex-col lg:flex-row gap-8 lg:gap-16 items-start" data-aos="fade-up">
           {metadata?.profile_image && (

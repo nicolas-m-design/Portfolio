@@ -11,33 +11,45 @@ interface HeroProps {
 
 export default function Hero({ aboutMe }: HeroProps) {
   return (
-    <section className="h-screen md:h-[90vh] flex items-center justify-center relative overflow-hidden pt-16 pb-24 md:pt-24 md:pb-0" role="banner" aria-label="Hero section introducing Nicolas Ménard">
-      {/* Gradient Background */}
-      <div className="absolute inset-0 bg-white" />
+    <section
+      className="h-screen md:h-[90vh] flex items-center justify-center relative overflow-hidden pt-16 pb-24 md:pt-24 md:pb-0"
+      role="banner"
+      aria-label="Hero section introducing Nicolas Ménard"
+    >
+      <div className="absolute inset-0" style={{ backgroundColor: '#f9fafb' }} />
 
-      {/* Content */}
       <div className="container relative z-10 pointer-events-none md:-translate-y-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-start gap-4 md:gap-16">
-          {/* WaveMesh - visible on all screens, right on desktop */}
           {SHOW_WAVE_MESH && (
-            <div className="w-4/5 mx-auto aspect-[4/3] md:w-[400px] md:h-[400px] md:order-2 md:flex-shrink-0 md:aspect-auto md:mx-0 md:ml-8" data-aos="fade-up" data-aos-duration="1000">
+            <div className="w-4/5 mx-auto aspect-[4/3] md:w-[400px] md:h-[400px] md:order-2 md:flex-shrink-0 md:aspect-auto md:mx-0 md:ml-8">
               <WaveMesh />
             </div>
           )}
 
-          {/* Text content - below on mobile, left on desktop */}
           <div className="flex-1 md:order-1 md:max-w-xl lg:max-w-2xl px-4 md:px-0 text-center md:text-left">
-            <h1 className="text-xl md:text-2xl lg:text-3xl text-gray-600 mb-6 font-extrabold leading-relaxed" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+            <h1
+              className="text-xl md:text-2xl lg:text-3xl mb-6 font-medium leading-tight"
+              style={{
+                fontFamily: "'DM Sans', ui-sans-serif, system-ui, sans-serif",
+                color: '#2F3437',
+                letterSpacing: '-0.02em',
+              }}
+            >
               Engineering mindset,<br className="md:hidden" /> user-focused heart
             </h1>
-            <p className="text-lg text-gray-500 leading-6">
-              I'm a results-driven designer who specializes in solving complex product challenges, with proven experience leading teams and conducting user research.
+            <p
+              className="text-base md:text-lg leading-relaxed"
+              style={{ color: '#787774' }}
+            >
+              I&rsquo;m a results-driven designer who specializes in solving
+              complex product challenges, with proven experience leading teams
+              and conducting user research.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Animated arrow */}
+      {/* Scroll cue */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 pointer-events-auto">
         <button
           onClick={() => {
@@ -46,26 +58,23 @@ export default function Hero({ aboutMe }: HeroProps) {
               workSection.scrollIntoView({ behavior: 'smooth' })
             }
           }}
-          className="flex flex-col items-center hover:text-gray-900 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-md p-2"
-          style={{ color: 'rgb(107 114 128 / var(--tw-text-opacity, 1))' }}
+          className="flex flex-col items-center transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-md p-2"
+          style={{ color: '#787774' }}
           aria-label="Scroll to work section"
         >
-          <div className="animate-bounce">
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"
-              />
-            </svg>
-          </div>
+          <svg
+            className="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M19 14l-7 7m0 0l-7-7m7 7V3"
+            />
+          </svg>
         </button>
       </div>
     </section>

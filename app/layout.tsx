@@ -57,7 +57,7 @@ export default function RootLayout({
         {/* Console capture script for dashboard debugging */}
         <script src="/dashboard-console-capture.js" />
       </head>
-      <body className="bg-gray-50 text-gray-900">
+      <body className="bg-white text-gray-900">
         <ClientAOSProvider>
           {children}
         </ClientAOSProvider>
