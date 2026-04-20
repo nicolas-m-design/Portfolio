@@ -19,13 +19,24 @@ function parseDevice(ua: string | null): string {
   return '🖥️ Unknown'
 }
 
+function parseBrowser(ua: string | null): string {
+  if (!ua) return 'Unknown'
+  if (/Edg\//i.test(ua)) return 'Edge'
+  if (/OPR\//i.test(ua)) return 'Opera'
+  if (/Chrome\//i.test(ua)) return 'Chrome'
+  if (/Firefox\//i.test(ua)) return 'Firefox'
+  if (/Safari\//i.test(ua)) return 'Safari'
+  return 'Unknown'
+}
+
 async function sendTelegramNotification(country: string | null, city: string | null, page: string | null, ua: string | null) {
   const flag = country ? countryFlag(country) : '🌐'
   const location = [city, country].filter(Boolean).join(', ') || 'Unknown'
   const path = page || '/'
   const device = parseDevice(ua)
+  const browser = parseBrowser(ua)
 
-  const text = `${flag} <b>Portfolio visit</b>\n📍 ${location}\n📄 ${path}\n${device}`
+  const text = `${flag} <b>Portfolio visit</b>\n📍 ${location}\n📄 ${path}\n${device} · ${browser}`
 
   try {
     const response = await fetch(
