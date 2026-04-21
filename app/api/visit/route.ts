@@ -68,7 +68,8 @@ export async function POST(request: NextRequest) {
       request.headers.get('x-real-ip') ||
       'unknown'
 
-    if (ip === 'unknown' || ip === '127.0.0.1' || ip === '::1') {
+    const ownerIPs = (process.env.OWNER_IP ?? '').split(',').map(s => s.trim())
+    if (ip === 'unknown' || ip === '127.0.0.1' || ip === '::1' || ownerIPs.includes(ip)) {
       return NextResponse.json({ success: true, reason: 'skipped' })
     }
 
