@@ -25,7 +25,7 @@ function getProjectTypeLabel(
   projectType: { key: string; value: string } | string[] | undefined
 ): string {
   if (!projectType) return 'Case Study'
-  if (Array.isArray(projectType)) return projectType[0] || 'Case Study'
+  if (Array.isArray(projectType)) return projectType.slice(0, 2).join(' · ') || 'Case Study'
   if (typeof projectType === 'object' && 'value' in projectType) return projectType.value
   return 'Case Study'
 }
