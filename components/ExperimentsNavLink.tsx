@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useRef } from 'react'
+import SquircleFocusRing from './SquircleFocusRing'
 
 const STAR  = 'M0,-6 L1.2,-1.2 L6,0 L1.2,1.2 L0,6 L-1.2,1.2 L-6,0 L-1.2,-1.2 Z'
 const BLEED = 32 // px canvas extends beyond link bounds
@@ -134,6 +135,7 @@ export default function ExperimentsNavLink() {
         aria-label="Navigate to Experiments page"
       >
         Experiments
+        <SquircleFocusRing cornerRadius={8} cornerSmoothing={0.8} offset={2} strokeWidth={2} />
       </Link>
     </span>
   )

@@ -11,10 +11,10 @@ export default function Experience({ experiences }: ExperienceProps) {
   }
 
   return (
-    <section id="experience" className="section bg-white" aria-labelledby="experience-heading">
+    <section id="experience" className="section bg-white dark:bg-black" aria-labelledby="experience-heading">
       <div className="container">
         <div className="mb-16" data-aos="fade-up">
-          <h2 id="experience-heading" className="text-2xl md:text-3xl font-normal text-gray-900 leading-tight pl-4 md:pl-0">
+          <h2 id="experience-heading" className="text-2xl md:text-3xl font-normal text-gray-900 dark:text-gray-100 leading-tight pl-4 md:pl-0">
             Experience
           </h2>
         </div>

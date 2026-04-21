@@ -37,7 +37,7 @@ export default async function CVPage({ searchParams }: PageProps) {
   const aboutMe = await getAboutMe().catch(() => null)
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#f9fafb' }}>
+    <div className="min-h-screen bg-gray-50 dark:bg-black">
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>

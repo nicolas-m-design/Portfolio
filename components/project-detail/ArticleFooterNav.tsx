@@ -15,7 +15,7 @@ export default function ArticleFooterNav({ next }: { next: NextProject }) {
     <nav className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-8 pt-16">
       <Link
         href="/#work"
-        className="group text-gray-600 hover:text-gray-900 font-medium transition-colors text-sm"
+        className="group text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white font-medium transition-colors text-sm"
       >
         <span className="inline-block transition-transform group-hover:-translate-x-1">←</span>{' '}
         Back to all work
@@ -25,11 +25,11 @@ export default function ArticleFooterNav({ next }: { next: NextProject }) {
         href={`/work/${next.slug}`}
         className="group text-right block"
       >
-        <span className="block text-gray-500 uppercase tracking-wider text-[11px] font-medium mb-2">
+        <span className="block text-gray-500 dark:text-gray-400 uppercase tracking-wider text-[11px] font-medium mb-2">
           Next project
         </span>
         <span
-          className="block text-gray-900 group-hover:text-primary-600 transition-colors"
+          className="block text-gray-900 dark:text-white group-hover:text-primary-600 transition-colors"
           style={{
             fontFamily: "'DM Sans', ui-sans-serif, system-ui, sans-serif",
             fontSize: 'clamp(22px, 2.4vw, 28px)',

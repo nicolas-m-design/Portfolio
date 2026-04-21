@@ -173,7 +173,7 @@ The build runs token generation first and fails on any drift. \`npm run build\` 
 
 ### What shipped
 
-A 12-route spec app. 14 component families. 53 primitive tokens. 92 semantic aliases. 33 curated icons. Zero primitive tokens leaking into component CSS. One markdown contract governing it all. Three weeks, solo, with Claude Code and Codex as the execution layer.
+A 12-route spec app. 14 component families. 53 primitive tokens. 92 semantic aliases. 33 curated icons. Zero primitive tokens leaking into component CSS. One markdown contract governing it all. A few days, solo, with Claude Code and Codex as the execution layer.
 
 ### What still doesn't work
 
@@ -199,7 +199,7 @@ Two things I'm taking from this.
 - Build a visual-diff tool between the Figma library and the coded spec pages from the beginning. Drift is easier to prevent than to clean up.
 - Write more quotable rules. Agents execute better against *"one value, no exceptions"* than against *"consider using a single radius value where appropriate."*
 
-Factory is a three-week experiment. The next version is a three-month one, where the markdown contract governs not just tokens and components but product motion, copy, and metrics.
+Factory is a few-days experiment. The next version is a longer one, where the markdown contract governs not just tokens and components but product motion, copy, and metrics.
 `
 
 // When no next manual project exists, link to the EF global navigation case study.
@@ -252,14 +252,14 @@ export default function FactoryCaseStudy() {
       <div className="container article-column">
         <div>
           <p
-            className="text-gray-500 font-medium tracking-widest uppercase mb-6"
+            className="text-gray-500 dark:text-gray-400 font-medium tracking-widest uppercase mb-6"
             style={{ fontSize: '12px', letterSpacing: '0.12em' }}
           >
             Design System
           </p>
 
           <h1
-            className="text-gray-900 mb-8"
+            className="text-gray-900 dark:text-white mb-8"
             style={{
               fontFamily: "'DM Sans', ui-sans-serif, system-ui, sans-serif",
               fontSize: 'clamp(40px, 6vw, 56px)',
@@ -273,7 +273,7 @@ export default function FactoryCaseStudy() {
           </h1>
 
           <p
-            className="text-gray-700 mb-12"
+            className="text-gray-700 dark:text-gray-300 mb-12"
             style={{
               fontFamily: "'PP Neue Montreal', ui-sans-serif, system-ui, sans-serif",
               fontSize: 'clamp(18px, 1.6vw, 20px)',

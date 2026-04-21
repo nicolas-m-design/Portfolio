@@ -22,7 +22,7 @@ const experiments: Experiment[] = [
     slug: 'animated-wordmark',
     title: 'Animated Wordmark',
     description: 'Variable font wordmark with a traveling weight wave, neon glow, and physics-based spark particles',
-    bgColor: '#000',
+    bgColor: '#111',
     tags: ['Variable Fonts', 'Canvas', 'CSS'],
   },
   {
@@ -60,7 +60,7 @@ export default async function ExperimentsPage() {
       <main id="main-content" role="main" className="pt-48 pb-16">
         <div className="container">
           <div className="mb-16" data-aos="fade-up">
-            <h1 className="text-2xl md:text-3xl font-normal text-gray-900 leading-tight max-w-[960px]">
+            <h1 className="text-2xl md:text-3xl font-normal text-gray-900 dark:text-gray-100 leading-tight max-w-[960px]">
               I like building things just to see if they work. These are small experiments made with AI tools where I try ideas and learn along the way.
             </h1>
           </div>

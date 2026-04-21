@@ -57,7 +57,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-black">
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>

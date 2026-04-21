@@ -16,7 +16,7 @@ export default function Hero({ aboutMe }: HeroProps) {
       role="banner"
       aria-label="Hero section introducing Nicolas Ménard"
     >
-      <div className="absolute inset-0" style={{ backgroundColor: '#f9fafb' }} />
+      <div className="absolute inset-0 bg-gray-50 dark:bg-black" />
 
       <div className="container relative z-10 pointer-events-none md:-translate-y-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-start gap-4 md:gap-16">
@@ -28,19 +28,15 @@ export default function Hero({ aboutMe }: HeroProps) {
 
           <div className="flex-1 md:order-1 md:max-w-xl lg:max-w-2xl px-4 md:px-0 text-center md:text-left">
             <h1
-              className="text-xl md:text-2xl lg:text-3xl mb-6 font-medium leading-tight"
+              className="text-xl md:text-2xl lg:text-3xl mb-6 font-medium leading-tight text-[#2F3437] dark:text-gray-100"
               style={{
                 fontFamily: "'DM Sans', ui-sans-serif, system-ui, sans-serif",
-                color: '#2F3437',
                 letterSpacing: '-0.02em',
               }}
             >
               Engineering mindset,<br className="md:hidden" /> user-focused heart
             </h1>
-            <p
-              className="text-base md:text-lg leading-relaxed"
-              style={{ color: '#787774' }}
-            >
+            <p className="text-base md:text-lg leading-relaxed text-[#787774] dark:text-gray-400">
               I&rsquo;m a results-driven designer who specializes in solving
               complex product challenges, with proven experience leading teams
               and conducting user research.
@@ -58,8 +54,7 @@ export default function Hero({ aboutMe }: HeroProps) {
               workSection.scrollIntoView({ behavior: 'smooth' })
             }
           }}
-          className="flex flex-col items-center transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-md p-2"
-          style={{ color: '#787774' }}
+          className="flex flex-col items-center transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded-md p-2 text-[#787774] dark:text-gray-500"
           aria-label="Scroll to work section"
         >
           <svg

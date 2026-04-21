@@ -114,7 +114,7 @@ export default function AgentTraceCard() {
         </div>
       </div>
 
-      <figcaption className="mt-3 text-center text-xs text-gray-500">
+      <figcaption className="mt-3 text-center text-xs text-gray-500 dark:text-gray-400">
         Agent session: Button Loading state reconciled from Figma to code. The
         agent never invented anything — every move is bound to an explicit
         rule.

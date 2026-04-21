@@ -64,7 +64,7 @@ function useReveal<T extends HTMLElement>(delayMs = 0) {
 // Relies on vertical rhythm for separation, not hairlines.
 function SectionTitle({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <h2 className={`cv-section-title text-[9.5px] font-semibold uppercase tracking-[0.14em] text-gray-500 mb-4 mt-12 ${className}`}>
+    <h2 className={`cv-section-title text-[9.5px] font-semibold uppercase tracking-[0.14em] text-gray-500 dark:text-gray-400 mb-4 mt-12 ${className}`}>
       {children}
     </h2>
   )
@@ -73,8 +73,7 @@ function SectionTitle({ children, className = '' }: { children: React.ReactNode;
 function SkillPill({ label }: { label: string }) {
   return (
     <span
-      className="cv-pill inline-block px-2 py-[3px] text-[11px] text-gray-800 leading-none rounded-[4px]"
-      style={{ backgroundColor: '#EFEEEA' }}
+      className="cv-pill inline-block px-2 py-[3px] text-[11px] text-gray-800 dark:text-gray-200 bg-[#EFEEEA] dark:bg-[#1e1e1e] leading-none rounded-[4px]"
     >
       {label}
     </span>
@@ -93,22 +92,22 @@ function RoleEntry({ role, variant, index }: { role: CVRole; variant: CVVariant;
       {/* 2-col grid on screen: dates in left gutter (editorial), content right.
           Collapses to single column on print via cv-print.css. */}
       <div className="cv-role-grid grid grid-cols-[110px_1fr] gap-x-6 max-[640px]:grid-cols-1 max-[640px]:gap-y-1">
-        <p className="cv-role-meta text-[11px] text-gray-600 font-mono pt-[3px] tabular-nums">
+        <p className="cv-role-meta text-[11px] text-gray-600 dark:text-gray-400 font-mono pt-[3px] tabular-nums">
           {role.dates}
         </p>
         <div>
           <header className="mb-2.5">
-            <h3 className="cv-role-heading text-[13px] font-semibold text-black leading-snug">
+            <h3 className="cv-role-heading text-[13px] font-semibold text-black dark:text-white leading-snug">
               {role.title}
-              <span className="font-normal text-gray-600 italic"> — {role.company}</span>
+              <span className="font-normal text-gray-600 dark:text-gray-400 italic"> — {role.company}</span>
             </h3>
             {role.location && (
-              <p className="cv-role-location text-[11px] text-gray-600 mt-0.5">
+              <p className="cv-role-location text-[11px] text-gray-600 dark:text-gray-400 mt-0.5">
                 {role.location}
               </p>
             )}
             {role.context && (
-              <p className="cv-role-context text-[11px] text-gray-600 italic mt-1.5 leading-relaxed">
+              <p className="cv-role-context text-[11px] text-gray-600 dark:text-gray-400 italic mt-1.5 leading-relaxed">
                 {role.context}
               </p>
             )}
@@ -123,10 +122,10 @@ function RoleEntry({ role, variant, index }: { role: CVRole; variant: CVVariant;
               </p>
             )}
           </header>
-          <ul className="cv-bullets space-y-1.5 text-[13px] text-gray-700 leading-[1.65]">
+          <ul className="cv-bullets space-y-1.5 text-[13px] text-gray-700 dark:text-gray-300 leading-[1.65]">
             {bullets.map((b, j) => (
               <li key={j} className="flex gap-2.5">
-                <span className="text-gray-400 mt-[6px] shrink-0 w-[3px] h-[3px] rounded-full bg-gray-400" aria-hidden />
+                <span className="text-gray-400 mt-[6px] shrink-0 w-[3px] h-[3px] rounded-full bg-gray-400 dark:bg-gray-600" aria-hidden />
                 <span>{b.text}</span>
               </li>
             ))}
@@ -147,12 +146,14 @@ export default function CurriculumVitae({ variant }: Props) {
 
         {/* ── Controls — screen only. Flat (no shadow), editorial. ── */}
         <div className="cv-no-print px-8 pt-36 pb-5 flex flex-wrap items-center justify-between gap-3 animate-fade-in">
-          <nav aria-label="Resume variant" className="flex rounded-full border border-gray-200 bg-white p-1">
+          <nav aria-label="Resume variant" className="flex rounded-full border border-gray-200 dark:border-[#222] bg-white dark:bg-[#111] p-1">
             <Link
               href="?variant=de"
               aria-current={variant === 'de' ? 'page' : undefined}
               className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
-                variant === 'de' ? 'bg-black text-white' : 'text-gray-700 hover:text-black'
+                variant === 'de'
+                  ? 'bg-black dark:bg-white text-white dark:text-black cursor-default pointer-events-none'
+                  : 'text-gray-700 dark:text-gray-400 hover:text-black dark:hover:text-white'
               }`}
             >
               Design Engineer
@@ -161,20 +162,22 @@ export default function CurriculumVitae({ variant }: Props) {
               href="?variant=ux"
               aria-current={variant === 'ux' ? 'page' : undefined}
               className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
-                variant === 'ux' ? 'bg-black text-white' : 'text-gray-700 hover:text-black'
+                variant === 'ux'
+                  ? 'bg-black dark:bg-white text-white dark:text-black cursor-default pointer-events-none'
+                  : 'text-gray-700 dark:text-gray-400 hover:text-black dark:hover:text-white'
               }`}
             >
               Product Designer
             </Link>
           </nav>
           <div className="flex items-center gap-3">
-            <span className="hidden sm:block text-[10px] text-gray-500 leading-snug max-w-[200px] text-right">
-              Print → "Save as PDF" strips styling for ATS.
+            <span className="hidden sm:block text-xs text-gray-500 dark:text-gray-500">
+              Save as PDF
             </span>
             <button
               type="button"
               onClick={() => window.print()}
-              className="rounded-full border border-gray-200 bg-white px-4 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 active:scale-[0.98] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+              className="rounded-full border border-gray-200 dark:border-[#222] bg-white dark:bg-[#111] px-4 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#1a1a1a] active:scale-[0.98] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
               aria-label="Save resume as PDF"
             >
               <span aria-hidden>↓</span> Save as PDF
@@ -193,12 +196,12 @@ export default function CurriculumVitae({ variant }: Props) {
           */}
           <aside
             aria-label="Contact and skills"
-            className="cv-sidebar lg:border-r lg:border-gray-100 px-8 pt-10 lg:pt-14 pb-10 lg:sticky lg:top-20 lg:max-h-[calc(100vh-5rem)] lg:overflow-y-auto animate-slide-up"
+            className="cv-sidebar lg:border-r lg:border-gray-100 dark:lg:border-[#222] px-8 pt-10 lg:pt-14 pb-10 lg:sticky lg:top-20 lg:max-h-[calc(100vh-5rem)] lg:overflow-y-auto animate-slide-up"
             style={{ animationFillMode: 'both' }}
           >
             {/* Name */}
             <h1
-              className="cv-name text-black leading-[0.92] mb-3"
+              className="cv-name text-black dark:text-white leading-[0.92] mb-3"
               style={{
                 fontFamily: "'DM Sans', ui-sans-serif, system-ui, sans-serif",
                 fontSize: 'clamp(40px, 4.5vw, 56px)',
@@ -212,18 +215,18 @@ export default function CurriculumVitae({ variant }: Props) {
 
             {/* Headline */}
             <p
-              className="cv-headline text-[13px] font-medium text-gray-700 leading-[1.4] mb-6"
+              className="cv-headline text-[13px] font-medium text-gray-700 dark:text-gray-300 leading-[1.4] mb-6"
               style={{ textWrap: 'balance' }}
             >
               {cv.headline[variant]}
             </p>
 
             {/* Rule */}
-            <div className="h-px bg-gray-200 mb-5" />
+            <div className="h-px bg-gray-200 dark:bg-[#222] mb-5" />
 
             {/* Contact — flex-col on screen, flex-wrap on print (via cv-print.css).
                 Separator spans are hidden on screen, revealed on print. */}
-            <div className="cv-contact-row flex flex-col gap-[5px] text-[12px] text-gray-700">
+            <div className="cv-contact-row flex flex-col gap-[5px] text-[12px] text-gray-700 dark:text-gray-300">
               <span>{cv.contact.location}</span>
               {cv.contact.legalStatus && (
                 <>
@@ -234,7 +237,7 @@ export default function CurriculumVitae({ variant }: Props) {
               <span className="cv-sep hidden text-gray-300" aria-hidden>·</span>
               <a
                 href={`mailto:${cv.contact.email}`}
-                className="hover:text-black transition-colors"
+                className="hover:text-black dark:hover:text-white transition-colors"
               >
                 {cv.contact.email}
               </a>
@@ -247,7 +250,7 @@ export default function CurriculumVitae({ variant }: Props) {
               {cv.contact.links.map((l) => (
                 <span key={l.href} className="contents">
                   <span className="cv-sep hidden text-gray-300" aria-hidden>·</span>
-                  <a href={l.href} className="hover:text-black transition-colors">
+                  <a href={l.href} className="hover:text-black dark:hover:text-white transition-colors">
                     {l.label}
                   </a>
                 </span>
@@ -260,7 +263,7 @@ export default function CurriculumVitae({ variant }: Props) {
               <div className="cv-skills-groups flex flex-col gap-5">
                 {skills.map((group) => (
                   <div key={group.label} className="cv-skills-group">
-                    <span className="cv-skills-group-label block text-[9.5px] font-semibold uppercase tracking-[0.14em] text-gray-500 mb-2">
+                    <span className="cv-skills-group-label block text-[9.5px] font-semibold uppercase tracking-[0.14em] text-gray-500 dark:text-gray-400 mb-2">
                       {group.label}
                     </span>
                     <ul className="cv-skills-group-items flex flex-wrap gap-1.5 list-none p-0">
@@ -283,7 +286,7 @@ export default function CurriculumVitae({ variant }: Props) {
           >
             {/* Summary — larger, editorial feel. Tighter measure for reading rhythm. */}
             <p
-              className="cv-summary text-[17px] leading-[1.65] text-gray-800 mb-4 max-w-[52ch]"
+              className="cv-summary text-[17px] leading-[1.65] text-gray-800 dark:text-gray-200 mb-4 max-w-[52ch]"
               style={{ textWrap: 'pretty' }}
             >
               {cv.summary[variant]}
@@ -306,19 +309,19 @@ export default function CurriculumVitae({ variant }: Props) {
                 {cv.education.map((e, i) => (
                   <div key={i} className="cv-role">
                     <div className="cv-role-grid grid grid-cols-[110px_1fr] gap-x-6 max-[640px]:grid-cols-1 max-[640px]:gap-y-1">
-                      <p className="cv-role-meta text-[11px] text-gray-600 font-mono pt-[3px] tabular-nums">
+                      <p className="cv-role-meta text-[11px] text-gray-600 dark:text-gray-400 font-mono pt-[3px] tabular-nums">
                         {e.dates}
                       </p>
                       <div>
-                        <h3 className="cv-role-heading text-[13px] font-semibold text-black leading-snug">
+                        <h3 className="cv-role-heading text-[13px] font-semibold text-black dark:text-white leading-snug">
                           {e.degree}
-                          <span className="font-normal text-gray-600 italic"> — {e.school}</span>
+                          <span className="font-normal text-gray-600 dark:text-gray-400 italic"> — {e.school}</span>
                         </h3>
                         {e.location && (
-                          <p className="text-[11px] text-gray-600 mt-0.5">{e.location}</p>
+                          <p className="text-[11px] text-gray-600 dark:text-gray-400 mt-0.5">{e.location}</p>
                         )}
                         {e.detail && (
-                          <p className="text-[11px] text-gray-600 italic mt-1 leading-relaxed">
+                          <p className="text-[11px] text-gray-600 dark:text-gray-400 italic mt-1 leading-relaxed">
                             {e.detail}
                           </p>
                         )}
@@ -335,8 +338,8 @@ export default function CurriculumVitae({ variant }: Props) {
                 <SectionTitle>Certifications</SectionTitle>
                 <ul className="flex flex-col gap-2">
                   {cv.certifications.map((c, i) => (
-                    <li key={i} className="flex gap-2.5 text-[13px] text-gray-700 leading-[1.6]">
-                      <span className="mt-[7px] shrink-0 w-[3px] h-[3px] rounded-full bg-gray-400" aria-hidden />
+                    <li key={i} className="flex gap-2.5 text-[13px] text-gray-700 dark:text-gray-300 leading-[1.6]">
+                      <span className="mt-[7px] shrink-0 w-[3px] h-[3px] rounded-full bg-gray-400 dark:bg-gray-600" aria-hidden />
                       <span>{c}</span>
                     </li>
                   ))}
@@ -350,11 +353,11 @@ export default function CurriculumVitae({ variant }: Props) {
                 <SectionTitle>Awards</SectionTitle>
                 <ul className="flex flex-col gap-2">
                   {cv.awards.map((a, i) => (
-                    <li key={i} className="flex gap-2.5 text-[13px] text-gray-700 leading-[1.6]">
-                      <span className="mt-[7px] shrink-0 w-[3px] h-[3px] rounded-full bg-gray-400" aria-hidden />
+                    <li key={i} className="flex gap-2.5 text-[13px] text-gray-700 dark:text-gray-300 leading-[1.6]">
+                      <span className="mt-[7px] shrink-0 w-[3px] h-[3px] rounded-full bg-gray-400 dark:bg-gray-600" aria-hidden />
                       <span>
                         {a.title}
-                        {a.issuer && <span className="text-gray-600 italic"> — {a.issuer}</span>}
+                        {a.issuer && <span className="text-gray-600 dark:text-gray-400 italic"> — {a.issuer}</span>}
                       </span>
                     </li>
                   ))}
@@ -368,20 +371,20 @@ export default function CurriculumVitae({ variant }: Props) {
                 <SectionTitle>Publications</SectionTitle>
                 <ul className="flex flex-col gap-2">
                   {cv.publications.map((p, i) => (
-                    <li key={i} className="flex gap-2.5 text-[13px] text-gray-700 leading-[1.6]">
-                      <span className="mt-[7px] shrink-0 w-[3px] h-[3px] rounded-full bg-gray-400" aria-hidden />
+                    <li key={i} className="flex gap-2.5 text-[13px] text-gray-700 dark:text-gray-300 leading-[1.6]">
+                      <span className="mt-[7px] shrink-0 w-[3px] h-[3px] rounded-full bg-gray-400 dark:bg-gray-600" aria-hidden />
                       <span>
                         {p.href ? (
                           <a
                             href={p.href}
-                            className="underline underline-offset-2 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 rounded-sm"
+                            className="underline underline-offset-2 hover:text-black dark:hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 rounded-sm"
                           >
                             {p.title}
                           </a>
                         ) : (
                           p.title
                         )}
-                        {p.venue && <span className="text-gray-600 italic"> — {p.venue}</span>}
+                        {p.venue && <span className="text-gray-600 dark:text-gray-400 italic"> — {p.venue}</span>}
                       </span>
                     </li>
                   ))}
@@ -394,39 +397,39 @@ export default function CurriculumVitae({ variant }: Props) {
             <section>
               <SectionTitle>Other</SectionTitle>
               <dl className="cv-other-grid grid grid-cols-[110px_1fr] gap-x-6 gap-y-2.5 text-[13px] max-[640px]:grid-cols-1 max-[640px]:gap-y-1">
-                <dt className="text-[11px] text-gray-600 font-mono pt-[2px] uppercase tracking-wider">
+                <dt className="text-[11px] text-gray-600 dark:text-gray-400 font-mono pt-[2px] uppercase tracking-wider">
                   Languages
                 </dt>
-                <dd className="text-gray-700 leading-[1.55]">{cv.languages.join(' · ')}</dd>
+                <dd className="text-gray-700 dark:text-gray-300 leading-[1.55]">{cv.languages.join(' · ')}</dd>
 
                 {cv.interests && cv.interests.length > 0 && (
                   <>
-                    <dt className="text-[11px] text-gray-600 font-mono pt-[2px] uppercase tracking-wider">
+                    <dt className="text-[11px] text-gray-600 dark:text-gray-400 font-mono pt-[2px] uppercase tracking-wider">
                       Outside work
                     </dt>
-                    <dd className="text-gray-700 leading-[1.55]">{cv.interests.join(' · ')}</dd>
+                    <dd className="text-gray-700 dark:text-gray-300 leading-[1.55]">{cv.interests.join(' · ')}</dd>
                   </>
                 )}
 
-                <dt className="text-[11px] text-gray-600 font-mono pt-[2px] uppercase tracking-wider">
+                <dt className="text-[11px] text-gray-600 dark:text-gray-400 font-mono pt-[2px] uppercase tracking-wider">
                   References
                 </dt>
-                <dd className="text-gray-700 leading-[1.55]">Available on request.</dd>
+                <dd className="text-gray-700 dark:text-gray-300 leading-[1.55]">Available on request.</dd>
               </dl>
             </section>
 
             {/* Footer variant switcher — screen only. Animated arrow on hover. */}
-            <div className="cv-no-print mt-20 pt-6 border-t border-gray-200 flex items-center justify-between text-[11px] text-gray-600">
+            <div className="cv-no-print mt-20 pt-6 border-t border-gray-200 dark:border-[#222] flex items-center justify-between text-[11px] text-gray-600 dark:text-gray-400">
               <span>
                 Viewing{' '}
-                <strong className="text-black font-medium">
+                <strong className="text-black dark:text-white font-medium">
                   {variant === 'de' ? 'Design Engineer' : 'Product Designer'}
                 </strong>{' '}
                 variant
               </span>
               <Link
                 href={`?variant=${otherVariant}`}
-                className="group inline-flex items-center gap-1 underline underline-offset-4 hover:text-black transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 rounded-sm"
+                className="group inline-flex items-center gap-1 underline underline-offset-4 hover:text-black dark:hover:text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 rounded-sm"
               >
                 Switch to {otherVariant === 'de' ? 'Design Engineer' : 'Product Designer'}
                 <span aria-hidden className="transition-transform group-hover:translate-x-0.5">→</span>

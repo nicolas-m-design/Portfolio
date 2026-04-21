@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useSquircle } from '@/hooks/useSquircle'
+import SquircleFocusRing from './SquircleFocusRing'
 
 export interface Experiment {
   slug: string
@@ -31,7 +32,7 @@ export default function ExperimentCard({ experiment }: ExperimentCardProps) {
   const href = `/experiments/${slug}`
   const commonProps = {
     className:
-      'block group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-50 rounded-2xl transition-colors duration-200 squircle-shadow',
+      'relative block group focus:outline-none rounded-2xl transition-colors duration-200 squircle-shadow dark:ring-1 dark:ring-white/[0.15] dark:rounded-[28px]',
     'aria-label': `View experiment: ${title}`,
     tabIndex: 0,
   }
@@ -106,13 +107,17 @@ export default function ExperimentCard({ experiment }: ExperimentCardProps) {
       </article>
   )
 
+  const ring = <SquircleFocusRing cornerRadius={28} cornerSmoothing={0.8} />
+
   return newTab ? (
     <a href={href} target="_blank" rel="noopener noreferrer" {...commonProps}>
       {articleEl}
+      {ring}
     </a>
   ) : (
     <Link href={href} {...commonProps}>
       {articleEl}
+      {ring}
     </Link>
   )
 }

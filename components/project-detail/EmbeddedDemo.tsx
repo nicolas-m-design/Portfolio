@@ -132,9 +132,9 @@ export default function EmbeddedDemo({
 
   return (
     <figure className="my-4">
-      <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-lg border border-gray-200 dark:border-[#222] bg-white dark:bg-[#111] shadow-sm dark:shadow-none">
         {/* Browser chrome */}
-        <div className="flex items-center gap-3 border-b border-gray-200 bg-gray-50 px-3 py-2.5">
+        <div className="flex items-center gap-3 border-b border-gray-200 dark:border-[#222] bg-gray-50 dark:bg-[#1a1a1a] px-3 py-2.5">
           {/* Traffic-light dots */}
           <div className="flex items-center gap-1.5 shrink-0" aria-hidden="true">
             <span className="block h-3 w-3 rounded-full bg-[#FF5F57]" />
@@ -144,7 +144,7 @@ export default function EmbeddedDemo({
 
           {/* URL pill */}
           <div className="flex-1 min-w-0">
-            <div className="truncate rounded-md border border-gray-200 bg-white px-3 py-1 text-center text-xs text-gray-600">
+            <div className="truncate rounded-md border border-gray-200 dark:border-[#333] bg-white dark:bg-[#111] px-3 py-1 text-center text-xs text-gray-600 dark:text-gray-400">
               {shownUrl}
               {tabs && activePath ? (
                 <span className="text-gray-400">#{activePath}</span>
@@ -157,7 +157,7 @@ export default function EmbeddedDemo({
             href={tabs && activePath ? `${src}#${activePath}` : src}
             target="_blank"
             rel="noopener noreferrer"
-            className="shrink-0 rounded-md border border-gray-200 bg-white px-3 py-1 text-xs font-medium text-gray-700 transition-colors hover:text-gray-900 hover:border-gray-300"
+            className="shrink-0 rounded-md border border-gray-200 dark:border-[#333] bg-white dark:bg-[#111] px-3 py-1 text-xs font-medium text-gray-700 dark:text-gray-300 transition-colors hover:text-gray-900 hover:border-gray-300 dark:hover:text-gray-100 dark:hover:border-[#444]"
           >
             View Full Page <span aria-hidden="true">↗</span>
           </a>
@@ -168,7 +168,7 @@ export default function EmbeddedDemo({
           <div
             role="tablist"
             aria-label={`${title} sections`}
-            className="flex items-center gap-1 border-b border-gray-200 bg-white px-3 pt-2"
+            className="flex items-center gap-1 border-b border-gray-200 dark:border-[#222] bg-white dark:bg-[#111] px-3 pt-2"
           >
             {tabs.map((tab, i) => {
               const isActive = i === activeTab
@@ -182,8 +182,8 @@ export default function EmbeddedDemo({
                     'shrink-0 rounded-t-md px-3 py-2 text-xs font-medium transition-colors',
                     'border border-b-0',
                     isActive
-                      ? 'border-gray-200 bg-white text-gray-900 -mb-px'
-                      : 'border-transparent text-gray-500 hover:text-gray-800',
+                      ? 'border-gray-200 dark:border-[#333] bg-white dark:bg-[#1a1a1a] text-gray-900 dark:text-gray-100 -mb-px'
+                      : 'border-transparent text-gray-500 dark:text-gray-500 hover:text-gray-800 dark:hover:text-gray-300',
                   ].join(' ')}
                 >
                   {tab.label}
@@ -196,7 +196,7 @@ export default function EmbeddedDemo({
         {/* Iframe (rendered at internalWidth, scaled to fit) */}
         <div
           ref={scaleWrapRef}
-          className="relative w-full overflow-hidden bg-white"
+          className="relative w-full overflow-hidden bg-white dark:bg-[#111]"
           style={{ aspectRatio }}
         >
           <iframe
@@ -218,7 +218,7 @@ export default function EmbeddedDemo({
       </div>
 
       {caption && (
-        <figcaption className="mt-3 text-center text-xs text-gray-500">
+        <figcaption className="mt-3 text-center text-xs text-gray-500 dark:text-gray-400">
           {caption}
         </figcaption>
       )}

@@ -23,17 +23,17 @@ export default function ContractTriangleDiagram() {
           {/* left edge: apex → bottom-left */}
           <line
             x1="320" y1="70" x2="130" y2="310"
-            stroke="#d1d5db" strokeWidth="1.5"
+            className="stroke-gray-300 dark:stroke-[#333]" strokeWidth="1.5"
           />
           {/* right edge: apex → bottom-right */}
           <line
             x1="320" y1="70" x2="510" y2="310"
-            stroke="#d1d5db" strokeWidth="1.5"
+            className="stroke-gray-300 dark:stroke-[#333]" strokeWidth="1.5"
           />
           {/* base edge: bottom-left → bottom-right */}
           <line
             x1="130" y1="310" x2="510" y2="310"
-            stroke="#d1d5db" strokeWidth="1.5"
+            className="stroke-gray-300 dark:stroke-[#333]" strokeWidth="1.5"
           />
         </svg>
 
@@ -71,7 +71,7 @@ export default function ContractTriangleDiagram() {
         </div>
       </div>
 
-      <figcaption className="mt-3 text-center text-xs text-gray-500">
+      <figcaption className="mt-3 text-center text-xs text-gray-500 dark:text-gray-400">
         Each artifact references the other two. Every AI agent has a stable
         reference point on any decision.
       </figcaption>
@@ -89,20 +89,20 @@ function Node({
   body: string
 }) {
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-[0_1px_0_rgba(17,24,39,0.03)]">
+    <div className="rounded-lg border border-gray-200 dark:border-[#222] bg-white dark:bg-[#111] p-4 shadow-[0_1px_0_rgba(17,24,39,0.03)] dark:shadow-none">
       <p
-        className="mb-2 text-[11px] font-medium uppercase text-gray-500"
+        className="mb-2 text-[11px] font-medium uppercase text-gray-500 dark:text-gray-400"
         style={{ letterSpacing: '0.12em' }}
       >
         {eyebrow}
       </p>
       <p
-        className="mb-1 font-mono text-[13px] text-gray-900"
+        className="mb-1 font-mono text-[13px] text-gray-900 dark:text-gray-100"
         style={{ wordBreak: 'break-word' }}
       >
         {title}
       </p>
-      <p className="text-xs leading-relaxed text-gray-600">{body}</p>
+      <p className="text-xs leading-relaxed text-gray-600 dark:text-gray-300">{body}</p>
     </div>
   )
 }
@@ -110,7 +110,7 @@ function Node({
 function EdgeLabel({ children }: { children: React.ReactNode }) {
   return (
     <p
-      className="hidden text-center text-xs italic text-gray-500 md:flex md:items-center md:justify-center"
+      className="hidden text-center text-xs italic text-gray-500 dark:text-gray-400 md:flex md:items-center md:justify-center"
       style={{ fontFamily: "'DM Sans', ui-sans-serif, system-ui, sans-serif" }}
     >
       {children}

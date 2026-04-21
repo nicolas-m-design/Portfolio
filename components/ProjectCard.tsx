@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { Project } from '@/types'
 import { useSquircle } from '@/hooks/useSquircle'
+import SquircleFocusRing from './SquircleFocusRing'
 
 interface ProjectCardProps {
   project: Project
@@ -23,11 +24,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Link
       href={`/work/${project.slug}`}
-      className="block group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-50 rounded-2xl transition-all duration-200 squircle-shadow group-hover-squircle-shadow"
+      className="relative block group focus:outline-none rounded-2xl transition-colors duration-200 squircle-shadow dark:ring-1 dark:ring-white/[0.15] dark:rounded-[28px]"
       aria-label={`View project: ${metadata?.project_name || project.title}`}
       tabIndex={0}
     >
-      <article ref={squircleRef} className="relative h-[320px] rounded-2xl overflow-hidden transition-transform duration-500 group-hover:-translate-y-2" role="article">
+      <article ref={squircleRef} className="relative h-[320px] rounded-2xl overflow-hidden transition-transform duration-500 group-hover:-translate-y-2 " role="article">
         {/* Video background or image fallback */}
         {isVideo ? (
           <>
@@ -98,6 +99,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           </div>
         </div>
       </article>
+      <SquircleFocusRing cornerRadius={28} cornerSmoothing={0.8} />
     </Link>
   )
 }

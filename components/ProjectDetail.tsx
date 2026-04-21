@@ -295,14 +295,14 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
       <div className="container article-column">
         <div>
           <p
-            className="text-gray-500 font-medium tracking-widest uppercase mb-6"
+            className="text-gray-500 dark:text-gray-400 font-medium tracking-widest uppercase mb-6"
             style={{ fontSize: '12px', letterSpacing: '0.12em' }}
           >
             {getProjectTypeLabel(metadata?.project_type)}
           </p>
 
           <h1
-            className="text-gray-900 mb-8"
+            className="text-gray-900 dark:text-white mb-8"
             style={{
               fontFamily: "'DM Sans', ui-sans-serif, system-ui, sans-serif",
               fontSize: 'clamp(40px, 6vw, 56px)',
@@ -317,7 +317,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
 
           {metadata?.description_short && (
             <div
-              className="text-gray-700 mb-12"
+              className="text-gray-700 dark:text-gray-300 mb-12"
               style={{
                 fontFamily: "'PP Neue Montreal', ui-sans-serif, system-ui, sans-serif",
                 fontSize: 'clamp(18px, 1.6vw, 20px)',

@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react'
 import { AboutMe } from '@/types'
 import ExperimentsNavLink from './ExperimentsNavLink'
 import NavWordmark from './NavWordmark'
+import ThemeToggle from './ThemeToggle'
+import SquircleFocusRing from './SquircleFocusRing'
 
 interface NavigationProps {
   aboutMe?: AboutMe | null
@@ -41,7 +43,7 @@ export default function Navigation({ aboutMe }: NavigationProps) {
       className={[
         'fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color] duration-300',
         scrolled
-          ? 'backdrop-blur-lg border-b border-gray-300'
+          ? 'backdrop-blur-lg border-b border-gray-300 dark:border-gray-800 dark:bg-black/80'
           : 'border-b border-transparent',
       ].join(' ')}
       role="banner"
@@ -57,26 +59,30 @@ export default function Navigation({ aboutMe }: NavigationProps) {
           >
             <button
               onClick={() => handleNavigation('work')}
-              className="nav-item-light hidden md:block rounded-md px-3 py-2"
+              className="nav-item-light relative hidden md:block rounded-md px-3 py-2"
               aria-label="Navigate to Projects section"
             >
               Projects
+              <SquircleFocusRing cornerRadius={8} cornerSmoothing={0.8} offset={2} strokeWidth={2} />
             </button>
             <button
               onClick={() => handleNavigation('contact')}
-              className="nav-item-light hidden md:block rounded-md px-3 py-2"
+              className="nav-item-light relative hidden md:block rounded-md px-3 py-2"
               aria-label="Navigate to About me section"
             >
               About me
+              <SquircleFocusRing cornerRadius={8} cornerSmoothing={0.8} offset={2} strokeWidth={2} />
             </button>
             <ExperimentsNavLink />
             <Link
               href="/cv"
-              className="nav-item-light rounded-md px-3 py-2"
+              className="nav-item-light relative rounded-md px-3 py-2"
               aria-label="View CV"
             >
               Resume
+              <SquircleFocusRing cornerRadius={8} cornerSmoothing={0.8} offset={2} strokeWidth={2} />
             </Link>
+            <ThemeToggle />
           </div>
         </div>
       </nav>

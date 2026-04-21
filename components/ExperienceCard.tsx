@@ -31,16 +31,16 @@ export default function ExperienceCard({ experience, isLast }: ExperienceCardPro
       >
         <div className="flex items-start justify-between mb-4">
           <div className="flex-1">
-            <h3 className="text-xl font-semibold text-gray-900 mb-1 leading-relaxed">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-1 leading-relaxed">
               {metadata?.job_title}
             </h3>
             <div className="text-lg font-medium text-primary-600 mb-2">
               {metadata?.company}
             </div>
             
-            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
+            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
               {metadata?.employment_type && (
-                <span className="px-2 py-1 bg-gray-100 rounded">
+                <span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded">
                   {metadata.employment_type.value}
                 </span>
               )}
@@ -54,7 +54,7 @@ export default function ExperienceCard({ experience, isLast }: ExperienceCardPro
               )}
               
               {metadata?.current_position && (
-                <span className="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-medium">
+                <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-xs font-medium">
                   Current
                 </span>
               )}
@@ -75,16 +75,16 @@ export default function ExperienceCard({ experience, isLast }: ExperienceCardPro
         
         {metadata?.job_description && (
           <div 
-            className="prose max-w-none text-gray-700 mb-4"
+            className="prose max-w-none text-gray-700 dark:text-gray-300 mb-4"
             dangerouslySetInnerHTML={{ __html: metadata.job_description }}
           />
         )}
         
         {metadata?.key_achievements && (
           <div>
-            <h4 className="font-medium text-gray-900 mb-2">Key Achievements:</h4>
-            <div 
-              className="prose prose-ul:list-disc prose-li:ml-0 max-w-none text-gray-700"
+            <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Key Achievements:</h4>
+            <div
+              className="prose prose-ul:list-disc prose-li:ml-0 max-w-none text-gray-700 dark:text-gray-300"
               dangerouslySetInnerHTML={{ __html: metadata.key_achievements }}
             />
           </div>

@@ -260,6 +260,71 @@
   }
 }
 
+/* Dark mode component overrides */
+.dark .article-prose {
+  color: #c9cdd4;
+}
+.dark .article-prose h2,
+.dark .article-prose h3,
+.dark .article-prose h4 {
+  color: #f0f0f2;
+}
+.dark .article-prose blockquote {
+  color: #d0d3d8;
+}
+.dark .article-prose blockquote::before {
+  color: #2a2d35;
+}
+.dark .article-prose code {
+  background: #111;
+  color: #c9cdd4;
+}
+.dark .article-prose thead {
+  border-color: #222;
+}
+.dark .article-prose th {
+  color: #e0e2e8;
+}
+.dark .article-prose td {
+  border-color: #111;
+}
+.dark .article-prose a {
+  color: #6b9fff;
+}
+.dark .article-prose a:hover {
+  color: #91b5ff;
+}
+.dark .card {
+  background: #111;
+  border-color: #222;
+  color: #e0e2e8;
+}
+.dark .btn-secondary {
+  background: #111;
+  color: #e0e2e8;
+}
+.dark .btn-secondary:hover {
+  background: #222;
+}
+
+/* nav-item-light dark mode */
+.dark .nav-item-light {
+  color: #9b9b98;
+}
+.dark .nav-item-light:hover {
+  color: #e8e8e6;
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+/* Dark focus ring on light bg → invert to dark bg */
+.dark a.nav-item-light:focus-visible,
+.dark button.nav-item-light:focus-visible,
+.dark .nav-item-light:focus-visible {
+  box-shadow:
+    0 0 0 2px #000,
+    0 0 0 4px #6b9fff !important;
+}
+
 /* Apple-style continuous corners (squircle) via CSS `corner-shape`.
  * Shipped in Chrome 139+ (Aug 2025), Safari TP. Browsers without support
  * fall back to existing `border-radius` — zero JS, SSR-safe.
@@ -306,6 +371,13 @@
   /* Full-pill shapes (rounded-full) — skip squircle; pills should stay circular */
 }
 
+/* Reveal SquircleFocusRing overlay when its direct parent (the focusable
+ * element) matches :focus-visible. The ring component must be a direct
+ * child of the focusable element. */
+:focus-visible > .squircle-focus-ring {
+  opacity: 1 !important;
+}
+
 /* Drop-shadow wrapper for clip-path squircle cards. `box-shadow` is clipped
  * by `clip-path`, so shadows must come from an ancestor via `filter:
  * drop-shadow()`, which follows the clipped outline. Hover deepens it. */
@@ -333,16 +405,10 @@
   transform: translateY(0);
 }
 
-/* Nav focus ring — outside Tailwind layers for max specificity.
- * Targets both <button> and <a> variants. Uses box-shadow (not outline)
- * so the ring is painted inside the element's stacking context and
- * can't be clipped by sibling canvases or parent overflow. */
+/* Nav focus ring handled by <SquircleFocusRing /> component — suppress
+ * default outline on nav items (the SVG overlay is the focus indicator). */
 a.nav-item-light:focus-visible,
 button.nav-item-light:focus-visible,
 .nav-item-light:focus-visible {
   outline: none !important;
-  box-shadow:
-    0 0 0 2px #ffffff,
-    0 0 0 4px #2563eb !important;
-  border-radius: 6px;
 }

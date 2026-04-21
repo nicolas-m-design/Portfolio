@@ -10,13 +10,13 @@ export default function NavWordmark() {
       aria-label="Navigate to home page"
     >
       <span
+        className="text-[#2F3437] dark:text-white"
         style={{
           fontFamily: "'DM Sans', ui-sans-serif, system-ui, sans-serif",
           fontSize: '1rem',
           fontWeight: 500,
           lineHeight: 1,
           letterSpacing: '-0.02em',
-          color: '#2F3437',
         }}
       >
         Nicolas Ménard

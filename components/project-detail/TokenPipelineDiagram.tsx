@@ -28,9 +28,9 @@ const COLUMNS: Column[] = [
     title: 'Raw values only',
     lede: 'Concrete, reusable values. No product meaning yet.',
     rows: [
-      { name: 'primitive-color-orange-9', detail: '#E8520A' },
-      { name: 'primitive-space-4', detail: '16px' },
-      { name: 'primitive-radius-none', detail: '0px' },
+      { name: 'color-orange-9', detail: '#E8520A' },
+      { name: 'space-4', detail: '16px' },
+      { name: 'radius-none', detail: '0px' },
     ],
   },
   {
@@ -38,9 +38,9 @@ const COLUMNS: Column[] = [
     title: 'Intent over value',
     lede: 'Roles map raw tokens into intent. Components consume this layer.',
     rows: [
-      { name: 'color-action-primary', detail: '→ primitive-color-orange-9' },
-      { name: 'layout-section-gap', detail: '→ primitive-space-8' },
-      { name: 'radius-control', detail: '→ primitive-radius-none' },
+      { name: 'color-action-primary', detail: '→ color-orange-9' },
+      { name: 'layout-section-gap', detail: '→ space-8' },
+      { name: 'radius-control', detail: '→ radius-none' },
     ],
   },
   {
@@ -53,7 +53,7 @@ const COLUMNS: Column[] = [
       { name: 'border-radius', detail: 'var(--radius-control)' },
     ],
     footer: {
-      label: 'Rule: no var(--primitive-*) here.',
+      label: 'Components reference semantic tokens only — never primitives directly.',
       tone: 'rule',
     },
   },
@@ -67,20 +67,20 @@ export default function TokenPipelineDiagram() {
           <div key={col.eyebrow} className="relative">
             <div
               className={[
-                'flex h-full flex-col rounded-lg border border-gray-200 bg-white p-5',
+                'flex h-full flex-col rounded-lg border border-gray-200 dark:border-[#222] bg-white dark:bg-[#111] p-5',
                 'md:rounded-none',
                 i === 0 ? 'md:rounded-l-lg' : '',
                 i === COLUMNS.length - 1 ? 'md:rounded-r-lg' : 'md:border-r-0',
               ].join(' ')}
             >
               <p
-                className="mb-3 text-[11px] font-medium uppercase text-gray-500"
+                className="mb-3 text-[11px] font-medium uppercase text-gray-500 dark:text-gray-400"
                 style={{ letterSpacing: '0.12em' }}
               >
                 {col.eyebrow}
               </p>
               <h3
-                className="mb-2 text-gray-900"
+                className="mb-2 text-gray-900 dark:text-white"
                 style={{
                   fontFamily: "'DM Sans', ui-sans-serif, system-ui, sans-serif",
                   fontSize: '20px',
@@ -91,17 +91,17 @@ export default function TokenPipelineDiagram() {
               >
                 {col.title}
               </h3>
-              <p className="mb-5 text-sm leading-relaxed text-gray-600">
+              <p className="mb-5 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
                 {col.lede}
               </p>
 
               <div className="space-y-3">
                 {col.rows.map((row) => (
                   <div key={row.name}>
-                    <code className="inline-block rounded bg-gray-100 px-1.5 py-0.5 font-mono text-[12.5px] text-gray-800">
+                    <code className="inline-block rounded bg-gray-100 dark:bg-[#1a1a1a] px-1.5 py-0.5 font-mono text-[12.5px] text-gray-800 dark:text-gray-200">
                       {row.name}
                     </code>
-                    <p className="mt-1 font-mono text-[12.5px] text-gray-500">
+                    <p className="mt-1 font-mono text-[12.5px] text-gray-500 dark:text-gray-400">
                       {row.detail}
                     </p>
                   </div>
@@ -109,7 +109,7 @@ export default function TokenPipelineDiagram() {
               </div>
 
               {col.footer && (
-                <div className="mt-5 border-t border-gray-200 pt-4">
+                <div className="mt-5 border-t border-gray-200 dark:border-[#222] pt-4">
                   <p className="flex items-start gap-2 text-sm text-[#E8520A]">
                     <span aria-hidden="true" className="mt-0.5">
                       ⚠
@@ -120,23 +120,6 @@ export default function TokenPipelineDiagram() {
               )}
             </div>
 
-            {i < COLUMNS.length - 1 && (
-              <span
-                aria-hidden="true"
-                className="absolute right-0 top-1/2 hidden -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-400 md:flex"
-                style={{ width: 24, height: 24 }}
-              >
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                  <path
-                    d="M2 5h6M5.5 2.5 8 5l-2.5 2.5"
-                    stroke="currentColor"
-                    strokeWidth="1.2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-            )}
           </div>
         ))}
       </div>

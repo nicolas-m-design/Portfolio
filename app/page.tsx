@@ -48,25 +48,24 @@ export default async function Page() {
         />
         
         {/* Placeholder sections when data fails */}
-        <section id="work" className="py-16 bg-white">
+        <section id="work" className="py-16 bg-white dark:bg-black">
           <div className="container">
-            <h2 className="text-2xl font-normal text-center mb-12">Work</h2>
-            <p className="text-center text-gray-600">Loading work...</p>
+            <h2 className="text-2xl font-normal text-center mb-12 dark:text-gray-100">Work</h2>
+            <p className="text-center text-gray-600 dark:text-gray-400">Loading work...</p>
           </div>
         </section>
-        
-        <section id="experience" className="py-16 bg-gray-50">
+
+        <section id="experience" className="py-16 bg-gray-50 dark:bg-black">
           <div className="container">
-            <h2 className="text-2xl font-normal mb-12">Experience</h2>
-            <p className="text-gray-600">Loading experience...</p>
+            <h2 className="text-2xl font-normal mb-12 dark:text-gray-100">Experience</h2>
+            <p className="text-gray-600 dark:text-gray-400">Loading experience...</p>
           </div>
         </section>
-        
-        
-        <section id="contact" className="py-16 bg-gray-50">
+
+        <section id="contact" className="py-16 bg-gray-50 dark:bg-black">
           <div className="container">
-            <h2 className="text-2xl font-normal mb-12">Contact</h2>
-            <p className="text-gray-600">Loading contact information...</p>
+            <h2 className="text-2xl font-normal mb-12 dark:text-gray-100">Contact</h2>
+            <p className="text-gray-600 dark:text-gray-400">Loading contact information...</p>
           </div>
         </section>
         </main>

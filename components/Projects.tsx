@@ -8,10 +8,10 @@ interface ProjectsProps {
 export default function Projects({ projects }: ProjectsProps) {
 
   return (
-    <section id="work" className="section bg-gray-50" aria-labelledby="work-heading">
+    <section id="work" className="section bg-gray-50 dark:bg-black" aria-labelledby="work-heading">
       <div className="container">
         <div className="mb-16" data-aos="fade-up">
-          <h2 id="work-heading" className="text-2xl md:text-3xl font-normal text-gray-900 leading-tight pl-4 md:pl-0">
+          <h2 id="work-heading" className="text-2xl md:text-3xl font-normal text-gray-900 dark:text-gray-100 leading-tight pl-4 md:pl-0">
             Projects
           </h2>
         </div>
@@ -25,7 +25,7 @@ export default function Projects({ projects }: ProjectsProps) {
             ))
           ) : (
             <div className="col-span-full text-center py-12">
-              <p className="text-gray-600">Work projects will appear here soon.</p>
+              <p className="text-gray-600 dark:text-gray-400">Work projects will appear here soon.</p>
             </div>
           )}
         </div>

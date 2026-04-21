@@ -11,14 +11,14 @@ export default function Contact({ aboutMe }: ContactProps) {
   // If no aboutMe data, show a fallback
   if (!aboutMe || !metadata) {
     return (
-      <section id="contact" className="section" style={{ backgroundColor: '#f9fafb' }}>
+      <section id="contact" className="section bg-gray-50 dark:bg-black">
         <div className="container">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-2xl md:text-3xl font-normal text-gray-900 mb-4">
+            <h2 className="text-2xl md:text-3xl font-normal text-gray-900 dark:text-gray-100 mb-4">
               Get In Touch
             </h2>
             <div className="w-20 h-1 bg-primary-600 mx-auto mb-6"></div>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-gray-600 dark:text-gray-400">
               Contact information will be available soon.
             </p>
           </div>
@@ -28,7 +28,7 @@ export default function Contact({ aboutMe }: ContactProps) {
   }
 
   return (
-    <section id="contact" className="section" style={{ backgroundColor: '#f9fafb' }}>
+    <section id="contact" className="section bg-gray-50 dark:bg-black">
       <div className="container">
         <div className="mb-16 flex flex-col lg:flex-row gap-8 lg:gap-16 items-start" data-aos="fade-up">
           {metadata?.profile_image && (
@@ -43,10 +43,10 @@ export default function Contact({ aboutMe }: ContactProps) {
             </div>
           )}
           <div className="flex-1 lg:order-2">
-            <h2 className="text-2xl md:text-3xl font-normal text-gray-900 mb-4 leading-tight pl-4 md:pl-0">
+            <h2 className="text-2xl md:text-3xl font-normal text-gray-900 dark:text-gray-100 mb-4 leading-tight pl-4 md:pl-0">
               About me
             </h2>
-            <div className="text-lg text-gray-600 max-w-2xl leading-6 space-y-4 px-4 md:px-0">
+            <div className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl leading-6 space-y-4 px-4 md:px-0">
               <p>
                 I'm a product designer with 10+ years shipping products across education, energy, mobility, and AI/robotics — turning complex challenges into meaningful, measurable outcomes.
               </p>
@@ -83,13 +83,13 @@ export default function Contact({ aboutMe }: ContactProps) {
               <div className="space-y-6">
                 {metadata?.email && (
                   <div className="flex items-center">
-                    <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
+                    <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mr-4">
                       <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">Email</h3>
+                      <h3 className="font-semibold text-gray-900 dark:text-gray-100">Email</h3>
                       <a 
                         href={`mailto:${metadata.email}`}
                         className="text-primary-600 hover:text-primary-700 transition-colors duration-200"
@@ -102,13 +102,13 @@ export default function Contact({ aboutMe }: ContactProps) {
                 
                 {metadata?.phone && (
                   <div className="flex items-center">
-                    <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
+                    <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mr-4">
                       <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                       </svg>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">Phone</h3>
+                      <h3 className="font-semibold text-gray-900 dark:text-gray-100">Phone</h3>
                       <a 
                         href={`tel:${metadata.phone}`}
                         className="text-primary-600 hover:text-primary-700 transition-colors duration-200"
@@ -121,29 +121,29 @@ export default function Contact({ aboutMe }: ContactProps) {
                 
                 {metadata?.location && (
                   <div className="flex items-center">
-                    <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-4">
+                    <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mr-4">
                       <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">Location</h3>
-                      <p className="text-gray-600 leading-6">{metadata.location}</p>
+                      <h3 className="font-semibold text-gray-900 dark:text-gray-100">Location</h3>
+                      <p className="text-gray-600 dark:text-gray-400 leading-6">{metadata.location}</p>
                     </div>
                   </div>
                 )}
                 
-                <div className="pt-6 border-t border-gray-200 flex justify-center md:justify-start">
+                <div className="pt-6 border-t border-gray-200 dark:border-gray-700 flex justify-center md:justify-start">
                   <SocialLinks aboutMe={aboutMe} />
                 </div>
                 
                 {metadata?.available_for_work !== undefined && (
                   <div className="pt-6 flex justify-center md:justify-start">
                     <div className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium ${
-                      metadata.available_for_work 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-yellow-100 text-yellow-800'
+                      metadata.available_for_work
+                        ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300'
+                        : 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300'
                     }`}>
                       <div className={`w-2 h-2 rounded-full mr-2 ${
                         metadata.available_for_work ? 'bg-green-500' : 'bg-yellow-500'

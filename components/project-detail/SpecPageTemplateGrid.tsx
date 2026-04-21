@@ -72,7 +72,7 @@ export default function SpecPageTemplateGrid() {
             <div
               key={p.name}
               className={[
-                'h-full border border-gray-200 bg-white p-5',
+                'h-full border border-gray-200 dark:border-[#222] bg-white dark:bg-[#111] p-5',
                 // Round only the outer corners so the 2×3 grid reads as one block.
                 'rounded-lg md:rounded-none',
                 row === 0 && col === 0 ? 'md:rounded-tl-lg' : '',
@@ -86,22 +86,22 @@ export default function SpecPageTemplateGrid() {
             >
               <div className="mb-3 flex items-baseline gap-2">
                 <span
-                  className="text-[11px] font-medium uppercase text-gray-500"
+                  className="text-[11px] font-medium uppercase text-gray-500 dark:text-gray-400"
                   style={{ letterSpacing: '0.12em' }}
                 >
                   {p.n}
                 </span>
                 <span
-                  className="text-[11px] font-medium uppercase text-gray-500"
+                  className="text-[11px] font-medium uppercase text-gray-500 dark:text-gray-400"
                   style={{ letterSpacing: '0.12em' }}
                 >
                   · {p.role}
                 </span>
               </div>
-              <code className="mb-2 inline-block rounded bg-gray-100 px-1.5 py-0.5 font-mono text-[12.5px] text-gray-900">
+              <code className="mb-2 inline-block rounded bg-gray-100 dark:bg-[#1a1a1a] px-1.5 py-0.5 font-mono text-[12.5px] text-gray-900 dark:text-gray-200">
                 {p.name}
               </code>
-              <p className="mt-2 text-sm leading-relaxed text-gray-600">
+              <p className="mt-2 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
                 {p.detail}
               </p>
             </div>
@@ -109,7 +109,7 @@ export default function SpecPageTemplateGrid() {
         })}
       </div>
 
-      <figcaption className="mt-3 text-center text-xs text-gray-500">
+      <figcaption className="mt-3 text-center text-xs text-gray-500 dark:text-gray-400">
         The spec template. Every foundation and component page composes from
         these six primitives, in this order.
       </figcaption>

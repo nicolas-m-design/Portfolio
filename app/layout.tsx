@@ -3,6 +3,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
 import ClientAOSProvider from '@/components/ClientAOSProvider'
 import VisitorTracker from '@/components/VisitorTracker'
+import ThemeProvider from '@/components/ThemeProvider'
 import './globals.css'
 
 export const viewport = 'width=device-width, initial-scale=1'
@@ -33,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
@@ -57,13 +58,15 @@ export default function RootLayout({
         {/* Console capture script for dashboard debugging */}
         <script src="/dashboard-console-capture.js" />
       </head>
-      <body className="bg-white text-gray-900">
-        <ClientAOSProvider>
-          {children}
-        </ClientAOSProvider>
-        <SpeedInsights />
-        <Analytics />
-        <VisitorTracker />
+      <body className="bg-white text-gray-900 dark:bg-black dark:text-gray-100">
+        <ThemeProvider>
+          <ClientAOSProvider>
+            {children}
+          </ClientAOSProvider>
+          <SpeedInsights />
+          <Analytics />
+          <VisitorTracker />
+        </ThemeProvider>
       </body>
     </html>
   )
