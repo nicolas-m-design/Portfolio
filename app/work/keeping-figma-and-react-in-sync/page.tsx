@@ -1,9 +1,9 @@
-// app/work/factory-design-system/page.tsx
+// app/work/keeping-figma-and-react-in-sync/page.tsx
 //
 // Static, hand-authored case study that bypasses the Cosmic CMS.
 // This file exists as a concrete sibling of the dynamic `[slug]/page.tsx`
 // route; Next.js resolves static segments before dynamic ones, so this
-// route wins for `/work/factory-design-system` without disturbing any
+// route wins for `/work/keeping-figma-and-react-in-sync` without disturbing any
 // other Cosmic-fed project page.
 
 import { Metadata } from 'next'
