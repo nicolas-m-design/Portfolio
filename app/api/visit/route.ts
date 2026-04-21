@@ -29,14 +29,14 @@ function parseBrowser(ua: string | null): string {
   return 'Unknown'
 }
 
-async function sendTelegramNotification(country: string | null, city: string | null, page: string | null, ua: string | null, ip: string) {
+async function sendTelegramNotification(country: string | null, city: string | null, page: string | null, ua: string | null) {
   const flag = country ? countryFlag(country) : '🌐'
   const location = [city, country].filter(Boolean).join(', ') || 'Unknown'
   const path = page || '/'
   const device = parseDevice(ua)
   const browser = parseBrowser(ua)
 
-  const text = `${flag} <b>Portfolio visit</b>\n📍 ${location}\n📄 ${path}\n${device} · ${browser}\n🔍 ${ip}`
+  const text = `${flag} <b>Portfolio visit</b>\n📍 ${location}\n📄 ${path}\n${device} · ${browser}`
 
   try {
     const response = await fetch(
@@ -85,7 +85,7 @@ export async function POST(request: NextRequest) {
     } catch { /* body optional */ }
 
     const ua = request.headers.get('user-agent')
-    await sendTelegramNotification(country, city, page, ua, ip)
+    await sendTelegramNotification(country, city, page, ua)
 
     return NextResponse.json({ success: true, reason: 'new' })
   } catch (error) {
