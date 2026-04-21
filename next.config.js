@@ -20,6 +20,15 @@ const nextConfig = {
       }
     ]
   },
+  async redirects() {
+    return [
+      {
+        source: '/work/factory-design-system',
+        destination: '/work/keeping-figma-and-react-in-sync',
+        permanent: true,
+      },
+    ]
+  },
   async rewrites() {
     return [
       {
