@@ -21,9 +21,9 @@ export const metadata: Metadata = {
       'A token-driven design system built in lockstep across Figma and React, where a single markdown contract lets AI agents do the execution without drift.',
     images: [
       {
-        url: '/case-studies/factory-design-system/cover.svg',
-        width: 1600,
-        height: 928,
+        url: 'https://nicolasmenard.design/case-studies/factory-design-system/cover.png',
+        width: 1200,
+        height: 628,
         alt: 'Keeping Figma and React in Sync with DESIGN.md – cover image',
       },
     ],

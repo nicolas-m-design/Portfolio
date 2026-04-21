@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>LinkedIn Thumbnail — Factory Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 1200px;
+      height: 628px;
+      overflow: hidden;
+    }
+
+    body {
+      background: #f9fafb;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      color: #111827;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 72px 80px 56px;
+      position: relative;
+    }
+
+    body::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #252df1;
+    }
+
+    .headline {
+      font-size: 72px;
+      font-weight: 500;
+      line-height: 1.07;
+      letter-spacing: -0.03em;
+      color: #111827;
+      margin-bottom: 56px;
+    }
+
+    /* DESIGN.md — mono because it's a filename, blue = portfolio primary */
+    .headline em {
+      font-style: normal;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.88em;
+      font-weight: 500;
+      color: #252df1;
+      letter-spacing: -0.01em;
+    }
+
+    .pipeline {
+      display: flex;
+      align-items: center;
+    }
+
+    .node-box {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 24px;
+      font-weight: 400;
+      color: #374151;
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      padding: 16px 28px;
+      white-space: nowrap;
+    }
+
+    .node-box.contract {
+      font-family: 'DM Mono', monospace;
+      font-size: 22px;
+      font-weight: 500;
+      color: #252df1;
+      background: #eff6ff;
+      border-color: #bfdbfe;
+    }
+
+    .connector {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .line-track {
+      width: 56px;
+      height: 1px;
+      background: #d1d5db;
+    }
+
+    .arrow-head {
+      width: 0;
+      height: 0;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      border-left: 8px solid #d1d5db;
+    }
+
+    .footer {
+      margin-top: 44px;
+    }
+
+    .byline {
+      font-size: 16px;
+      font-weight: 400;
+      color: #9ca3af;
+      letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="headline">
+    Keeping Figma and React<br>in sync with <em>DESIGN.md</em>
+  </div>
+
+  <div class="pipeline">
+    <div class="node-box">Figma + MCP</div>
+    <div class="connector"><div class="line-track"></div><div class="arrow-head"></div></div>
+    <div class="node-box contract">DESIGN.md</div>
+    <div class="connector"><div class="line-track"></div><div class="arrow-head"></div></div>
+    <div class="node-box">React + Tests</div>
+  </div>
+
+  <div class="footer">
+    <div class="byline">nicolasmenard.design</div>
+  </div>
+
+</body>
+</html>
