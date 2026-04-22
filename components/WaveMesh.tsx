@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useEffect, useRef, useMemo } from 'react';
 
 // Generate 3D mesh - moved outside component to avoid recreation

@@ -17,8 +17,13 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   const thumbnailUrl = metadata?.thumbnail
   const isVideo = thumbnailUrl && typeof thumbnailUrl === 'string' && thumbnailUrl.toLowerCase().match(/\.(mp4|webm|ogg|mov)(\?.*)?$/)
   
-  const backgroundImage = thumbnailUrl || metadata?.featured_image || metadata?.cloudinary_featured_image
-    ? `${thumbnailUrl || metadata?.featured_image || metadata?.cloudinary_featured_image}?w=800&h=600&fit=crop&auto=format,compress`
+  const rawImage = thumbnailUrl || metadata?.featured_image || metadata?.cloudinary_featured_image
+  // Only Unsplash honors w/h/fit/auto query params; local assets + Cloudinary ignore them.
+  // Skip params for SVGs (no raster resize) and local paths.
+  const isUnsplash = typeof rawImage === 'string' && rawImage.includes('images.unsplash.com')
+  const isSvg = typeof rawImage === 'string' && rawImage.toLowerCase().endsWith('.svg')
+  const backgroundImage = rawImage
+    ? (isUnsplash && !isSvg ? `${rawImage}?w=800&h=600&fit=crop&auto=format,compress` : rawImage)
     : `https://images.unsplash.com/photo-1558655146-d09347e92766?w=800&h=600&fit=crop&auto=format,compress&q=80`
 
   return (

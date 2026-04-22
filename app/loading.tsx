@@ -1,9 +1,15 @@
+'use client'
+
+import WaveMesh from '@/components/WaveMesh'
+
 export default function Loading() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-black flex items-center justify-center">
-      <div className="text-center">
-        <div className="w-16 h-16 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin mx-auto mb-4"></div>
-        <p className="text-gray-600 dark:text-gray-400 leading-6">Loading portfolio...</p>
+    <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center">
+      <div className="flex flex-col items-center gap-4">
+        <div className="w-64 h-40 opacity-60">
+          <WaveMesh />
+        </div>
+        <p className="text-sm text-gray-500 dark:text-gray-400">Loading...</p>
       </div>
     </div>
   )
