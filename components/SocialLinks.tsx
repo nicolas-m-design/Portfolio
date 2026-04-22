@@ -58,20 +58,19 @@ export default function SocialLinks({ aboutMe }: SocialLinksProps) {
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              {...(link.isDownload && { download: true })}
               className={`${
-                link.showText 
+                link.showText
                   ? 'w-full md:w-auto inline-flex items-center justify-center space-x-3 px-4 py-3 bg-gray-100 dark:bg-gray-800 hover:bg-primary-600 text-gray-600 dark:text-gray-300 hover:text-white rounded-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2'
                   : 'w-10 h-10 bg-gray-100 dark:bg-gray-800 hover:bg-primary-600 text-gray-600 dark:text-gray-300 hover:text-white rounded-lg flex items-center justify-center transition-all duration-200 transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2'
               }`}
-              aria-label={`${link.isDownload ? 'Download' : 'Visit'} ${link.name} ${link.isDownload ? '' : 'profile'} (opens in new tab)`}
+              aria-label={`Visit ${link.name} profile (opens in new tab)`}
             >
               <span aria-hidden="true">
                 {link.icon}
               </span>
               {link.showText && (
                 <span className="font-medium">
-                  {link.isDownload ? `Download ${link.name}` : `Connect on ${link.name}`}
+                  {`Connect on ${link.name}`}
                 </span>
               )}
             </a>
