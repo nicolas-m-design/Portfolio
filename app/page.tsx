@@ -18,7 +18,7 @@ export default async function Page() {
 
     return (
       <div className="min-h-screen">
-        <a href="#main-content" className="skip-link">
+        <a href="#work" className="skip-link">
           Skip to main content
         </a>
         <Navigation aboutMe={aboutMe} />
@@ -36,7 +36,7 @@ export default async function Page() {
     // Fallback: show hero with placeholder sections
     return (
       <div className="min-h-screen">
-        <a href="#main-content" className="skip-link">
+        <a href="#work" className="skip-link">
           Skip to main content
         </a>
         <Navigation aboutMe={null} />

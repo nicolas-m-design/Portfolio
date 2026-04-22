@@ -133,6 +133,7 @@ export default function ExperimentsNavLink() {
         href="/experiments"
         className="nav-item-light relative rounded-md px-3 py-2 block"
         aria-label="Navigate to Experiments page"
+        tabIndex={0}
       >
         Experiments
         <SquircleFocusRing cornerRadius={8} cornerSmoothing={0.8} offset={2} strokeWidth={2} />

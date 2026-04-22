@@ -254,9 +254,11 @@
     }
   }
   
-  /* Skip link for screen readers */
+  /* Skip link for screen readers — left-aligned to the navbar max-w-7xl
+   * container so it covers the wordmark exactly. At viewports wider than
+   * max-w-7xl (1280px), the offset tracks the centered container. */
   .skip-link {
-    @apply sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary-600 focus:text-white focus:rounded-md focus:shadow-lg;
+    @apply sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-4 sm:focus:left-6 lg:focus:left-[max(2rem,calc((100vw-80rem)/2+2rem))] focus:z-[100] focus:px-5 focus:py-3 focus:bg-primary-600 focus:text-white focus:rounded-xl focus:shadow-lg focus:text-base focus:font-medium;
   }
 }
 
@@ -373,8 +375,11 @@
 
 /* Reveal SquircleFocusRing overlay when its direct parent (the focusable
  * element) matches :focus-visible. The ring component must be a direct
- * child of the focusable element. */
-:focus-visible > .squircle-focus-ring {
+ * child of the focusable element. `a:focus` fallback covers anchors whose
+ * :focus-visible heuristic occasionally fails to match after Tab focus
+ * (mouse clicks on anchors navigate away, so :focus on anchors is safe). */
+:focus-visible > .squircle-focus-ring,
+a:focus > .squircle-focus-ring {
   opacity: 1 !important;
 }
 

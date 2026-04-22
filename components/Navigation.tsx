@@ -78,6 +78,7 @@ export default function Navigation({ aboutMe }: NavigationProps) {
               href="/cv"
               className="nav-item-light relative rounded-md px-3 py-2"
               aria-label="View CV"
+              tabIndex={0}
             >
               Resume
               <SquircleFocusRing cornerRadius={8} cornerSmoothing={0.8} offset={2} strokeWidth={2} />

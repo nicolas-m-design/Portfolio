@@ -13,7 +13,7 @@ export default function Hero({ aboutMe }: HeroProps) {
   return (
     <section
       className="h-screen md:h-[90vh] flex items-center justify-center relative overflow-hidden pt-16 pb-24 md:pt-24 md:pb-0"
-      role="banner"
+      role="region"
       aria-label="Hero section introducing Nicolas Ménard"
     >
       <div className="absolute inset-0 bg-gray-50 dark:bg-black" />

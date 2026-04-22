@@ -3,6 +3,7 @@
 import { useTheme } from 'next-themes'
 import { Moon, Sun } from '@phosphor-icons/react'
 import { useEffect, useState } from 'react'
+import SquircleFocusRing from './SquircleFocusRing'
 
 export default function ThemeToggle() {
   const { setTheme, resolvedTheme } = useTheme()
@@ -19,7 +20,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
-      className="nav-item-light rounded-md p-2"
+      className="nav-item-light relative rounded-md p-2"
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       role="switch"
       aria-checked={isDark}
@@ -40,6 +41,7 @@ export default function ThemeToggle() {
           }`}
         />
       </span>
+      <SquircleFocusRing cornerRadius={8} cornerSmoothing={0.8} offset={2} strokeWidth={2} />
     </button>
   )
 }
