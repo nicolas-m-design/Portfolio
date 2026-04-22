@@ -1,19 +1,17 @@
 'use client'
 
 import { useEffect } from 'react'
-import { AboutMe, WorkExperience, Project } from '@/types'
+import { AboutMe, Project } from '@/types'
 import Hero from '@/components/Hero'
 import Projects from '@/components/Projects'
-import Experience from '@/components/Experience'
 import Contact from '@/components/Contact'
 
 interface HomePageProps {
   aboutMe: AboutMe | null
-  workExperience: WorkExperience[]
   projects: Project[]
 }
 
-export default function HomePage({ aboutMe, workExperience, projects }: HomePageProps) {
+export default function HomePage({ aboutMe, projects }: HomePageProps) {
   useEffect(() => {
     // Handle anchor scrolling when page loads with hash
     const handleAnchorScroll = () => {
@@ -50,11 +48,7 @@ export default function HomePage({ aboutMe, workExperience, projects }: HomePage
       <Hero aboutMe={aboutMe} />
       
       <Projects projects={projects} />
-      
-      {workExperience.length > 0 && (
-        <Experience experiences={workExperience} />
-      )}
-      
+
       <Contact aboutMe={aboutMe} />
     </>
   )
