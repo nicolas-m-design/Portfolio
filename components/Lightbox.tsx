@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import WaveMesh from './WaveMesh'
 
 interface LightboxProps {
   images: string[]
@@ -117,10 +118,11 @@ export default function Lightbox({
         className="relative w-[90vw] my-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Loading spinner */}
         {!imageLoaded && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+            <div className="w-64 h-40 opacity-60">
+              <WaveMesh />
+            </div>
           </div>
         )}
 

@@ -40,14 +40,12 @@ export default function RootLayout({
         <meta name="theme-color" content="#000000" />
         
         {/* Font preloading for better LCP */}
-        <link rel="preload" href="/pp-neue-montreal/ppneuemontreal-book.otf" as="font" type="font/otf" crossOrigin="anonymous" />
-        <link rel="preload" href="/pp-neue-montreal/ppneuemontreal-medium.otf" as="font" type="font/otf" crossOrigin="anonymous" />
+        <link rel="preload" href="/pp-neue-montreal/ppneuemontreal-book.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
 
-        {/* Space Grotesk variable font — used for animated nav wordmark */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* DM Sans — display face for project detail hero titles and pull-quotes */}
-        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet" />
 
         {/* Favicons */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
